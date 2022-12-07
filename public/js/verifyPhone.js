@@ -8,7 +8,11 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-contai
         // ...
         if (phoneNumber == null) {
             console.log('phone number is null');
+            $('#btn_login').prop('disabled', true);
+            $('#code').hide();
         }else {
+            $('#btn_login').prop('disabled', false);
+            $('#code').show();
             sendVerificationCode(phoneNumber).then(code=>{
                 sentCodeId = code;
                 console.log('sent code is:', sentCodeId);
