@@ -1,5 +1,18 @@
 var sentCodeId = null, phoneNumber=null;
 
+$('#phone').on('change', function () {
+    phoneNumber = $('#phone').val();
+    const regexpPhone = /(\+213|0)([0-9]{9})/;
+    const match = phoneNumber.match(regexpPhone);
+    if (match != null){
+        phoneNumber = (match[1] == '0')?'+213'+match[2]:match[1]+match[2];
+        $('#recaptcha-container').show();
+    }else {
+        phoneNumber = null;
+        $('#recaptcha-container').hide();
+    }
+})
+
 // window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
     'size': 'normal',
@@ -10,6 +23,8 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-contai
             console.log('phone number is null');
             $('#btn_login').prop('disabled', true);
             $('#code').hide();
+            $('.custom-alert').html(`يجب إدخال رقم الهاتف قبل تأكيد كابتشا.`);
+            $('.custom-alert').fadeIn();
         }else {
             $('#btn_login').prop('disabled', false);
             $('#code').show();
@@ -73,37 +88,3 @@ function signInWithPhone(sentCodeId, code){
         });
     });
 }
-
-$(document).ready(() => {
-
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        var uid = user.uid;
-        // ...
-        console.log(`user ${uid} is logged`);
-
-        } else {
-        // User is signed out
-        // ...
-        console.log(`user logout`);
-        }
-    });
-
-    // axios.post(`${API_URL}/session`).then(res => {
-    //     const message = res.data;
-    //     if (message.success) {
-    //         user = message.result;
-    //         if (user.phoneVerified) {
-    //             window.location.href = './';
-    //             return;
-    //         }
-    //         phoneNumber = user.phoneNumber;
-    //         $('.fullbox-loading').remove('.sk-loading');
-    //     }else {
-    //         console.log('session expired');
-    //         window.location.href = 'login.html'
-    //     }
-    // });
-});
