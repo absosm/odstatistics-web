@@ -48,7 +48,7 @@ recaptchaVerifier.render().then((widgetId) => {
 function sendVerificationCode(phoneNumber) {
     return new Promise(resolve => {
         const appVerifier = window.recaptchaVerifier;
-        auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
         .then((confirmationResult) => {
             resolve(confirmationResult.verificationId);
         })
@@ -59,9 +59,9 @@ function signInWithPhone(sentCodeId, code){
 
     return new Promise(resolve => {
         const credential = firebase.auth.PhoneAuthProvider.credential(sentCodeId, code);
-        auth.signInWithCredential(credential).then((userCredential) => {
+        firebase.auth().signInWithCredential(credential).then((userCredential) => {
 
-            // auth.currentUser.getIdToken().then(function(idToken) {
+            // firebase.auth().currentUser.getIdToken().then(function(idToken) {
             //     axios.post(`${API_URL}/verify_phone`, 
             //         JSON.stringify({ idToken }), 
             //         {headers: {
