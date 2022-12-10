@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="absosm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>خلية العنونة</title>
+    <title>خلية العنونة | إحصاء ما تم إنجازه</title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
@@ -53,14 +53,30 @@
       <div class="middle-box text-center animated fadeInRightBig">
         <div id="panel">
           <h2>لوحة التحكم</h2>
-          <h1>خاصة باللجنة البلدية للعنونة</h1>
-          <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
-          <a href="paneling.html">تسمية الفضاءات العمومية</a>
-          <a href="numbering.html">ترقيم البنايات العمومية</a>
-          <a href="statistic.html">حصيلة ما تم إنجازه</a>
-          <a id="logout" href="#" style="background-color: #ffa100;"><i class="fa fa-sign-out"></i> تسجيل الخروج</a>
-        </div>
-        <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
+          <h1>حصيلة ما تم إنجازه</h1>
+          <div class="widget">
+            <div class="row">
+                <div class="col-8 text-center">
+                    <span> إجمالي عدد الفضاءات </span>
+                    <h1 class="font-bold">0</h2>
+                </div>
+                <div class="col-4 text-center">
+                    <i class="fa fa-map-marker fa-4x"></i>
+                </div>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="row">
+                <div class="col-8 text-center">
+                    <span> إجمالي مداخل البنايات </span>
+                    <h1 class="font-bold">0</h2>
+                </div>
+                <div class="col-4 text-center">
+                    <i class="fa fa-building fa-4x"></i>
+                </div>
+            </div>
+          </div>
+          <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
       </div>
     </div>
 
@@ -73,6 +89,8 @@
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
+    <script defer src="js/firebase.js?v=0.0.1"></script>
+    <!-- Custom and plugin javascript -->
     <script type="module">
       $(document).ready(() => {
 
@@ -83,6 +101,8 @@
               var uid = user.uid;
               // ...
               console.log(`user ${uid} is logged`);
+
+            //   get_spaces_count();
 
               $('.fullbox-loading').remove('.sk-loading');
             } else {

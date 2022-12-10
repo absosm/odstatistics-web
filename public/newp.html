@@ -31,13 +31,26 @@
     <!-- Animation CSS -->
     <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
     <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="https://apcouleddjellal.dz/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <!-- custom style -->
-    <link href="css/style.css?v0.0.0.2" rel="stylesheet">
+    <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   </head>
   <body class="rtls">
+
+    <div class="fullbox-loading sk-loading">
+      <div class="sk-spinner sk-spinner-wave">
+          <div class="sk-rect1"></div>
+          <div class="sk-rect2"></div>
+          <div class="sk-rect3"></div>
+          <div class="sk-rect4"></div>
+          <div class="sk-rect5"></div>
+      </div>
+    </div>
+
     <div class="wrapper wrapper-content">
       <div class="middle-box text-center animated fadeInRightBig">
         <div id="panel">
@@ -46,61 +59,62 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">رقم المقاطعة</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" name="account">
+                    <select id="cb_section" class="form-control m-b">
                     </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">رقم المجموعة السكنية</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" name="account">
+                    <select id="cb_group" class="form-control m-b">
                     </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">نوع الفضاء</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" name="account">
-                        <option>شارع</option>
-                        <option>طريق</option>
-                        <option>نهج</option>
-                        <option>مسلك</option>
-                        <option>معبر</option>
-                        <option>حي</option>
-                        <option>تجمع سكاني</option>
-                        <option>تجزئة</option>
-                        <option>حديقة</option>
-                        <option>ساحة</option>
-                        <option>حظيرة</option>
-                        <option>غابة</option>
-                        <option>معلم تذكاري</option>
-                        <option>آثار تاريخية</option>
-                        <option>مؤسسة</option>
-                        <option>أخرى</option>
+                    <select id="cb_space_type" class="form-control m-b" name="account">
+                        <option value="1">شارع</option>
+                        <option value="2">طريق</option>
+                        <option value="3">نهج</option>
+                        <option value="4">مسلك</option>
+                        <option value="5">معبر</option>
+                        <option value="6">حي</option>
+                        <option value="7">تجمع سكاني</option>
+                        <option value="8">تجزئة</option>
+                        <option value="9">حديقة</option>
+                        <option value="10">ساحة</option>
+                        <option value="11">حظيرة</option>
+                        <option value="12">غابة</option>
+                        <option value="13">معلم تذكاري</option>
+                        <option value="14">آثار تاريخية</option>
+                        <option value="15">مؤسسة</option>
+                        <option value="0">أخرى</option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">التسمية او الرقم</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control">
+                    <input id="tb_space_name" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
                 <div class="col-sm-8">
-                    <label><input type="checkbox" value="option1" id="inlineCheckbox1"> مركبة </label> <label class="checkbox-inline">
+                    <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label class="checkbox-inline">
+                    <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label class="checkbox-inline">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">ملاحظات</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control">
+                    <input id="tb_comment" type="text" class="form-control">
                 </div>
             </div>
             <button id="btn_cancel" class="btn btn-danger btn-circle btn-lg" type="button"><i class="fa fa-times"></i>
             </button>
-            <button class="btn btn-info btn-circle btn-lg" type="button"><i class="fa fa-check"></i>
+            <button id="btn_new" class="btn btn-info btn-circle btn-lg" type="button"><i class="fa fa-check"></i>
             </button>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
@@ -112,9 +126,13 @@
     <script src="https://apcouleddjellal.dz/js/bootstrap.js"></script>
     <script src="https://apcouleddjellal.dz/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="https://apcouleddjellal.dz/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
+    <script defer src="js/firebase.js?v=0.0.1"></script>
+
     <script type="module">
       $(document).ready(() => {
 
@@ -122,9 +140,11 @@
             if (user) {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/firebase.User
-              var uid = user.uid;
+              uid = user.uid;
               // ...
               console.log(`user ${uid} is logged`);
+
+              get_user_sections();
 
               $('.fullbox-loading').remove('.sk-loading');
             } else {
@@ -135,10 +155,28 @@
             }
         });
       });
+
+      $('#cb_section').change(function () {
+        get_user_group($('#cb_section').val());
+      });
       
       $('#btn_cancel').click(function () {
         document.location = 'paneling.html'
+      });
+
+      $('#cb_named').change(function () {
+
+        $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
+
+        if (!$('#cb_named').prop('checked'))
+          $('#cb_installed').prop('checked', false);
+      });
+
+      $('#btn_new').click(function () {
+        add_espace();
       })
+
+
     </script>
   </body>
 </html>
