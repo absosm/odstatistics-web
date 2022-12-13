@@ -38,6 +38,9 @@
     <!-- custom style -->
     <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
   </head>
   <body class="rtls">
 
@@ -132,28 +135,27 @@
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-
+    <script defer src="js/dash.js?v=0.0.1"></script>
     <script type="module">
       $(document).ready(() => {
+        // firebase.auth().onAuthStateChanged((user) => {
+        //     if (user) {
+        //       // User is signed in, see docs for a list of available properties
+        //       // https://firebase.google.com/docs/reference/js/firebase.User
+        //       uid = user.uid;
+        //       // ...
+        //       console.log(`user ${uid} is logged`);
 
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-              // User is signed in, see docs for a list of available properties
-              // https://firebase.google.com/docs/reference/js/firebase.User
-              uid = user.uid;
-              // ...
-              console.log(`user ${uid} is logged`);
+        //       get_user_sections();
 
-              get_user_sections();
-
-              $('.fullbox-loading').remove('.sk-loading');
-            } else {
-              // User is signed out
-              // ...
-              console.log(`user logout`);
-              window.location = 'login.html';
-            }
-        });
+        //       $('.fullbox-loading').remove('.sk-loading');
+        //     } else {
+        //       // User is signed out
+        //       // ...
+        //       console.log(`user logout`);
+        //       window.location = 'login.html';
+        //     }
+        // });
       });
 
       $('#cb_section').change(function () {

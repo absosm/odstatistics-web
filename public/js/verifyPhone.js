@@ -56,31 +56,29 @@ function sendVerificationCode(phoneNumber) {
 }
 
 function signInWithPhone(sentCodeId, code){
-
     return new Promise(resolve => {
         const credential = firebase.auth.PhoneAuthProvider.credential(sentCodeId, code);
         firebase.auth().signInWithCredential(credential).then((userCredential) => {
 
-            // firebase.auth().currentUser.getIdToken().then(function(idToken) {
-            //     axios.post(`${API_URL}/verify_phone`, 
-            //         JSON.stringify({ idToken }), 
-            //         {headers: {
-            //             Accept: "application/json",
-            //             "Content-Type": "application/json"
-            //         } 
-            //     }).then(res=>{
-            //         var message = res.data;
-            //         if (message.success) {
-            //             window.location.href = './';
-            //         }else {
-            //             console.log('error:',message.errors);
-            //         }
-            //         firebase.auth().signOut();
-            //     });
-            // }).catch(error=>{
-            //     console.log('getIdToken()',error);
-            // });
-
+            firebase.auth().currentUser.getIdToken().then(function(idToken) {
+                axios.post(`${API_URL}/login`, 
+                    JSON.stringify({ idToken }), 
+                    {headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    } 
+                }).then(res=>{
+                    var message = res.data;
+                    if (message.success) {
+                        window.location.href = './';
+                    }else {
+                        console.log('error:',message.errors);
+                    }
+                    firebase.auth().signOut();
+                });
+            }).catch(error=>{
+                console.log('getIdToken()',error);
+            });
             resolve(true);
         }).catch(error => {
             console.log(error);

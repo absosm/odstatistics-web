@@ -35,6 +35,9 @@
     <!-- custom style -->
     <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
   </head>
   <body class="rtls">
 
@@ -85,10 +88,10 @@
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
+    <script defer src="js/firebase.js?v=0.0.1"></script>
     <script defer src="js/verifyPhone.js?v=0.0.1"></script>
     <script type="module">
 
-    $('#btn_login').prop('disabled', true);
     $('#code').hide();
     $('#recaptcha-container').hide();
 
@@ -96,7 +99,7 @@
         if (!e.isDefaultPrevented()) { 
             e.preventDefault();
             if (sentCodeId == null) {
-              $('.custom-alert').html(`click i'm not robot before verify`);
+              $('.custom-alert').html(`إضغظ على أنا لست روبوتا قبل التحقق.`);
               $('.custom-alert').fadeIn();
               return;
             }
@@ -105,7 +108,7 @@
                 console.log('OK');
               }else {
                 console.log('Wrong verification code');
-                $('.custom-alert').html(`Wrong verification code`);
+                $('.custom-alert').html(`كود التحقق خاطئ`);
                 $('.custom-alert').fadeIn();
               }
             });
@@ -117,23 +120,32 @@
     });
 
     $(document).ready(() => {
-
-      firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-            var uid = user.uid;
-            // ...
-            console.log(`user ${uid} is logged`);
-            window.location = '/';
-          } else {
-            // User is signed out
-            // ...
-            console.log(`user logout`);
-
-            $('.fullbox-loading').remove('.sk-loading');
+      axios.defaults.withCredentials = true;
+      axios.post(`${API_URL}/session`).then(res => {
+          const message = res.data;
+          if (message.success && message.result) {
+              window.location.href = './';
+          }else {
+              $('.fullbox-loading').remove('.sk-loading');
           }
       });
+
+      // firebase.auth().onAuthStateChanged((user) => {
+      //     if (user) {
+      //       // User is signed in, see docs for a list of available properties
+      //       // https://firebase.google.com/docs/reference/js/firebase.User
+      //       var uid = user.uid;
+      //       // ...
+      //       console.log(`user ${uid} is logged`);
+      //       window.location = '/';
+      //     } else {
+      //       // User is signed out
+      //       // ...
+      //       console.log(`user logout`);
+
+      //       $('.fullbox-loading').remove('.sk-loading');
+      //     }
+      // });
     });
 
     </script>
