@@ -27,7 +27,15 @@ function logout() {
 function get_user_sections() {
 
     axios.post(`${API_URL}/section`).then(res => {
-
+        var message = res.data;
+        if (message.success) {
+            var sections = message.result;
+            sections.forEach(s => {
+                $('#cb_section').append( new Option(s.number,s.number) );
+            });
+        }else {
+            console.log('error: ' + message.error);
+        }
     });
 
     // var ref = firebase.database().ref('section/' + uid);

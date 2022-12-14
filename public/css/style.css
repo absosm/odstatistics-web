@@ -90,6 +90,9 @@ button.btn-info.dim {
 .btn-rounded {
     border-radius: 50px !important;
 }
+.ladda-button[data-style=expand-right] .ladda-spinner {
+  right: 100px;
+}
 .form-control {
   color: #000;
 }

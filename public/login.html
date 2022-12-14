@@ -32,6 +32,8 @@
     <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Ladda style -->
+    <link href="https://apcouleddjellal.dz/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
     <!-- custom style -->
     <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -70,7 +72,7 @@
               <!-- custom-alert -->
               <div class="alert alert-danger custom-alert" style="display: none"></div>
               <div id="recaptcha-container"></div>
-              <button id="btn_login" type="submit" class="btn btn-primary btn-rounded btn-block" href="#" disabled></i> تسجيل الدخول</button>
+              <button id="btn_login" type="submit" class="ladda-button ladda-button-demo btn btn-primary btn-rounded btn-block" href="#" disabled></i> تسجيل الدخول</button>
           </form>
           <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
             
@@ -87,6 +89,10 @@
     <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Ladda -->
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/spin.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
     <script defer src="js/verifyPhone.js?v=0.0.1"></script>
@@ -94,6 +100,7 @@
 
     $('#code').hide();
     $('#recaptcha-container').hide();
+    var l = $( '.ladda-button-demo' ).ladda();
 
     $('#login').on('submit', function (e) {
         if (!e.isDefaultPrevented()) { 
@@ -103,13 +110,16 @@
               $('.custom-alert').fadeIn();
               return;
             }
+            l.ladda( 'start' );
             signInWithPhone(sentCodeId, $('#code').val()).then(success => {
               if (success) {
                 console.log('OK');
+                l.ladda('stop');
               }else {
                 console.log('Wrong verification code');
                 $('.custom-alert').html(`كود التحقق خاطئ`);
                 $('.custom-alert').fadeIn();
+                l.ladda('stop');
               }
             });
         }
