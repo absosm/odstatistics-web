@@ -3,9 +3,10 @@ function get_sections(reserved = true) {
         var message = res.data;
         if (message.success) {
             var sections = message.result;
-            var select = Number(Cookies.get('sid'));
+            var select = Cookies.get('sid');
+            console.log(select);
             sections.forEach(s => {
-                if (s.number === select)
+                if (s.id === select)
                     $('#cb_section').append( new Option(s.number,s.id, true, true) );
                 else
                     $('#cb_section').append( new Option(s.number,s.id) );
