@@ -1,6 +1,5 @@
-function get_sections() {
-
-    axios.post(`${API_URL}/sections`).then(res => {
+function get_sections(reserved = true) {
+    axios.post(`${API_URL}/sections`, {reserved: reserved}).then(res => {
         var message = res.data;
         if (message.success) {
             var sections = message.result;
@@ -18,7 +17,6 @@ function get_sections() {
 }
 
 function get_users() {
-
     axios.post(`${API_URL}/users`).then(res => {
         var message = res.data;
         if (message.success) {
@@ -69,33 +67,33 @@ function add_group() {
 }
 
 function add_section() {
-    // const section_id = $('#cb_section option:selected').val();
-    // axios.post(`${API_URL}/new_group`, 
-    // {group : {
-    //     sid: section_id,
-    //     number : Number($('#tb_group').val()),
-    // }}).then(res => {
-    //     var message = res.data;
-    //     if (message.success) {
-    //         swal({
-    //             title: "نجت العملية!",
-    //             text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-    //             type: "success",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#DD6B55",
-    //             confirmButtonText: "نعم واصل",
-    //             cancelButtonText: "إلغاء",
-    //             closeOnConfirm: false
-    //         }, function (isConfirm) {
-    //             if (isConfirm) {
-    //                 Cookies.set('sid', section_id);
-    //                 window.location.href = 'newg.html';
-    //             } else {
-    //             window.location.href = '.';
-    //             }
-    //         });
-    //     }else {
-    //         console.log('error: ' + message.error);
-    //     }
-    // });
+    const uid = $('#cb_user option:selected').val();
+    axios.post(`${API_URL}/new_section`, 
+    {link : {
+        uid : uid,
+        sid: $('#cb_section option:selected').val()
+    }}).then(res => {
+        var message = res.data;
+        if (message.success) {
+            swal({
+                title: "نجت العملية!",
+                text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "نعم واصل",
+                cancelButtonText: "إلغاء",
+                closeOnConfirm: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    Cookies.set('uid', uid);
+                    window.location.href = 'news.html';
+                } else {
+                window.location.href = '.';
+                }
+            });
+        }else {
+            console.log('error: ' + message.error);
+        }
+    });
 }
