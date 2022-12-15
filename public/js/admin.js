@@ -61,7 +61,8 @@ function add_group() {
                 }
             });
         }else {
-            console.log('error: ' + message.error);
+            console.log();
+            swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
 }
