@@ -30,8 +30,12 @@ function get_user_sections() {
         var message = res.data;
         if (message.success) {
             var sections = message.result;
+            const select = Number(Cookies.get('sid'));
             sections.forEach(s => {
-                $('#cb_section').append( new Option(s.number,s.id) );
+                if (s.number === select)
+                    $('#cb_section').append( new Option(s.number,s.id, true, true) );
+                else
+                    $('#cb_section').append( new Option(s.number,s.id) );
             });
 
             get_user_group($('#cb_section').val());
@@ -41,22 +45,33 @@ function get_user_sections() {
     });
 }
   
-function get_spaces_count() {
-    var ref = firebase.database().ref('section/' + uid + '/');
-    ref.once('value', (snapshot) => {
-        console.log(snapshot.size);
+function get_statistics() {
+    axios.post(`${API_URL}/statistics`).then(res => {
+        var message = res.data;
+        if (message.success) {
+            var statistics = message.result;
+            $('#spaces').text(statistics.spaces);
+            $('#numberings').text(statistics.numberings);
+        }else {
+            console.log('error: ' + message.error);
+        }
     });
 }
   
 function get_user_group(section_id) {
-
     axios.post(`${API_URL}/group`, {section_id}).then(res => {
         var message = res.data;
         if (message.success) {
             var groups = message.result;
+            var select = undefined;
+            if (Cookies.get('gid') !== undefined)
+                select = Number(Cookies.get('gid'));
             $('#cb_group').empty();
             groups.forEach(g => {
-                $('#cb_group').append( new Option(g.number,g.id) );
+                if (g.number === select)
+                    $('#cb_group').append( new Option(g.number,g.id, true, true) );
+                else
+                    $('#cb_group').append( new Option(g.number,g.id) );
             });
         }else {
             console.log('error: ' + message.error);
@@ -65,10 +80,14 @@ function get_user_group(section_id) {
 }
   
 function add_espace() {
+
+    const sid = Number($('#cb_section option:selected').text());
+    const gid = Number($('#cb_group option:selected').text());
+
     axios.post(`${API_URL}/new_space`, 
     {space : {
-        section_id: Number($('#cb_section option:selected').text()),
-        group_id : Number($('#cb_group option:selected').text()),
+        section_id: sid,
+        group_id : gid,
         type: Number($('#cb_space_type').val()),
         name : $('#tb_space_name').val(),
         named: $('#cb_named').prop('checked'),
@@ -88,7 +107,9 @@ function add_espace() {
                 closeOnConfirm: false
             }, function (isConfirm) {
                 if (isConfirm) {
-                window.location.href = 'newp.html';
+                    Cookies.set('sid', sid);
+                    Cookies.set('gid', gid);
+                    window.location.href = 'newp.html';
                 } else {
                 window.location.href = 'paneling.html';
                 }
@@ -100,10 +121,14 @@ function add_espace() {
 }
   
 function add_numbering() {
+
+    const sid = Number($('#cb_section option:selected').text());
+    const gid = Number($('#cb_group option:selected').text());
+
     axios.post(`${API_URL}/new_numbering`, 
     {numbering : {
-        section_id: Number($('#cb_section option:selected').text()),
-        group_id : Number($('#cb_group option:selected').text()),
+        section_id: sid,
+        group_id : gid,
         number : $('#tb_number').val(),
         numbered: $('#cb_numbered').prop('checked'),
         installed: $('#cb_installed').prop('checked'),
@@ -122,9 +147,11 @@ function add_numbering() {
                 closeOnConfirm: false
             }, function (isConfirm) {
                 if (isConfirm) {
-                window.location.href = 'newn.html';
+                    Cookies.set('sid', sid);
+                    Cookies.set('gid', gid);
+                    window.location.href = 'newn.html';
                 } else {
-                window.location.href = 'numbering.html';
+                    window.location.href = 'numbering.html';
                 }
             });
         }else {
