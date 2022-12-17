@@ -36,12 +36,15 @@ function get_users() {
 
 function add_group() {
     const section_id = $('#cb_section option:selected').val();
+    const l = $( '.lbtn-add' ).ladda();
+    l.ladda( 'start' );
     axios.post(`${API_URL}/new_group`, 
     {group : {
         sid: section_id,
         number : Number($('#tb_group').val()),
     }}).then(res => {
         var message = res.data;
+        l.ladda( 'stop' );
         if (message.success) {
             swal({
                 title: "نجت العملية!",
@@ -68,6 +71,8 @@ function add_group() {
 
 function add_section() {
     const uid = $('#cb_user option:selected').val();
+    const l = $( '.lbtn-add' ).ladda();
+    l.ladda( 'start' );
     axios.post(`${API_URL}/new_section`, 
     {link : {
         uid : uid,
@@ -75,6 +80,7 @@ function add_section() {
     }}).then(res => {
         var message = res.data;
         if (message.success) {
+            l.ladda( 'stop' );
             swal({
                 title: "نجت العملية!",
                 text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
@@ -93,7 +99,7 @@ function add_section() {
                 }
             });
         }else {
-            console.log('error: ' + message.error);
+            swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
 }

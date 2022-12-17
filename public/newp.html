@@ -35,6 +35,8 @@
     <link href="https://apcouleddjellal.dz/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Ladda style -->
+    <link href="https://apcouleddjellal.dz/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
     <!-- custom style -->
     <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -59,66 +61,68 @@
         <div id="panel">
             <h2>لوحة التحكم</h2>
             <h1>إضافة فضاء عمومي</h1>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">رقم المقاطعة</label>
-                <div class="col-sm-8">
-                    <select id="cb_section" class="form-control m-b">
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">رقم المجموعة السكنية</label>
-                <div class="col-sm-8">
-                    <select id="cb_group" class="form-control m-b">
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">نوع الفضاء</label>
-                <div class="col-sm-8">
-                    <select id="cb_space_type" class="form-control m-b" name="account">
-                        <option value="1">شارع</option>
-                        <option value="2">طريق</option>
-                        <option value="3">نهج</option>
-                        <option value="4">مسلك</option>
-                        <option value="5">معبر</option>
-                        <option value="6">حي</option>
-                        <option value="7">تجمع سكاني</option>
-                        <option value="8">تجزئة</option>
-                        <option value="9">حديقة</option>
-                        <option value="10">ساحة</option>
-                        <option value="11">حظيرة</option>
-                        <option value="12">غابة</option>
-                        <option value="13">معلم تذكاري</option>
-                        <option value="14">آثار تاريخية</option>
-                        <option value="15">مؤسسة</option>
-                        <option value="0">أخرى</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">التسمية او الرقم</label>
-                <div class="col-sm-8">
-                    <input id="tb_space_name" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
-                <div class="col-sm-8">
-                    <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label class="checkbox-inline">
-                    <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label class="checkbox-inline">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">ملاحظات</label>
-                <div class="col-sm-8">
-                    <input id="tb_comment" type="text" class="form-control">
-                </div>
-            </div>
-            <button id="btn_cancel" class="btn btn-danger btn-circle btn-lg" type="button"><i class="fa fa-times"></i>
-            </button>
-            <button id="btn_new" class="btn btn-info btn-circle btn-lg" type="button"><i class="fa fa-check"></i>
-            </button>
+            <form id="add_space" class="m-t" role="form" method="post" enctype="multipart/form-data">
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">رقم المقاطعة</label>
+                  <div class="col-sm-8">
+                      <select id="cb_section" class="form-control m-b">
+                      </select>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">رقم المجموعة السكنية</label>
+                  <div class="col-sm-8">
+                      <select id="cb_group" class="form-control m-b">
+                      </select>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">نوع الفضاء</label>
+                  <div class="col-sm-8">
+                      <select id="cb_space_type" class="form-control m-b" name="account">
+                          <option value="1">شارع</option>
+                          <option value="2">طريق</option>
+                          <option value="3">نهج</option>
+                          <option value="4">مسلك</option>
+                          <option value="5">معبر</option>
+                          <option value="6">حي</option>
+                          <option value="7">تجمع سكاني</option>
+                          <option value="8">تجزئة</option>
+                          <option value="9">حديقة</option>
+                          <option value="10">ساحة</option>
+                          <option value="11">حظيرة</option>
+                          <option value="12">غابة</option>
+                          <option value="13">معلم تذكاري</option>
+                          <option value="14">آثار تاريخية</option>
+                          <option value="15">مؤسسة</option>
+                          <option value="0">أخرى</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية او الرقم</label>
+                  <div class="col-sm-8">
+                      <input id="tb_space_name" type="text" class="form-control">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
+                  <div class="col-sm-8">
+                      <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label class="checkbox-inline">
+                      <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label class="checkbox-inline">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">ملاحظات</label>
+                  <div class="col-sm-8">
+                      <input id="tb_comment" type="text" class="form-control">
+                  </div>
+              </div>
+              <button class="ladda-button lbtn-add btn btn-primary btn-rounded btn-block" type="submit"> حفظ <i class="fa fa-check"></i>
+              </button>
+              <button id="btn_cancel" class="btn btn-primary btn-rounded btn-block" type="button"> إلغاء <i class="fa fa-times"></i>
+              </button>
+            </form>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
       </div>
@@ -133,6 +137,10 @@
     <script src="https://apcouleddjellal.dz/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Ladda -->
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/spin.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
     <script defer src="js/dash.js?v=0.0.1"></script>
@@ -176,11 +184,12 @@
           $('#cb_installed').prop('checked', false);
       });
 
-      $('#btn_new').click(function () {
-        add_espace();
-      })
-
-
+      $('#add_space').on('submit', function (e) {
+        if (!e.isDefaultPrevented()) { 
+            e.preventDefault();
+            add_space();
+        }
+      });
     </script>
   </body>
 </html>

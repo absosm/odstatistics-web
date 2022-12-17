@@ -35,6 +35,8 @@
     <link href="https://apcouleddjellal.dz/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Ladda style -->
+    <link href="https://apcouleddjellal.dz/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
     <!-- custom style -->
     <link href="css/style.css?v0.0.0.1" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -59,24 +61,26 @@
         <div id="panel">
             <h2>لوحة التحكم</h2>
             <h1>إضافة مقاطعة</h1>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">إسم المستخدم</label>
-                <div class="col-sm-8">
-                  <select id="cb_user" class="form-control m-b">
-                  </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">رقم المقاطعة</label>
-                <div class="col-sm-8">
-                    <select id="cb_section" class="form-control m-b">
+            <form id="add_section" class="m-t" role="form" method="post" enctype="multipart/form-data">
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">إسم المستخدم</label>
+                  <div class="col-sm-8">
+                    <select id="cb_user" class="form-control m-b">
                     </select>
-                </div>
-            </div>
-            <button id="btn_cancel" class="btn btn-danger btn-circle btn-lg" type="button"><i class="fa fa-times"></i>
-            </button>
-            <button id="btn_new" class="btn btn-info btn-circle btn-lg" type="button"><i class="fa fa-check"></i>
-            </button>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">رقم المقاطعة</label>
+                  <div class="col-sm-8">
+                      <select id="cb_section" class="form-control m-b">
+                      </select>
+                  </div>
+              </div>
+              <button class="ladda-button lbtn-add btn btn-primary btn-rounded btn-block" type="submit"> حفظ <i class="fa fa-check"></i>
+              </button>
+              <button id="btn_cancel" class="btn btn-primary btn-rounded btn-block" type="button"> إلغاء <i class="fa fa-times"></i>
+              </button>
+            </form>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
       </div>
@@ -91,11 +95,16 @@
     <script src="https://apcouleddjellal.dz/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Ladda -->
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/spin.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.min.js"></script>
+    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/dash.js?v=0.0.1"></script>
-    <script defer src="js/admin.js?v=0.0.1"></script>
+    <script defer src="js/dash.js?v=0.0.2"></script>
+    <script defer src="js/admin.js?v=0.0.2"></script>
     <script type="module">
+
       $(document).ready(() => {
         // firebase.auth().onAuthStateChanged((user) => {
         //     if (user) {
@@ -124,10 +133,12 @@
         document.location = '.'
       });
 
-      $('#btn_new').click(function () {
-        add_section();
-      })
-
+      $('#add_section').on('submit', function (e) {
+        if (!e.isDefaultPrevented()) { 
+            e.preventDefault();
+            add_section();
+        }
+      });
 
     </script>
   </body>

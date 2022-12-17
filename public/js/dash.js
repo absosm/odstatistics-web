@@ -1,6 +1,3 @@
-// Initialize Firebase
-var database = firebase.database();
-
 $(document).ready(() => {
     axios.defaults.withCredentials = true;
     axios.post(`${API_URL}/session`).then(res => {
@@ -79,11 +76,11 @@ function get_user_group(section_id) {
     });
 }
   
-function add_espace() {
-
+function add_space() {
     const sid = Number($('#cb_section option:selected').text());
     const gid = Number($('#cb_group option:selected').text());
-
+    const l = $( '.lbtn-add' ).ladda();
+    l.ladda( 'start' );
     axios.post(`${API_URL}/new_space`, 
     {space : {
         section_id: sid,
@@ -95,6 +92,7 @@ function add_espace() {
         comment:$('#tb_comment').val(),
     }}).then(res => {
         var message = res.data;
+        l.ladda( 'stop' );
         if (message.success) {
             swal({
                 title: "نجت العملية!",
@@ -115,7 +113,7 @@ function add_espace() {
                 }
             });
         }else {
-            console.log('error: ' + message.error);
+            swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
 }
@@ -124,7 +122,8 @@ function add_numbering() {
 
     const sid = Number($('#cb_section option:selected').text());
     const gid = Number($('#cb_group option:selected').text());
-
+    const l = $( '.lbtn-add' ).ladda();
+    l.ladda( 'start' );
     axios.post(`${API_URL}/new_numbering`, 
     {numbering : {
         section_id: sid,
@@ -135,6 +134,7 @@ function add_numbering() {
         comment:$('#tb_comment').val(),
     }}).then(res => {
         var message = res.data;
+        l.ladda( 'stop' );
         if (message.success) {
             swal({
                 title: "نجت العملية!",
@@ -155,7 +155,7 @@ function add_numbering() {
                 }
             });
         }else {
-            console.log('error: ' + message.error);
+            swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
 }
