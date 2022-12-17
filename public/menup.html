@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="absosm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>خلية العنونة</title>
+    <title>خلية العنونة | قائمة الفضاءات العمومية </title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
@@ -53,20 +53,95 @@
     </div>
 
     <div class="wrapper wrapper-content">
-      <div class="middle-box text-center animated fadeInRightBig">
+      <div class="middle-box animated fadeInRightBig">
         <div id="panel">
+          <button id="btn_home" class="btn btn-float btn-info btn-circle btn-lg" type="button"><i class="fa fa-home fa-2x"></i></button>
           <h2>لوحة التحكم</h2>
-          <h1>خاصة باللجنة البلدية للعنونة</h1>
-          <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
-          <a class="btn-link" href="paneling.html">تسمية الفضاءات العمومية</a>
-          <a class="btn-link" href="numbering.html">ترقيم البنايات العمومية</a>
-          <a class="btn-link" href="statistic.html">حصيلة ما تم إنجازه</a>
-          <a class="btn-link" id="logout" href="#" style="background-color: #ffa100;"><i class="fa fa-sign-out"></i> تسجيل الخروج</a>
+          <h1>قائمة الفضاءات العمومية</h1>
+          <div class="scroll_content">
+
+
+
+            <ul class="list-group elements-list">
+              <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted"> 16.02.2015</small>
+                    <strong>شارع الأمير عبد القادر</strong>
+                    <div class="small m-t-xs">
+                        <div>
+                            ملاحظات
+                        </div>
+                        <span class="m-b-none">
+                            <i class="fa fa-map-marker"></i> مقاطعة 1024/32
+                        </span>
+                    </div>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted"> 16.02.2015</small>
+                    <strong>شارع الأمير عبد القادر</strong>
+                    <div class="small m-t-xs">
+                        <div>
+                            ملاحظات
+                        </div>
+                        <span class="m-b-none">
+                            <i class="fa fa-map-marker"></i> مقاطعة 1024/32
+                        </span>
+                    </div>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted"> 16.02.2015</small>
+                    <strong>شارع الأمير عبد القادر</strong>
+                    <div class="small m-t-xs">
+                        <div>
+                            ملاحظات
+                        </div>
+                        <span class="m-b-none">
+                            <i class="fa fa-map-marker"></i> مقاطعة 1024/32
+                        </span>
+                    </div>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted"> 16.02.2015</small>
+                    <strong>شارع الأمير عبد القادر</strong>
+                    <div class="small m-t-xs">
+                        <div>
+                            ملاحظات
+                        </div>
+                        <span class="m-b-none">
+                            <i class="fa fa-map-marker"></i> مقاطعة 1024/32
+                        </span>
+                    </div>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted"> 16.02.2015</small>
+                    <strong>شارع الأمير عبد القادر</strong>
+                    <div class="small m-t-xs">
+                        <div>
+                            ملاحظات
+                        </div>
+                        <span class="m-b-none">
+                            <i class="fa fa-map-marker"></i> مقاطعة 1024/32
+                        </span>
+                    </div>
+                </a>
+              </li>
+            </ul>
+
+
+
+          </div>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
       </div>
     </div>
-
     <!-- Mainly scripts -->
     <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
     <script src="https://apcouleddjellal.dz/js/popper.min.js"></script>
@@ -75,10 +150,9 @@
     <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
-
+    <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
     <script defer src="js/dash.js?v=0.0.1"></script>
-    <!-- Custom and plugin javascript -->
     <script type="module">
       $(document).ready(() => {
         // firebase.auth().onAuthStateChanged((user) => {
@@ -97,11 +171,15 @@
         //       window.location = 'login.html';
         //     }
         // });
-      });
 
-      $('#logout').click(function () {
-        logout();
-        //firebase.auth().signOut();
+        // Add slimscroll to element
+        $('.scroll_content').slimscroll({
+            height: '350px'
+        })
+
+      });
+      $('#btn_home').click(function () {
+        document.location = 'paneling.html'
       });
     </script>
   </body>

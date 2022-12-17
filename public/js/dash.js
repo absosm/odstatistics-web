@@ -49,6 +49,8 @@ function get_statistics() {
             var statistics = message.result;
             $('#spaces').text(statistics.spaces);
             $('#numberings').text(statistics.numberings);
+            $('#sections').text(statistics.sections);
+            $('#groups').text(statistics.groups);
         }else {
             console.log('error: ' + message.error);
         }
