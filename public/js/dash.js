@@ -1,3 +1,7 @@
+/*
+Vesion 0.0.4
+*/
+
 function init_session() {
     return new Promise((resolve, reject) => {
         axios.defaults.withCredentials = true;
