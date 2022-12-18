@@ -60,6 +60,7 @@
           <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
           <a class="btn-link" href="paneling.html">تسمية الفضاءات العمومية</a>
           <a class="btn-link" href="numbering.html">ترقيم البنايات العمومية</a>
+          <a class="btn-link" href="sections.html">توزيع المقاطعات</a>
           <a class="btn-link" href="statistic.html">حصيلة ما تم إنجازه</a>
           <a class="btn-link" id="logout" href="#" style="background-color: #ffa100;"><i class="fa fa-sign-out"></i> تسجيل الخروج</a>
         </div>
@@ -81,22 +82,11 @@
     <!-- Custom and plugin javascript -->
     <script type="module">
       $(document).ready(() => {
-        // firebase.auth().onAuthStateChanged((user) => {
-        //     if (user) {
-        //       // User is signed in, see docs for a list of available properties
-        //       // https://firebase.google.com/docs/reference/js/firebase.User
-        //       var uid = user.uid;
-        //       // ...
-        //       console.log(`user ${uid} is logged`);
-
-        //       $('.fullbox-loading').remove('.sk-loading');
-        //     } else {
-        //       // User is signed out
-        //       // ...
-        //       console.log(`user logout`);
-        //       window.location = 'login.html';
-        //     }
-        // });
+        init_session().then(()=>{
+          $('.fullbox-loading').remove('.sk-loading');         
+        }).catch(()=>{
+          window.location.href = 'login.html';
+        })
       });
 
       $('#logout').click(function () {

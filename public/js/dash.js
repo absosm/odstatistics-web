@@ -1,14 +1,16 @@
-$(document).ready(() => {
-    axios.defaults.withCredentials = true;
-    axios.post(`${API_URL}/session`).then(res => {
-        const message = res.data;
-        if (message.success && message.result) {
-            $('.fullbox-loading').remove('.sk-loading');
-        }else {
-            window.location.href = 'login.html';
-        }
+function init_session() {
+    return new Promise((resolve, reject) => {
+        axios.defaults.withCredentials = true;
+        axios.post(`${API_URL}/session`).then(res => {
+            const message = res.data;
+            if (message.success && message.result) {
+                resolve(true);
+            }else {
+                reject(false);
+            }
+        });
     });
-});
+}
 
 function logout() {
     axios.get(`${API_URL}/logout`).then(res => {
@@ -41,18 +43,33 @@ function get_user_sections() {
         }
     });
 }
-  
-function get_statistics() {
-    axios.post(`${API_URL}/statistics`).then(res => {
+
+function get_section_dist() {
+    axios.post(`${API_URL}/sections_dist`).then(res => {
         var message = res.data;
         if (message.success) {
-            var statistics = message.result;
-            $('#spaces').text(statistics.spaces);
-            $('#numberings').text(statistics.numberings);
-            $('#sections').text(statistics.sections);
-            $('#groups').text(statistics.groups);
+            const all = message.result;
+            all.forEach(result => {
+                const user = result.user;
+                const sections = result.sections;
+                sections.forEach(section => {
+                    let li = `<li class="list-group-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-1">
+                            <small class="float-left text-muted"><i class="fa fa-map-marker"></i> مقاطعة ${section.number}</small>
+                            <strong>${user.displayName}</strong>
+                            <div class="small m-t-xs">
+                                <span class="m-b-none">
+                                    
+                                </span>
+                            </div>
+                        </a>
+                    </li>`;
+
+                    $('#sections').append(li);
+                })
+            });
         }else {
-            console.log('error: ' + message.error);
+            console.log(message.errors[0]);
         }
     });
 }
@@ -72,6 +89,21 @@ function get_user_group(section_id) {
                 else
                     $('#cb_group').append( new Option(g.number,g.id) );
             });
+        }else {
+            console.log('error: ' + message.error);
+        }
+    });
+}
+
+function get_statistics() {
+    axios.post(`${API_URL}/statistics`).then(res => {
+        var message = res.data;
+        if (message.success) {
+            var statistics = message.result;
+            $('#spaces').text(statistics.spaces);
+            $('#numberings').text(statistics.numberings);
+            $('#sections').text(statistics.sections);
+            $('#groups').text(statistics.groups);
         }else {
             console.log('error: ' + message.error);
         }

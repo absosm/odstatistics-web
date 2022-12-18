@@ -97,22 +97,11 @@
     <script defer src="js/dash.js?v=0.0.1"></script>
     <script type="module">
       $(document).ready(() => {
-        // firebase.auth().onAuthStateChanged((user) => {
-        //     if (user) {
-        //       // User is signed in, see docs for a list of available properties
-        //       // https://firebase.google.com/docs/reference/js/firebase.User
-        //       var uid = user.uid;
-        //       // ...
-        //       console.log(`user ${uid} is logged`);
-
-        //       $('.fullbox-loading').remove('.sk-loading');
-        //     } else {
-        //       // User is signed out
-        //       // ...
-        //       console.log(`user logout`);
-        //       window.location = 'login.html';
-        //     }
-        // });
+        init_session().then(()=>{
+          $('.fullbox-loading').remove('.sk-loading');         
+        }).catch(()=>{
+          window.location.href = 'login.html';
+        })
       });
       
       $('#btn_home').click(function () {
