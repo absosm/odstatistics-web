@@ -34,7 +34,7 @@
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <!-- custom style -->
-    <link href="css/style.css?v0.0.0.3" rel="stylesheet">
+    <link href="css/style.css?v0.0.0.4" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -66,8 +66,8 @@
               <i class="fa fa-plus"></i>
               <span class="label">إضافة</span>
             </button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-history"></i>
+            <button id="btn_menu" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-bars"></i><span class="label">قائمة</span>
             </button>    
           </div>
           <div class="p-md">
@@ -98,17 +98,19 @@
     <script type="module">
       $(document).ready(() => {
         init_session().then(()=>{
-          $('.fullbox-loading').remove('.sk-loading');         
+          $('.fullbox-loading').remove('.sk-loading');
         }).catch(()=>{
           window.location.href = 'login.html';
         })
       });
-      
       $('#btn_home').click(function () {
         document.location = 'index.html'
       })
       $('#btn_new').click(function () {
         document.location = 'newn.html'
+      })
+      $('#btn_menu').click(function () {
+        document.location = 'menun.html'
       })
     </script>
   </body>

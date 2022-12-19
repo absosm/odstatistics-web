@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.4
+Vesion 0.0.5
 */
 
 function init_session() {
@@ -93,8 +93,40 @@ function get_user_group(section_id) {
                 else
                     $('#cb_group').append( new Option(g.number,g.id) );
             });
+            
+            if($('#numberings').length > 0) {
+                get_user_numbering(Number($('#cb_group option:selected').text()));
+            }
         }else {
             console.log('error: ' + message.error);
+        }
+    });
+}
+
+function get_user_numbering(gid) {
+    axios.post(`${API_URL}/numberings`, {gid: gid}).then(res => {
+        var message = res.data;
+        if (message.success) {
+            const numberings = message.result;
+            numberings.forEach(numbering => {
+                const numbered = (numbering.numbered)?'نعم':'لا';
+                const installed = (numbering.installed)?'نعم':'لا';
+                let li = `<li class="list-group-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-1">
+                        <small class="float-left text-muted">أولي: ${numbered} | تركيب: ${installed}</small>
+                        <strong>${numbering.number}</strong>
+                        <div class="small m-t-xs">
+                            <span class="m-b-none">
+                                ملاحظات: ${numbering.comment}
+                            </span>
+                        </div>
+                    </a>
+                </li>`;
+
+                $('#numberings').append(li);
+            });
+        }else {
+            console.log(message.errors[0]);
         }
     });
 }

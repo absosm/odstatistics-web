@@ -1,3 +1,7 @@
+/* 
+version 0.0.4
+*/
+
 /* arabic */
 @font-face {
     font-family: 'Amiri';
@@ -94,8 +98,8 @@ span.label {
     line-height: 1.33;
 }
 .btn-float {
-  top: 2em;
-  right: 2em;
+  top: 0.8em;
+  right: 0.8em;
   position: absolute;
 }
 .btn-rounded {
@@ -124,9 +128,12 @@ span.label {
     text-align: center; 
     font-size: 13px; 
 }
+.scroll_content{
+  border: 1px solid #adb5bd;
+}
 /* LIST GROUP */
 .list-group {
-  padding-right: 1em;
+  padding: 0;
 }
 a.list-group-item.active,
 a.list-group-item.active:hover,
