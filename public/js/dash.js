@@ -108,6 +108,7 @@ function get_user_numbering(gid) {
         var message = res.data;
         if (message.success) {
             const numberings = message.result;
+            $('#numberings').html('');
             numberings.forEach(numbering => {
                 const numbered = (numbering.numbered)?'نعم':'لا';
                 const installed = (numbering.installed)?'نعم':'لا';
