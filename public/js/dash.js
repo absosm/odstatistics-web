@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.5
+Vesion 0.0.6
 */
 
 function init_session() {
@@ -59,7 +59,9 @@ function get_section_dist() {
                 sections.forEach(section => {
                     let li = `<li class="list-group-item">
                         <a class="nav-link" data-toggle="tab" href="#tab-1">
-                            <small class="float-left text-muted"><i class="fa fa-map-marker"></i> مقاطعة ${section.number}</small>
+                            <small class="float-left text-muted">
+                                <i class="fa fa-map-marker"></i> مقاطعة ${section.number}
+                            </small>
                             <strong>${user.displayName}</strong>
                             <div class="small m-t-xs">
                                 <span class="m-b-none">
@@ -93,9 +95,11 @@ function get_user_group(section_id) {
                 else
                     $('#cb_group').append( new Option(g.number,g.id) );
             });
-            
             if($('#numberings').length > 0) {
                 get_user_numbering(Number($('#cb_group option:selected').text()));
+            }
+            if($('#spaces').length > 0) {
+                get_user_space(Number($('#cb_group option:selected').text()));
             }
         }else {
             console.log('error: ' + message.error);
@@ -103,12 +107,50 @@ function get_user_group(section_id) {
     });
 }
 
+function get_user_space(gid) {
+
+    const types = ['أخرى', 'شارع', 'طريق', 'نهج', 'مسلك', 
+    'معبر', 'حي', 'تجمع سكاني', 'تجزئة', 'حديقة', 'ساحة', 'حظيرة', 
+    'غابة', 'معلم تذكاري', 'آثار تاريخية', 'مؤسسة'];
+
+    $('#spaces').html('');
+    axios.post(`${API_URL}/spaces`, {gid: gid}).then(res => {
+        var message = res.data;
+        if (message.success) {
+            const spaces = message.result;
+            spaces.forEach(space => {
+                const named = (space.named)?'نعم':'لا';
+                const installed = (space.installed)?'نعم':'لا';
+                let li = `<li class="list-group-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-1">
+                        <small class="float-left text-muted">أولي: ${named} | تركيب: ${installed}</small>
+                        <strong>(${types[space.type]})</strong>
+                        <div class="small m-t-xs">
+                            <span class="m-b-none">
+                                تسمية: ${space.name}
+                            </span>
+                        </div>
+                        <div class="small m-t-xs">
+                            <span class="m-b-none">
+                                ملاحظات: ${space.comment}
+                            </span>
+                        </div>
+                    </a>
+                </li>`;
+                $('#spaces').append(li);
+            });
+        }else {
+            console.log(message.errors[0]);
+        }
+    });
+}
+
 function get_user_numbering(gid) {
+    $('#numberings').html('');
     axios.post(`${API_URL}/numberings`, {gid: gid}).then(res => {
         var message = res.data;
         if (message.success) {
             const numberings = message.result;
-            $('#numberings').html('');
             numberings.forEach(numbering => {
                 const numbered = (numbering.numbered)?'نعم':'لا';
                 const installed = (numbering.installed)?'نعم':'لا';
@@ -123,7 +165,6 @@ function get_user_numbering(gid) {
                         </div>
                     </a>
                 </li>`;
-
                 $('#numberings').append(li);
             });
         }else {
