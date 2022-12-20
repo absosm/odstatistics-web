@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.6
+Vesion 0.0.7
 */
 
 function init_session() {
@@ -52,27 +52,24 @@ function get_section_dist() {
     axios.post(`${API_URL}/sections_dist`).then(res => {
         var message = res.data;
         if (message.success) {
-            const all = message.result;
-            all.forEach(result => {
-                const user = result.user;
-                const sections = result.sections;
-                sections.forEach(section => {
-                    let li = `<li class="list-group-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab-1">
-                            <small class="float-left text-muted">
-                                <i class="fa fa-map-marker"></i> مقاطعة ${section.number}
-                            </small>
-                            <strong>${user.displayName}</strong>
-                            <div class="small m-t-xs">
-                                <span class="m-b-none">
-                                    
-                                </span>
-                            </div>
-                        </a>
-                    </li>`;
-
-                    $('#sections').append(li);
-                })
+            const sections = message.result;
+            sections.forEach(result => {
+                const _user = result.user;
+                const _section = result.section;
+                let li = `<li class="list-group-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-1">
+                        <small class="float-left text-muted">
+                            <i class="fa fa-map-marker"></i> مقاطعة ${_section.number}
+                        </small>
+                        <strong>${_user.displayName}</strong>
+                        <div class="small m-t-xs">
+                            <span class="m-b-none">
+                                
+                            </span>
+                        </div>
+                    </a>
+                </li>`;
+                $('#sections').append(li);
             });
         }else {
             console.log(message.errors[0]);
