@@ -1,3 +1,7 @@
+/*
+version: 0.0.3
+*/
+
 function get_sections(reserved = true) {
     axios.post(`${API_URL}/sections`, {reserved: reserved}).then(res => {
         var message = res.data;
@@ -21,6 +25,7 @@ function get_users() {
         var message = res.data;
         if (message.success) {
             var users = message.result;
+            // console.log(message);
             var select = Cookies.get('uid');
             users.forEach(u => {
                 if (u.uid === select)
