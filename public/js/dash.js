@@ -204,7 +204,7 @@ function delete_space(id) {
             axios.post(`${API_URL}/delete_space`, {id}).then(res => {
                 var message = res.data;
                 if (message.success) {
-                    window.location.href = 'deln.html';
+                    window.location.href = 'delp.html';
                 }else {
                     swal("خطأ!", "لا يتم", "error");
                 }
