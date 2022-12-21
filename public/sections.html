@@ -83,11 +83,11 @@
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/dash.js?v=0.0.7"></script>
+    <script defer src="js/dash.js?v=0.0.8"></script>
     <script type="module">
       $(document).ready(() => {
+        get_section_dist();
         init_session().then(()=>{
-          get_section_dist();
           $('.fullbox-loading').remove('.sk-loading');
         }).catch(()=>{
           window.location.href = 'login.html';

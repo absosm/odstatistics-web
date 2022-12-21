@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="absosm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>خلية العنونة | تسمية الفضاءات العمومية </title>
+    <title>خلية العنونة | حذف ترقيم مدخل بناية </title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
@@ -31,6 +31,8 @@
     <!-- Animation CSS -->
     <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
     <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="https://apcouleddjellal.dz/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <!-- Toastr style -->
     <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <!-- custom style -->
@@ -53,41 +55,35 @@
     </div>
 
     <div class="wrapper wrapper-content">
-      <div class="middle-box text-center animated fadeInRightBig">
+      <div class="middle-box animated fadeInRightBig">
         <div id="panel">
+          <button id="btn_home" class="btn btn-float btn-info btn-circle btn-lg" type="button"><i class="fa fa-home fa-2x"></i></button>
           <h2>لوحة التحكم</h2>
-          <h1>تسمية الفضاءات العمومية</h1>
-          <div class="p-md">
-            <button id="btn_home" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-home"></i>
-              <span class="label">الرئيسية</span>
-            </button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-calculator"></i>
-              <span class="label">حصيلة</span>
-            </button>
-            <button id="btn_menu" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-bars"></i><span class="label">قائمة</span>
-            </button>    
+          <h1>خذف ترقيم مدخل بناية</h1>
+          <div class="form-group row">
+              <label class="col-sm-4 col-form-label">المقاطعة</label>
+              <div class="col-sm-8">
+                  <select id="cb_section" class="form-control m-b">
+                  </select>
+              </div>
           </div>
-          <div class="p-md">
-            <button id="btn_new" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-plus"></i>
-              <span class="label">إضافة</span>
-            </button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-edit"></i>
-              <span class="label">تعديل</span>
-            </button>
-            <button id="btn_delete" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-trash-o"></i><span class="label">حذف</span>
-            </button>
+          <div class="form-group row">
+              <label class="col-sm-4 col-form-label">المجموعة السكنية</label>
+              <div class="col-sm-8">
+                <select id="cb_group" class="form-control m-b">
+                </select>
+            </div>
           </div>
-          <div class="p-md">
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">ترقيم البناية</label>
+            <div class="col-sm-8">
+              <select id="cb_numbering" class="form-control m-b">
+              </select>
+            </div>
           </div>
+          <button id="btn_delete" class="ladda-button lbtn-add btn btn-primary btn-rounded btn-block"> حذف <i class="fa fa-times"></i>
+          </button>
+        </div>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
       </div>
@@ -98,6 +94,8 @@
     <script src="https://apcouleddjellal.dz/js/bootstrap.js"></script>
     <script src="https://apcouleddjellal.dz/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="https://apcouleddjellal.dz/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- Toastr script -->
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
@@ -105,24 +103,26 @@
     <script defer src="js/dash.js?v=0.0.8"></script>
     <script type="module">
       $(document).ready(() => {
+        load_cb_sections();
         init_session().then(()=>{
           $('.fullbox-loading').remove('.sk-loading');         
         }).catch(()=>{
           window.location.href = 'login.html';
         })
       });
+      $('#cb_section').change(function () {
+        load_cb_groups($('#cb_section option:selected').val());
+      });
+      $('#cb_group').change(function () {
+        load_cb_numberings(Number($('#cb_group option:selected').text()));
+      });
       $('#btn_home').click(function () {
-        document.location = 'index.html'
-      });
-      $('#btn_new').click(function () {
-        document.location = 'newp.html'
-      });
-      $('#btn_menu').click(function () {
-        document.location = 'menup.html'
+        document.location = 'numbering.html'
       });
       $('#btn_delete').click(function () {
-        document.location = 'delp.html'
-      })
+        const id = $('#cb_numbering option:selected').val();
+        delete_numbering(id);
+      });
     </script>
   </body>
 </html>

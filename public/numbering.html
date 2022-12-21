@@ -62,18 +62,26 @@
               <i class="fa fa-home"></i>
               <span class="label">الرئيسية</span>
             </button>
-            <button id="btn_new" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-plus"></i>
-              <span class="label">إضافة</span>
+            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-calculator"></i>
+              <span class="label">حصيلة</span>
             </button>
             <button id="btn_menu" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
               <i class="fa fa-bars"></i><span class="label">قائمة</span>
             </button>    
           </div>
           <div class="p-md">
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
+            <button id="btn_new" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-plus"></i>
+              <span class="label">إضافة</span>
+            </button>
+            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-edit"></i>
+              <span class="label">تعديل</span>
+            </button>
+            <button id="btn_delete" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-trash-o"></i><span class="label">حذف</span>
+            </button>
           </div>
           <div class="p-md">
             <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
@@ -94,7 +102,7 @@
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/dash.js?v=0.0.4"></script>
+    <script defer src="js/dash.js?v=0.0.8"></script>
     <script type="module">
       $(document).ready(() => {
         init_session().then(()=>{
@@ -111,6 +119,9 @@
       })
       $('#btn_menu').click(function () {
         document.location = 'menun.html'
+      })
+      $('#btn_delete').click(function () {
+        document.location = 'deln.html'
       })
     </script>
   </body>

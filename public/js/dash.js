@@ -1,10 +1,10 @@
 /*
-Vesion 0.0.7
+Vesion 0.0.8
 */
+axios.defaults.withCredentials = true;
 
 function init_session() {
     return new Promise((resolve, reject) => {
-        axios.defaults.withCredentials = true;
         axios.post(`${API_URL}/session`).then(res => {
             const message = res.data;
             if (message.success && message.result) {
@@ -27,25 +27,33 @@ function logout() {
     });
 }
 
-function get_user_sections() {
-
-    axios.post(`${API_URL}/section`).then(res => {
-        var message = res.data;
-        if (message.success) {
-            var sections = message.result;
-            const select = Number(Cookies.get('sid'));
-            sections.forEach(s => {
-                if (s.number === select)
-                    $('#cb_section').append( new Option(s.number,s.id, true, true) );
-                else
-                    $('#cb_section').append( new Option(s.number,s.id) );
-            });
-
-            get_user_group($('#cb_section').val());
-        }else {
-            console.log('error: ' + message.error);
-        }
+function get_sections_uid() {
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/section`).then(res => {
+            var message = res.data;
+            if (message.success) {
+                resolve(message.result)
+            }else {
+                reject(message.errors);
+            }
+        });
     });
+}
+
+function load_cb_sections() {
+    get_sections_uid().then(sections=>{
+        const select = Number(Cookies.get('sid'));
+        sections.forEach(s => {
+            if (s.number === select)
+                $('#cb_section').append( new Option(s.number,s.id, true, true) );
+            else
+                $('#cb_section').append( new Option(s.number,s.id) );
+        });
+
+        load_cb_groups($('#cb_section').val());
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
 }
 
 function get_section_dist() {
@@ -76,96 +84,207 @@ function get_section_dist() {
         }
     });
 }
+
+function get_groups_sid(sid) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/group`, {sid}).then(res => {
+            var message = res.data;
+            if (message.success) {
+                resolve(message.result)
+            }else {
+                reject(message.errors);
+            }
+        });
+    });
+}
   
-function get_user_group(section_id) {
-    axios.post(`${API_URL}/group`, {section_id}).then(res => {
-        var message = res.data;
-        if (message.success) {
-            var groups = message.result;
-            var select = undefined;
-            if (Cookies.get('gid') !== undefined)
-                select = Number(Cookies.get('gid'));
-            $('#cb_group').empty();
-            groups.forEach(g => {
-                if (g.number === select)
-                    $('#cb_group').append( new Option(g.number,g.id, true, true) );
-                else
-                    $('#cb_group').append( new Option(g.number,g.id) );
-            });
-            if($('#numberings').length > 0) {
-                get_user_numbering(Number($('#cb_group option:selected').text()));
-            }
-            if($('#spaces').length > 0) {
-                get_user_space(Number($('#cb_group option:selected').text()));
-            }
-        }else {
-            console.log('error: ' + message.error);
+function load_cb_groups(sid) {
+    $('#cb_group').empty();
+    get_groups_sid(sid).then(groups => {
+        var select = undefined;
+        if (Cookies.get('gid') !== undefined)
+            select = Number(Cookies.get('gid'));
+        groups.forEach(g => {
+            if (g.number === select)
+                $('#cb_group').append( new Option(g.number,g.id, true, true) );
+            else
+                $('#cb_group').append( new Option(g.number,g.id) );
+        });
+        if($('#cb_numbering').length > 0) {
+            load_cb_numberings(Number($('#cb_group option:selected').text()));
         }
+        if($('#cb_space').length > 0) {
+            load_cb_spaces(Number($('#cb_group option:selected').text()));
+        }
+        if($('#numberings').length > 0) {
+            load_menu_numberings(Number($('#cb_group option:selected').text()));
+        }
+        if($('#spaces').length > 0) {
+            load_menu_spaces(Number($('#cb_group option:selected').text()));
+        }
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
+}
+
+function get_spaces_gid(gid) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/spaces`, {gid: gid}).then(res => {
+            var message = res.data;
+            if (message.success) {
+                resolve(message.result)
+            }else {
+                reject(message.errors);
+            }
+        });
     });
 }
 
-function get_user_space(gid) {
+function load_cb_spaces(gid) {
+    $('#cb_space').empty();
+    get_spaces_gid(gid).then(spaces=>{
+        spaces.forEach(s => {
+            $('#cb_space').append( new Option(s.name,s.id) );
+        });
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
+}
+
+function load_menu_spaces(gid) {
 
     const types = ['أخرى', 'شارع', 'طريق', 'نهج', 'مسلك', 
     'معبر', 'حي', 'تجمع سكاني', 'تجزئة', 'حديقة', 'ساحة', 'حظيرة', 
     'غابة', 'معلم تذكاري', 'آثار تاريخية', 'مؤسسة'];
 
     $('#spaces').html('');
-    axios.post(`${API_URL}/spaces`, {gid: gid}).then(res => {
-        var message = res.data;
-        if (message.success) {
-            const spaces = message.result;
-            spaces.forEach(space => {
-                const named = (space.named)?'نعم':'لا';
-                const installed = (space.installed)?'نعم':'لا';
-                let li = `<li class="list-group-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab-1">
-                        <small class="float-left text-muted">أولي: ${named} | تركيب: ${installed}</small>
-                        <strong>(${types[space.type]})</strong>
-                        <div class="small m-t-xs">
-                            <span class="m-b-none">
-                                تسمية: ${space.name}
-                            </span>
-                        </div>
-                        <div class="small m-t-xs">
-                            <span class="m-b-none">
-                                ملاحظات: ${space.comment}
-                            </span>
-                        </div>
-                    </a>
-                </li>`;
-                $('#spaces').append(li);
-            });
-        }else {
-            console.log(message.errors[0]);
+    get_spaces_gid(gid).then(spaces=>{
+        spaces.forEach(space => {
+            const named = (space.named)?'نعم':'لا';
+            const installed = (space.installed)?'نعم':'لا';
+            let li = `<li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted">أولي: ${named} | تركيب: ${installed}</small>
+                    <strong>(${types[space.type]})</strong>
+                    <div class="small m-t-xs">
+                        <span class="m-b-none">
+                            تسمية: ${space.name}
+                        </span>
+                    </div>
+                    <div class="small m-t-xs">
+                        <span class="m-b-none">
+                            ملاحظات: ${space.comment}
+                        </span>
+                    </div>
+                </a>
+            </li>`;
+            $('#spaces').append(li);
+        });
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
+}
+
+function delete_space(id) {
+    const sid = Number($('#cb_section option:selected').text());
+    const gid = Number($('#cb_group option:selected').text());
+    swal({
+        title: "هل أنت متأكد!",
+        text: "أنت بصدد حذف تسمية فضاء، هل أنت متأكد؟",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#016AD9",
+        confirmButtonText: "نعم واصل",
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            Cookies.set('sid', sid);
+            Cookies.set('gid', gid);
+            axios.post(`${API_URL}/delete_space`, {id}).then(res => {
+                var message = res.data;
+                if (message.success) {
+                    window.location.href = 'deln.html';
+                }else {
+                    swal("خطأ!", "لا يتم", "error");
+                }
+            })
         }
     });
 }
 
-function get_user_numbering(gid) {
+function get_numberings_gid(gid) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/numberings`, {gid: gid}).then(res => {
+            var message = res.data;
+            if (message.success) {
+                resolve(message.result)
+            }else {
+                reject(message.errors);
+            }
+        });
+    });
+}
+
+function load_menu_numberings(gid) {
     $('#numberings').html('');
-    axios.post(`${API_URL}/numberings`, {gid: gid}).then(res => {
-        var message = res.data;
-        if (message.success) {
-            const numberings = message.result;
-            numberings.forEach(numbering => {
-                const numbered = (numbering.numbered)?'نعم':'لا';
-                const installed = (numbering.installed)?'نعم':'لا';
-                let li = `<li class="list-group-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab-1">
-                        <small class="float-left text-muted">أولي: ${numbered} | تركيب: ${installed}</small>
-                        <strong>${numbering.number}</strong>
-                        <div class="small m-t-xs">
-                            <span class="m-b-none">
-                                ملاحظات: ${numbering.comment}
-                            </span>
-                        </div>
-                    </a>
-                </li>`;
-                $('#numberings').append(li);
-            });
-        }else {
-            console.log(message.errors[0]);
+    get_numberings_gid(gid).then(numberings=>{
+        numberings.forEach(numbering => {
+            const numbered = (numbering.numbered)?'نعم':'لا';
+            const installed = (numbering.installed)?'نعم':'لا';
+            let li = `<li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted">أولي: ${numbered} | تركيب: ${installed}</small>
+                    <strong>${numbering.number}</strong>
+                    <div class="small m-t-xs">
+                        <span class="m-b-none">
+                            ملاحظات: ${numbering.comment}
+                        </span>
+                    </div>
+                </a>
+            </li>`;
+            $('#numberings').append(li);
+        });
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
+}
+
+function load_cb_numberings(gid) {
+    $('#cb_numbering').empty();
+    get_numberings_gid(gid).then(numberings=>{
+        numberings.forEach(n => {
+            $('#cb_numbering').append( new Option(n.number,n.id) );
+        });
+    }).catch(errors=>{
+        console.log(errors[0]);
+    })
+}
+
+function delete_numbering(id) {
+    const sid = Number($('#cb_section option:selected').text());
+    const gid = Number($('#cb_group option:selected').text());
+    swal({
+        title: "هل أنت متأكد!",
+        text: "أنت بصدد حذف ترقيم بناية، هل أنت متأكد؟",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#016AD9",
+        confirmButtonText: "نعم واصل",
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            Cookies.set('sid', sid);
+            Cookies.set('gid', gid);
+            axios.post(`${API_URL}/delete_numbering`, {id}).then(res => {
+                var message = res.data;
+                if (message.success) {
+                    window.location.href = 'deln.html';
+                }else {
+                    swal("خطأ!", "لا يتم", "error");
+                }
+            })
         }
     });
 }
@@ -208,7 +327,7 @@ function add_space() {
                 text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
                 type: "success",
                 showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#016AD9",
                 confirmButtonText: "نعم واصل",
                 cancelButtonText: "إلغاء",
                 closeOnConfirm: false
@@ -218,7 +337,7 @@ function add_space() {
                     Cookies.set('gid', gid);
                     window.location.href = 'newp.html';
                 } else {
-                window.location.href = 'paneling.html';
+                    window.location.href = 'paneling.html';
                 }
             });
         }else {
@@ -250,7 +369,7 @@ function add_numbering() {
                 text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
                 type: "success",
                 showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#016AD9",
                 confirmButtonText: "نعم واصل",
                 cancelButtonText: "إلغاء",
                 closeOnConfirm: false

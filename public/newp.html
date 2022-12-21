@@ -143,20 +143,19 @@
     <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/dash.js?v=0.0.5"></script>
+    <script defer src="js/dash.js?v=0.0.8"></script>
     <script type="module">
       $(document).ready(() => {
+        load_cb_sections();
         init_session().then(()=>{
           $('.fullbox-loading').remove('.sk-loading');         
         }).catch(()=>{
           window.location.href = 'login.html';
         })
-
-        get_user_sections();
       });
 
       $('#cb_section').change(function () {
-        get_user_group($('#cb_section').val());
+        load_cb_groups($('#cb_section option:selected').val());
       });
       
       $('#btn_cancel').click(function () {
