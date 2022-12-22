@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.8
+Vesion 0.0.9
 */
 axios.defaults.withCredentials = true;
 
@@ -29,7 +29,7 @@ function logout() {
 
 function get_sections_uid() {
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/section`).then(res => {
+        axios.post(`${API_URL}/sections_uid`).then(res => {
             var message = res.data;
             if (message.success) {
                 resolve(message.result)
@@ -87,7 +87,7 @@ function get_section_dist() {
 
 function get_groups_sid(sid) {
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/group`, {sid}).then(res => {
+        axios.post(`${API_URL}/groups_sid`, {sid}).then(res => {
             var message = res.data;
             if (message.success) {
                 resolve(message.result)
@@ -129,7 +129,7 @@ function load_cb_groups(sid) {
 
 function get_spaces_gid(gid) {
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/spaces`, {gid: gid}).then(res => {
+        axios.post(`${API_URL}/spaces_gid`, {gid: gid}).then(res => {
             var message = res.data;
             if (message.success) {
                 resolve(message.result)
@@ -215,7 +215,7 @@ function delete_space(id) {
 
 function get_numberings_gid(gid) {
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/numberings`, {gid: gid}).then(res => {
+        axios.post(`${API_URL}/numberings_gid`, {gid: gid}).then(res => {
             var message = res.data;
             if (message.success) {
                 resolve(message.result)

@@ -62,12 +62,12 @@
               <i class="fa fa-home"></i>
               <span class="label">الرئيسية</span>
             </button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-calculator"></i>
-              <span class="label">حصيلة</span>
+            <button id="btn_sections" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-th"></i>
+              <span class="label">مقاطعة</span>
             </button>
-            <button id="btn_menu" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-bars"></i><span class="label">قائمة</span>
+            <button id="btn_groups" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-microchip"></i><span class="label">مجموعة</span>
             </button>    
           </div>
           <div class="p-md">
@@ -114,15 +114,12 @@
       $('#btn_home').click(function () {
         document.location = 'index.html'
       });
-      $('#btn_new').click(function () {
-        // document.location = 'newp.html'
+      $('#btn_sections').click(function () {
+        document.location = 'news.html'
       });
-      $('#btn_menu').click(function () {
-        // document.location = 'menup.html'
+      $('#btn_groups').click(function () {
+        document.location = 'newg.html'
       });
-      $('#btn_delete').click(function () {
-        // document.location = 'delp.html'
-      })
     </script>
   </body>
 </html>

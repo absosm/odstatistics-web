@@ -1,5 +1,5 @@
 /*
-version: 0.0.3
+version: 0.0.4
 */
 
 function get_sections(reserved = true) {
@@ -15,7 +15,7 @@ function get_sections(reserved = true) {
                     $('#cb_section').append( new Option(s.number,s.id) );
             });
         }else {
-            console.log('error: ' + message.error);
+            console.log(message.errors);
         }
     });
 }
@@ -34,7 +34,7 @@ function get_users() {
                     $('#cb_user').append( new Option(u.displayName,u.uid) );
             });
         }else {
-            console.log('error: ' + message.error);
+            console.log(message.errors);
         }
     });
 }
@@ -65,7 +65,7 @@ function add_group() {
                     Cookies.set('sid', section_id);
                     window.location.href = 'newg.html';
                 } else {
-                window.location.href = '.';
+                window.location.href = 'admin.html';
                 }
             });
         }else {
@@ -100,7 +100,7 @@ function add_section() {
                     Cookies.set('uid', uid);
                     window.location.href = 'news.html';
                 } else {
-                window.location.href = '.';
+                window.location.href = 'admin.html';
                 }
             });
         }else {
