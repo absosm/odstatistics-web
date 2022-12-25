@@ -71,22 +71,28 @@
             </button>    
           </div>
           <div class="p-md">
-            <button id="btn_new" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-plus"></i>
-              <span class="label">إضافة</span>
+            <button id="btn_space" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-map-marker"></i>
+              <span class="label">فضاء عام</span>
             </button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-edit"></i>
-              <span class="label">تعديل</span>
+            <button id="btn_numbering" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <i class="fa fa-list-ol"></i>
+              <span class="label">ترقيم مدخل</span>
             </button>
             <button id="btn_delete" class="btn btn-info  dim btn-large-dim btn-outline" type="button">
-              <i class="fa fa-trash-o"></i><span class="label">حذف</span>
+              <!-- <i class="fa fa-trash-o"></i><span class="label">حذف</span> -->
             </button>
           </div>
           <div class="p-md">
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
-            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button"><i class="fa fa-history"></i></button>
+            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <!-- <i class="fa fa-history"></i> -->
+            </button>
+            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <!-- <i class="fa fa-history"></i> -->
+            </button>
+            <button class="btn btn-info  dim btn-large-dim btn-outline" type="button">
+              <!-- <i class="fa fa-history"></i> -->
+            </button>
           </div>
         </div>
         <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
@@ -119,6 +125,9 @@
       });
       $('#btn_groups').click(function () {
         document.location = 'newg.html'
+      });
+      $('#btn_numbering').click(function () {
+        document.location = 'admin-num.html'
       });
     </script>
   </body>

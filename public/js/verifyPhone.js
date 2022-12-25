@@ -1,3 +1,6 @@
+/*
+version: 0.0.1
+*/
 var sentCodeId = null, phoneNumber=null;
 
 $('#phone').on('change', function () {
@@ -30,7 +33,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-contai
             $('#code').show();
             sendVerificationCode(phoneNumber).then(code=>{
                 sentCodeId = code;
-                console.log('sent code is:', sentCodeId);
+                // console.log('sent code is:', sentCodeId);
                 $('#recaptcha-container').hide();
             })
         }
@@ -72,12 +75,12 @@ function signInWithPhone(sentCodeId, code){
                     if (message.success) {
                         window.location.href = './';
                     }else {
-                        console.log('error:',message.errors);
+                        console.log(message.errors);
                     }
                     firebase.auth().signOut();
                 });
             }).catch(error=>{
-                console.log('getIdToken()',error);
+                console.log(error);
             });
             resolve(true);
         }).catch(error => {

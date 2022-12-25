@@ -1,6 +1,25 @@
 /*
-version: 0.0.4
+version: 0.0.5
 */
+
+function get_users() {
+    axios.post(`${API_URL}/users`).then(res => {
+        var message = res.data;
+        if (message.success) {
+            var users = message.result;
+            // console.log(message);
+            var select = Cookies.get('uid');
+            users.forEach(u => {
+                if (u.uid === select)
+                    $('#cb_user').append( new Option(u.displayName,u.uid, true, true) );
+                else
+                    $('#cb_user').append( new Option(u.displayName,u.uid) );
+            });
+        }else {
+            console.log(message.errors);
+        }
+    });
+}
 
 function get_sections(reserved = true) {
     axios.post(`${API_URL}/sections`, {reserved: reserved}).then(res => {
@@ -20,21 +39,37 @@ function get_sections(reserved = true) {
     });
 }
 
-function get_users() {
-    axios.post(`${API_URL}/users`).then(res => {
+function add_section() {
+    const uid = $('#cb_user option:selected').val();
+    const l = $( '.lbtn-add' ).ladda();
+    l.ladda( 'start' );
+    axios.post(`${API_URL}/new_section`, 
+    {link : {
+        uid : uid,
+        sid: $('#cb_section option:selected').val()
+    }}).then(res => {
         var message = res.data;
         if (message.success) {
-            var users = message.result;
-            // console.log(message);
-            var select = Cookies.get('uid');
-            users.forEach(u => {
-                if (u.uid === select)
-                    $('#cb_user').append( new Option(u.displayName,u.uid, true, true) );
-                else
-                    $('#cb_user').append( new Option(u.displayName,u.uid) );
+            l.ladda( 'stop' );
+            swal({
+                title: "نجت العملية!",
+                text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "نعم واصل",
+                cancelButtonText: "إلغاء",
+                closeOnConfirm: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    Cookies.set('uid', uid);
+                    window.location.href = 'news.html';
+                } else {
+                window.location.href = 'admin.html';
+                }
             });
         }else {
-            console.log(message.errors);
+            swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
 }
@@ -74,37 +109,44 @@ function add_group() {
     });
 }
 
-function add_section() {
-    const uid = $('#cb_user option:selected').val();
-    const l = $( '.lbtn-add' ).ladda();
-    l.ladda( 'start' );
-    axios.post(`${API_URL}/new_section`, 
-    {link : {
-        uid : uid,
-        sid: $('#cb_section option:selected').val()
-    }}).then(res => {
-        var message = res.data;
-        if (message.success) {
-            l.ladda( 'stop' );
-            swal({
-                title: "نجت العملية!",
-                text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-                type: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "نعم واصل",
-                cancelButtonText: "إلغاء",
-                closeOnConfirm: false
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    Cookies.set('uid', uid);
-                    window.location.href = 'news.html';
-                } else {
-                window.location.href = 'admin.html';
-                }
-            });
-        }else {
-            swal("يوجد خطأ!", message.errors[0].message, "error");
-        }
+function get_numberings_sid(sid) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/numberings_sid`, {sid: sid}).then(res => {
+            var message = res.data;
+            if (message.success) {
+                resolve(message.result)
+            }else {
+                reject(message.errors);
+            }
+        });
     });
+}
+
+function load_menu_numberings(sid) {
+    $('#numberings').html('');
+    get_numberings_sid(sid).then(numberings=>{
+        numberings.forEach(numbering => {
+            const numbered = (numbering.numbered)?'نعم':'لا';
+            const installed = (numbering.installed)?'نعم':'لا';
+            let li = `<li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-1">
+                    <small class="float-left text-muted">أولي: ${numbered} | تركيب: ${installed}</small>
+                    <strong>${numbering.number}</strong>
+                    <div class="small m-t-xs">
+                        <span class="m-b-none">
+                            ملاحظات: ${numbering.comment}
+                        </span>
+                    </div>
+                    <div class="small m-t-xs">
+                        <span class="m-b-none">
+                            مجموعة سكانية: ${numbering.group_id}
+                        </span>
+                    </div>
+                </a>
+            </li>`;
+            $('#numberings').append(li);
+        });
+    }).catch(errors=>{
+        console.log(errors);
+    })
 }
