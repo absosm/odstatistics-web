@@ -125,6 +125,7 @@ function get_numberings_sid(sid) {
 function load_menu_numberings(sid) {
     $('#numberings').html('');
     get_numberings_sid(sid).then(numberings=>{
+        $('#total').html(numberings.length);
         numberings.forEach(numbering => {
             const numbered = (numbering.numbered)?'نعم':'لا';
             const installed = (numbering.installed)?'نعم':'لا';

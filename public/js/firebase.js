@@ -1,5 +1,5 @@
-// const API_URL = 'http://127.0.0.1:5001';
-const API_URL = 'https://statistics-api.apcouleddjellal.dz';
+const API_URL = 'http://127.0.0.1:5001';
+// const API_URL = 'https://statistics-api.apcouleddjellal.dz';
 const auth = firebase.auth();
 
 function slice_hash(hash_url) {
