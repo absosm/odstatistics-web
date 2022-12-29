@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.9
+Vesion 0.0.10
 */
 axios.defaults.withCredentials = true;
 
@@ -27,9 +27,9 @@ function logout() {
     });
 }
 
-function get_sections_uid() {
+function get_sections_uid(inclusion_ends) {
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/sections_uid`).then(res => {
+        axios.post(`${API_URL}/sections_uid`, {inclusion_ends}).then(res => {
             var message = res.data;
             if (message.success) {
                 resolve(message.result)
@@ -40,8 +40,8 @@ function get_sections_uid() {
     });
 }
 
-function load_cb_sections() {
-    get_sections_uid().then(sections=>{
+function load_cb_sections(inclusion_ends) {
+    get_sections_uid(inclusion_ends).then(sections=>{
         const select = Number(Cookies.get('sid'));
         sections.forEach(s => {
             if (s.number === select)
@@ -67,12 +67,13 @@ function get_section_dist() {
                 let li = `<li class="list-group-item">
                     <a class="nav-link" data-toggle="tab" href="#tab-1">
                         <small class="float-left text-muted">
+                            ${(_section.end)?'<i class="fa fa-thumbs-o-up"></i>':''}
                             <i class="fa fa-map-marker"></i> مقاطعة ${_section.number}
                         </small>
                         <strong>${_user.displayName}</strong>
                         <div class="small m-t-xs">
                             <span class="m-b-none">
-                                
+                               
                             </span>
                         </div>
                     </a>
