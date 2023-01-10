@@ -56,21 +56,23 @@
               <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png"/>
             </div>
           </li>
-
+          <li class="active">
+            <a href="."><i class="fa fa-home"></i> <span class="nav-label">الصفحة الرئيسية</span></a>
+          </li>
           <li>
-            <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">عملية تسمية الفضاءات العمومية</span> <span class="fa arrow"></span></a>
+            <a href="index.html"><i class="fa fa-map-marker"></i> <span class="nav-label">عملية تسمية الفضاءات العمومية</span> <span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
               <li><a href="#">قائمة الفضاءات العمومية</a></li>
             </ul>
           </li>
           <li>
-            <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">عملية ترقيم مداخل البنايات</span><span class="fa arrow"></span></a>
+            <a href="#"><i class="fa fa-list-ol"></i> <span class="nav-label">عملية ترقيم مداخل البنايات</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li><a href="#">قائمة مداخل البنايات</a></li>
             </ul>
           </li>
           <li>
-            <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">مقاطعات البلدية</span></a>
+            <a href="#"><i class="fa fa-th"></i> <span class="nav-label">مقاطعات البلدية</span></a>
           </li>
         </ul>
       </div>
@@ -245,5 +247,13 @@
   <script src="https://apcouleddjellal.dz/js/inspinia.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/pace/pace.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/wow/wow.min.js"></script>
+
+  <script>  
+
+  $( "body" ).focusout(function() {
+    $('body').removeClass('mini-navbar');
+  })
+
+  </script>
 </body>
 </html>
