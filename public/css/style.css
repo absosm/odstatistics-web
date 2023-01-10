@@ -131,6 +131,9 @@ span.label {
 .scroll_content{
   border: 1px solid #adb5bd;
 }
+.rtls.nav{
+  padding-right: 0;
+}
 /* LIST GROUP */
 .list-group {
   padding: 0;

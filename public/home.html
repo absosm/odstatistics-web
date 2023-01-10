@@ -5,27 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="لوحة التحكم الخاصة بموقع بلدية أولاد جلال">
-  <meta name="keywords" content="APC OULED DJELLAL, OULED DJELLAL, أولاد جلال, اولاد جلال, commune ouled djellal, assemblée populaire communale, المجلس الشعبي البلدي">
+  <meta name="keywords" content="">
   <meta name="author" content="absosm">
-
-  <title>بلدية أولاد جلال | لوحة التحكم</title>
-
+  <title>الخلية البلدية للعنونة | الرئيسية</title>
   <!-- Bootstrap core CSS -->
   <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
-
   <!-- Animation CSS -->
   <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
   <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
   <!-- Toastr style -->
   <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-
   <!-- Custom styles for this template -->
-  <link href="https://apcouleddjellal.dz/css/style.css" rel="stylesheet">
+  <link href="css/odstyle.css" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
-<body>
+<body class="rtls canvas-menu fixed-nav">
 
   <!-- <div class="fullbox-loading sk-loading">
     <div class="sk-spinner sk-spinner-wave">
@@ -38,27 +33,44 @@
   </div> -->
 
   <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
+    <nav class="navbar-default navbar-static-side navbar-right" role="navigation">
       <div class="sidebar-collapse">
+        <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
             <div class="dropdown profile-element">
               <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png"/>
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span id="display_name" class="block m-t-xs font-bold">[Display name]</span>
-                <span class="text-muted text-xs block">Publisher <b class="caret"></b></span>
+                <span class="text-muted text-xs block">عون الإحصاء <b class="caret"></b></span>
               </a>
-              <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                <li><a id="profile" class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
+              <ul class="dropdown-menu animated fadeInLeft m-t-xs">
+                <li><a id="profile" class="dropdown-item" href="#">الملف الشخصي</a></li>
+                <li><a class="dropdown-item" href="#">خيارات</a></li>
+                <li><a class="dropdown-item" href="#">الرسائل الخاصة</a></li>
                 <li class="dropdown-divider"></li>
-                <li><a class="logout dropdown-item" href="#">Logout</a></li>
+                <li><a class="logout dropdown-item" href="#">تسجيل الخروج</a></li>
               </ul>
             </div>
             <div class="logo-element">
               <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png"/>
             </div>
+          </li>
+
+          <li>
+            <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">عملية تسمية الفضاءات العمومية</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+              <li><a href="#">قائمة الفضاءات العمومية</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">عملية ترقيم مداخل البنايات</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="#">قائمة مداخل البنايات</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">مقاطعات البلدية</span></a>
           </li>
         </ul>
       </div>
@@ -66,18 +78,18 @@
 
     <div id="page-wrapper" class="gray-bg">
       <div class="row border-bottom">
-        <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-fixed-top  " role="navigation" style="margin-bottom: 0">
           <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
+            <form role="search" class="navbar-form-custom" action=".">
               <div class="form-group">
-                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                <input type="text" placeholder="أبحث عن أي شيء..." class="form-control" name="search" id="top-search">
               </div>
             </form>
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <span class="m-r-sm text-muted welcome-message">Welcome to CPanel</span>
+              <span class="m-r-sm text-muted welcome-message">خاصة باللجنة البلدية للعنونة</span>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -176,33 +188,32 @@
             </li>
             <li>
               <a class="logout" href="#">
-                <i class="fa fa-sign-out"></i> Log out
+                <i class="fa fa-sign-out"></i> تسجيل الخروج
               </a>
             </li>
           </ul>
         </nav>
       </div>
 
-      <div class="row wrapper border-bottom white-bg page-heading">
+      <div class="row wrapper border-bottom page-heading">
         <div class="col-sm-4">
-          <h2>Dashboard</h2>
+          <h2>لوحة التحكم</h2>
           <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                  <a href="/">Home</a>
+                  <a href="index.html">الرئيسية</a>
               </li>
               <li class="breadcrumb-item active">
-                  <strong>Dashboard</strong>
+                  <strong>لوحة التحكم</strong>
               </li>
           </ol>
         </div>
       </div>
   
       <div class="wrapper wrapper-content">
-        <div class="middle-box text-center animated fadeInRightBig">
+        <div class="middle-box text-center animated fadeInLeftBig">
 
 
-          <!-- content here -->
-          phoneNumber: <span id="phoneNumber"></span>
+
 
 
         </div>
