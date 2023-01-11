@@ -1108,34 +1108,12 @@ a.list-group-item.active:focus {
     right: 0;
     z-index: 2000;
   }
-  /* fullbox loading */
-  .fullbox-loading.sk-loading:after {
-    content: '';
-    background-color: rgba(255, 255, 255, 1);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 3000;
-  }
-  .fullbox-loading.sk-loading > .sk-spinner {
-    display: block;
-    z-index: 4000;
-    position: fixed;
-    top: 50%;
-    left: 0;
-    right: 0;
-  }
 /* fullbox loading */
 .fullbox-loading.sk-loading:after {
     content: '';
     background-color: rgba(255, 255, 255, 1);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: fixed;
+    top: 0;left: 0;bottom: 0;right: 0;
     z-index: 3000;
 }
 .fullbox-loading.sk-loading > .sk-spinner {
@@ -1146,7 +1124,6 @@ a.list-group-item.active:focus {
     left: 0;
     right: 0;
 }
-
 @media (max-width: 600px) {
     body, #panel
     { 

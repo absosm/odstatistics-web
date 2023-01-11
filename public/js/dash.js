@@ -1,89 +1,88 @@
 /*
-Vesion 0.0.10
+Vesion 0.0.11
 */
 axios.defaults.withCredentials = true;
 
+
 function init_session() {
-    return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/session`).then(res => {
-            const message = res.data;
-            if (message.success && message.result) {
-                resolve(true);
-            }else {
-                reject(false);
-            }
-        });
-    });
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/session`).then(res => {
+			const message = res.data;
+			if (message.success && message.result) {
+				resolve(message.result);
+			}else {
+				reject(false);
+			}
+		});
+	});
 }
 
 function logout() {
-    axios.get(`${API_URL}/logout`).then(res => {
-        var message = res.data;
-        if (message.success) {
-            window.location.href = './login.html';
-        }else {
-            alert('error');
-        }
-    });
+	axios.get(`${API_URL}/logout`).then(res => {
+		var message = res.data;
+		if (message.success) {
+			window.location.href = './login.html';
+		}else {
+			alert('error');
+		}
+	});
 }
 
 function get_sections_uid(inclusion_ends) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${API_URL}/sections_uid`, {inclusion_ends}).then(res => {
-            var message = res.data;
-            if (message.success) {
-                resolve(message.result)
-            }else {
-                reject(message.errors);
-            }
-        });
-    });
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/sections_uid`, {inclusion_ends}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(message.result)
+			}else {
+				reject(message.errors);
+			}
+		});
+	});
 }
 
 function load_cb_sections(inclusion_ends) {
-    get_sections_uid(inclusion_ends).then(sections=>{
-        const select = Number(Cookies.get('sid'));
-        sections.forEach(s => {
-            if (s.number === select)
-                $('#cb_section').append( new Option(s.number,s.id, true, true) );
-            else
-                $('#cb_section').append( new Option(s.number,s.id) );
-        });
-
-        load_cb_groups($('#cb_section').val());
-    }).catch(errors=>{
-        console.log(errors[0]);
-    })
+	get_sections_uid(inclusion_ends).then(sections=>{
+		const select = Number(Cookies.get('sid'));
+		sections.forEach(s => {
+			if (s.number === select)
+				$('#cb_section').append( new Option(s.number,s.id, true, true) );
+			else
+				$('#cb_section').append( new Option(s.number,s.id) );
+		});
+		load_cb_groups($('#cb_section').val());
+	}).catch(errors=>{
+		console.log(errors[0]);
+	})
 }
 
 function get_section_dist() {
-    axios.post(`${API_URL}/sections_dist`).then(res => {
-        var message = res.data;
-        if (message.success) {
-            const sections = message.result;
-            sections.forEach(result => {
-                const _user = result.user;
-                const _section = result.section;
-                let li = `<li class="list-group-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab-1">
-                        <small class="float-left text-muted">
-                            ${(_section.end)?'<i class="fa fa-thumbs-o-up"></i>':''}
-                            <i class="fa fa-map-marker"></i> مقاطعة ${_section.number}
-                        </small>
-                        <strong>${_user.displayName}</strong>
-                        <div class="small m-t-xs">
-                            <span class="m-b-none">
-                               
-                            </span>
-                        </div>
-                    </a>
-                </li>`;
-                $('#sections').append(li);
-            });
-        }else {
-            console.log(message.errors[0]);
-        }
-    });
+	axios.post(`${API_URL}/sections_dist`).then(res => {
+		var message = res.data;
+		if (message.success) {
+			const sections = message.result;
+			sections.forEach(result => {
+				const _user = result.user;
+				const _section = result.section;
+				let li = `<li class="list-group-item">
+					<a class="nav-link" data-toggle="tab" href="#tab-1">
+						<small class="float-left text-muted">
+							${(_section.end)?'<i class="fa fa-thumbs-o-up"></i>':''}
+							<i class="fa fa-map-marker"></i> مقاطعة ${_section.number}
+						</small>
+						<strong>${_user.displayName}</strong>
+						<div class="small m-t-xs">
+							<span class="m-b-none">
+							</span>
+						</div>
+					</a>
+				</li>`;
+				$('#sections').append(li);
+			});
+		}else {
+			console.log(message.errors[0]);
+		}
+	});
 }
 
 function get_groups_sid(sid) {

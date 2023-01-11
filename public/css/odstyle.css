@@ -7847,11 +7847,8 @@ body.body-small .vote-icon {
 .fullbox-loading.sk-loading:after {
   content: '';
   background-color: rgba(255, 255, 255, 1);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  top: 0;right: 0;bottom: 0;left: 0;
   z-index: 3000;
 }
 .fullbox-loading.sk-loading > .sk-spinner {
@@ -7861,6 +7858,13 @@ body.body-small .vote-icon {
   top: 50%;
   left: 0;
   right: 0;
+}
+.full-box {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;bottom: 0;
+  left: 0;right: 0;
+  z-index: 2001;
 }
 /* PACE PLUGIN
 -------------------------------------------------- */

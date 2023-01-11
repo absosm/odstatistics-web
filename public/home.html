@@ -4,10 +4,28 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="لوحة التحكم الخاصة بموقع بلدية أولاد جلال">
+  <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="absosm">
   <title>الخلية البلدية للعنونة | الرئيسية</title>
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/9.14.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/9.14.0/firebase-database-compat.js"></script>
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-firestore-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-functions-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-messaging-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-storage-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-analytics-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-remote-config-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-performance-compat.js"></script> -->
+  <!-- 
+    initialize the SDK after all desired features are loaded, set useEmulator to false
+    to avoid connecting the SDK to running emulators.
+  -->
+  <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
+  <script defer src="/__/firebase/init.js"></script>
   <!-- Bootstrap core CSS -->
   <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
   <!-- Animation CSS -->
@@ -16,13 +34,16 @@
   <!-- Toastr style -->
   <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="css/odstyle.css" rel="stylesheet">
+  <link href="css/odstyle.css?v=0.0.1" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
 </head>
 
-<body class="rtls canvas-menu fixed-nav">
-
-  <!-- <div class="fullbox-loading sk-loading">
+<body class="rtls canvas-menu fixed-nav ">
+  <div class="full-box" hidden></div>
+  <div class="fullbox-loading sk-loading">
     <div class="sk-spinner sk-spinner-wave">
       <div class="sk-rect1"></div>
       <div class="sk-rect2"></div>
@@ -30,8 +51,7 @@
       <div class="sk-rect4"></div>
       <div class="sk-rect5"></div>
     </div>
-  </div> -->
-
+  </div>
   <div id="wrapper">
     <nav class="navbar-default navbar-static-side navbar-right" role="navigation">
       <div class="sidebar-collapse">
@@ -95,96 +115,25 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
               </a>
               <ul class="dropdown-menu dropdown-messages">
                 <li>
-                  <div class="dropdown-messages-box">
-                    <a class="dropdown-item float-left" href="profile.html">
-                      <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/a7.jpg">
-                    </a>
-                    <div class="media-body">
-                      <small class="float-right">46h ago</small>
-                      <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                      <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
-                  <div class="dropdown-messages-box">
-                    <a class="dropdown-item float-left" href="profile.html">
-                      <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/a4.jpg">
-                    </a>
-                    <div class="media-body ">
-                      <small class="float-right text-navy">5h ago</small>
-                      <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                      <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
-                  <div class="dropdown-messages-box">
-                    <a class="dropdown-item float-left" href="profile.html">
-                      <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/profile.jpg">
-                    </a>
-                    <div class="media-body ">
-                      <small class="float-right">23h ago</small>
-                      <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                      <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
                   <div class="text-center link-block">
-                    <a href="mailbox.html" class="dropdown-item">
-                      <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                    </a>
+                    لا توجد رسائل
                   </div>
                 </li>
               </ul>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                <i class="fa fa-bell"></i>  <span class="label label-primary">0</span>
               </a>
               <ul class="dropdown-menu dropdown-alerts">
                 <li>
-                  <a href="mailbox.html" class="dropdown-item">
-                    <div>
-                      <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                      <span class="float-right text-muted small">4 minutes ago</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
-                  <a href="profile.html" class="dropdown-item">
-                    <div>
-                      <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                      <span class="float-right text-muted small">12 minutes ago</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
-                    <a href="grid_options.html" class="dropdown-item">
-                        <div>
-                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                            <span class="float-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li>
-                    <div class="text-center link-block">
-                        <a href="notifications.html" class="dropdown-item">
-                            <strong>See All Alerts</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
+                  <div class="text-center link-block">
+                    لا توجد إشعارات
+                  </div>
                 </li>
               </ul>
             </li>
@@ -201,23 +150,80 @@
         <div class="col-sm-4">
           <h2>لوحة التحكم</h2>
           <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                  <a href="index.html">الرئيسية</a>
-              </li>
-              <li class="breadcrumb-item active">
-                  <strong>لوحة التحكم</strong>
-              </li>
+            <li class="breadcrumb-item">
+              <a href="index.html">الرئيسية</a>
+            </li>
+            <li class="breadcrumb-item active">
+              <strong>لوحة التحكم</strong>
+            </li>
           </ol>
         </div>
       </div>
   
       <div class="wrapper wrapper-content">
-        <div class="middle-box text-center animated fadeInLeftBig">
-
-
-
-
-
+        <div class="animated fadeInLeftBig">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="ibox ">
+                <div class="ibox-title">
+                  <div class="ibox-tools">
+                    <span class="label label-success float-right">Monthly</span>
+                  </div>
+                  <h5>Income</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">40 886,200</h1>
+                  <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                  <small>Total income</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="ibox ">
+                <div class="ibox-title">
+                  <div class="ibox-tools">
+                      <span class="label label-info float-right">Annual</span>
+                  </div>
+                  <h5>Orders</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">275,800</h1>
+                  <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                  <small>New orders</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="ibox ">
+                <div class="ibox-title">
+                  <div class="ibox-tools">
+                    <span class="label label-primary float-right">Today</span>
+                  </div>
+                  <h5>visits</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">106,120</h1>
+                  <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                  <small>New visits</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="ibox ">
+                <div class="ibox-title">
+                  <div class="ibox-tools">
+                    <span class="label label-danger float-right">Low value</span>
+                  </div>
+                  <h5>User activity</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">80,600</h1>
+                  <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                  <small>In first month</small>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -231,29 +237,44 @@
       </div>
     </div>
   </div>
-
-
   <!-- Mainly scripts -->
   <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/popper.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/bootstrap.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/metisMenu/jquery.metisMenu.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
   <!-- Toastr script -->
   <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
-
   <!-- Custom and plugin javascript -->
   <script src="https://apcouleddjellal.dz/js/inspinia.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/pace/pace.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/wow/wow.min.js"></script>
+  <!-- Custom and plugin javascript -->
+  <script defer src="js/firebase.js?v=0.0.1"></script>
+  <script defer src="js/dash.js?v=0.0.11"></script>
+  <script type="module">
+    $(document).ready(() => {
+      init_session().then((user)=>{
+        $('#display_name').text(user.displayName)
+        $('.fullbox-loading').remove('.sk-loading');         
+      }).catch(()=>{
+        window.location.href = 'login.html';
+      })
+    });
 
-  <script>  
-
-  $( "body" ).focusout(function() {
-    $('body').removeClass('mini-navbar');
-  })
-
+    $('.logout').click(function () {
+      logout();
+    });
+    $('.full-box').click(function () {
+      $('.full-box').attr('hidden', true);
+      $('body').removeClass('mini-navbar')
+    })
+    $('.navbar-minimalize').click(function () {
+      $('.full-box').attr('hidden', false)
+    })
+    $('.close-canvas-menu').click(function () {
+      $('.full-box').attr('hidden', true)
+    })
   </script>
 </body>
 </html>
