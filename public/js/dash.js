@@ -27,6 +27,28 @@ function logout() {
 	});
 }
 
+function load_sidebar() {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/load_sidebar`).then(res => {
+			var message = res.data;
+			if (message.success) {
+				let sidebar = message.result;
+				Object.keys(sidebar).forEach(key=>{
+					const menu_item = sidebar[key];
+					if (menu_item.submenu === null) {
+						console.log(menu_item);
+					}else {
+						
+					}
+				})
+				resolve(sidebar);
+			}else {
+				reject(message.errors);
+			}
+		});
+	});
+}
+
 function get_sections_uid(inclusion_ends) {
 	return new Promise((resolve, reject) => {
 		axios.post(`${API_URL}/sections_uid`, {inclusion_ends}).then(res => {
