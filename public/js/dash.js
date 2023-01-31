@@ -1,5 +1,5 @@
 /*
-Vesion 0.0.12
+Vesion 0.0.13
 */
 axios.defaults.withCredentials = true;
 
@@ -27,20 +27,47 @@ function logout() {
 	});
 }
 
+function append_menu(menu_item, submenu = false) {
+	const li = $(`<li></li>`), a = $(`<a href="${menu_item.url}"></a>`), 
+		i = $(`<i class="fa ${menu_item.icon}"></i>`), arrow = $(`<span class="fa arrow">`);
+		span = $(`<span class="nav-label"> ${menu_item.text} </span>`),
+		ul = $(`<ul class="nav nav-second-level collapse"></ul>`);
+	a.append(i);
+	a.append(span);
+	li.append(a);
+	if (submenu) {
+		a.append(arrow);
+		Object.keys(menu_item.submenu).forEach(key=>{
+			const _sub = menu_item.submenu[key];
+			const item = $(`<li><a href="${_sub.url}"> ${_sub.text} </a></li>`);
+			if (window.location.pathname === _sub.url) {
+				item.addClass('active');
+				li.addClass('active');
+			}
+			ul.append(item);
+		})
+		li.append(ul);
+	}
+	if (window.location.pathname === menu_item.url) li.addClass('active');
+	$('#side-menu').append(li);
+}
+
 function load_sidebar() {
 	return new Promise((resolve, reject) => {
 		axios.post(`${API_URL}/load_sidebar`).then(res => {
 			var message = res.data;
 			if (message.success) {
+				$(".metismenu").metisMenu('dispose');
 				let sidebar = message.result;
 				Object.keys(sidebar).forEach(key=>{
 					const menu_item = sidebar[key];
 					if (menu_item.submenu === null) {
-						console.log(menu_item);
+						append_menu(menu_item);
 					}else {
-						
+						append_menu(menu_item, true);
 					}
 				})
+				$(".metismenu").metisMenu();
 				resolve(sidebar);
 			}else {
 				reject(message.errors);
