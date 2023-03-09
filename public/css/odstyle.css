@@ -1,7 +1,7 @@
 /*
  *
  *   ABSOSM - Responsive Admin Theme
- *   version 0.0.1
+ *   version 0.0.2
  *
 */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
@@ -2152,8 +2152,8 @@ button.dim:active:before {
   text-decoration: none;
 }
 .page-item.active .page-link {
-  background-color: #1ab394;
-  border-color: #1ab394;
+  background-color: #1A73E8;
+  border-color: #1A73E8;
 }
 .page-link:focus {
   box-shadow: none;
