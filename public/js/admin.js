@@ -1,5 +1,5 @@
 /*
-version: 0.0.5
+version: 0.0.6
 */
 
 function get_users() {
@@ -37,6 +37,24 @@ function get_sections(reserved = true) {
             console.log(message.errors);
         }
     });
+}
+
+function get_sections_reserved() {
+  axios.post(`${API_URL}/sections_reserved`).then(res => {
+      var message = res.data;
+      if (message.success) {
+          var sections = message.result;
+          var select = Cookies.get('sid');
+          sections.forEach(s => {
+              if (s.id === select)
+                  $('#cb_section').append( new Option(s.number,s.id, true, true) );
+              else
+                  $('#cb_section').append( new Option(s.number,s.id) );
+          });
+      }else {
+          console.log(message.errors);
+      }
+  });
 }
 
 function add_section() {
@@ -107,6 +125,19 @@ function add_group() {
             swal("يوجد خطأ!", message.errors[0].message, "error");
         }
     });
+}
+
+function get_groups_snum(snum) {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/groups_snum`, {snum}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(message.result)
+			}else {
+				reject(message.errors);
+			}
+		});
+	});
 }
 
 function get_numberings_sid(sid) {

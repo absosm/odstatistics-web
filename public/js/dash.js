@@ -1,5 +1,6 @@
 /*
-Vesion 0.0.13
+Vesion 0.0.14
+last modifed 13/03/2023 10:28
 */
 axios.defaults.withCredentials = true;
 
@@ -309,31 +310,16 @@ function load_cb_numberings(gid) {
 }
 
 function delete_numbering(id) {
-	const sid = Number($('#cb_section option:selected').text());
-	const gid = Number($('#cb_group option:selected').text());
-	swal({
-			title: "هل أنت متأكد!",
-			text: "أنت بصدد حذف ترقيم بناية، هل أنت متأكد؟",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#016AD9",
-			confirmButtonText: "نعم واصل",
-			cancelButtonText: "إلغاء",
-			closeOnConfirm: false
-	}, function (isConfirm) {
-		if (isConfirm) {
-			Cookies.set('sid', sid);
-			Cookies.set('gid', gid);
-			axios.post(`${API_URL}/delete_numbering`, {id}).then(res => {
-				var message = res.data;
-				if (message.success) {
-					window.location.href = 'deln.html';
-				}else {
-					swal("خطأ!", "لا يتم", "error");
-				}
-			})
-		}
-	});
+	return new Promise((resolve, reject)=>{
+		axios.post(`${API_URL}/delete_numbering`, {id}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(true);
+			}else {
+				reject(message.errors);
+			}
+		})
+	})
 }
 
 function get_statistics() {

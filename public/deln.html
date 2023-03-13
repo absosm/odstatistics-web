@@ -100,7 +100,7 @@
     <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/dash.js?v=0.0.10"></script>
+    <script defer src="js/dash.js?v=0.0.14"></script>
     <script type="module">
       $(document).ready(() => {
         load_cb_sections(false);
@@ -121,7 +121,28 @@
       });
       $('#btn_delete').click(function () {
         const id = $('#cb_numbering option:selected').val();
-        delete_numbering(id);
+        const sid = Number($('#cb_section option:selected').text());
+	      const gid = Number($('#cb_group option:selected').text());
+        swal({
+          title: "هل أنت متأكد!",
+          text: "أنت بصدد حذف ترقيم بناية، هل أنت متأكد؟",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#016AD9",
+          confirmButtonText: "نعم واصل",
+          cancelButtonText: "إلغاء",
+          closeOnConfirm: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            Cookies.set('sid', sid);
+            Cookies.set('gid', gid);
+            delete_numbering(id).then(result=>{
+				      window.location.href = 'deln.html';
+            }).catch(errors=>{
+              swal("يوجد خطأ!", errors[0].message, "error");
+            });
+          }
+        });
       });
     </script>
   </body>
