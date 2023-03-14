@@ -293,16 +293,16 @@
   <div class="modal" id="dialog_update_numbering" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title"> تعديل مدخل بناية </h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-12">
-              <form id="add_numbering" class="m-t" role="form" method="post" enctype="multipart/form-data">
+        <form id="update_numbering" class="m-t" role="form" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
+            <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"> تعديل مدخل بناية </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
                 <div class="row">
                   <div class="col-lg-4">رقم التعريف:</div>
                   <div class="col-lg-8"><b class="nid"></b></div>
@@ -327,21 +327,18 @@
                     <label><input id="cb_installed" type="checkbox" disabled> اللوحة مركبة </label> <label class="checkbox-inline">
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary">
-              تعديـــــل
-              <i class="fa fa-edit"></i>
-            </button>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="submit" class="btn btn-primary">تعديـــــل<i class="fa fa-edit"></i></button>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
           </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -367,7 +364,7 @@
   <script src="https://apcouleddjellal.dz/js/plugins/wow/wow.min.js"></script>
   <!-- Custom and plugin javascript -->
   <script defer src="js/firebase.js?v=0.0.1"></script>
-  <script defer src="js/dash.js?v=0.0.14"></script>
+  <script defer src="js/dash.js?v=0.0.15"></script>
   <script defer src="js/admin.js?v=0.0.6"></script>
   <script type="module">
 
@@ -476,6 +473,29 @@
         $('#dialog_numbering').modal('show');
       });
     });
+    $('#update_numbering').on('submit', function (e) {
+      if (!e.isDefaultPrevented()) { 
+        e.preventDefault();
+        const nid = $('.modal').attr('nid');
+        var data = {
+          number: $('#tb_number').val(),
+          group_id : Number($('#cb_group option:selected').text()),
+          numbered: $('#cb_numbered').prop('checked'),
+          installed: $('#cb_installed').prop('checked'),
+        }
+        update_numbering(nid, data).then(result=>{
+          var d = $('#numberings').DataTable().row( row ).data();
+          d[1] = data.number;
+          d[3] = data.group_id;
+          d[4] = (data.numbered)?'نعم':'لا';
+          d[5] = (data.installed)?'نعم':'لا';
+          $('#numberings').DataTable().row( row ).data(d).draw();
+          $('#dialog_update_numbering').modal('toggle');
+        }).catch(errors=>{
+          swal("يوجد خطأ!", errors[0].message, "error");
+        })
+      }
+    });
     $('#update-numbering').click((e)=>{
       e.preventDefault();
       const nid = $('.modal').attr('nid');
@@ -485,6 +505,9 @@
       $('#dialog_update_numbering').attr('nid', nid);
       $('.nid').text(nid);
       $('#tb_number').val(data[1]);
+      $('#cb_numbered').prop('checked', data[4]==='نعم');
+      $('#cb_installed').prop('checked', data[5]==='نعم');
+      $('#cb_installed').prop('disabled', !$('#cb_numbered').prop('checked'));
       $('#cb_group').empty();
 	    get_groups_snum(Number(data[2])).then(groups => {
         var select = data[3];
@@ -494,6 +517,7 @@
           else
             $('#cb_group').append( new Option(g.number,g.id) );
         });
+
         $('#dialog_update_numbering').modal('show');
       }).catch(errors=>{
         console.log(errors[0]);
@@ -520,15 +544,12 @@
         if (isConfirm) {
           delete_numbering(nid).then(result=>{
             row.remove().draw();
-            $('.modal').modal('toggle');
+            $('#dialog_numbering').modal('toggle');
           }).catch(errors=>{
             swal("يوجد خطأ!", errors[0].message, "error");
           });
         }
       });
-    })
-    $('#showDialog').click(()=>{
-      
     })
     $('#refrech').click(()=>{
       reload_table();

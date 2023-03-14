@@ -1,6 +1,6 @@
 /*
-Vesion 0.0.14
-last modifed 13/03/2023 10:28
+Vesion 0.0.15
+last modifed 14/03/2023 08:47
 */
 axios.defaults.withCredentials = true;
 
@@ -312,6 +312,19 @@ function load_cb_numberings(gid) {
 function delete_numbering(id) {
 	return new Promise((resolve, reject)=>{
 		axios.post(`${API_URL}/delete_numbering`, {id}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(true);
+			}else {
+				reject(message.errors);
+			}
+		})
+	})
+}
+
+function update_numbering(id, data) {
+	return new Promise((resolve, reject)=>{
+		axios.post(`${API_URL}/update_numbering`, {id, data}).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
