@@ -168,10 +168,7 @@
                     <i class="fa fa-wrench"></i>
                   </a>
                   <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#" class="dropdown-item" id="refrech">تحديث</a>
-                    </li>
-                    <li><a href="#" class="dropdown-item" id="showDialog">Config option 2</a>
-                    </li>
+                    <li><a href="#" class="dropdown-item" id="refrech">تحديث</a></li>
                   </ul>
                   <a class="close-link">
                     <i class="fa fa-times"></i>
@@ -456,7 +453,6 @@
         window.location.href = 'login.html';
       })
       load_sidebar();
-      get_statistics_uid();
       load_table();
       $('#numberings tbody').on('click', '.numbering-item', function (e) {
         e.preventDefault();
@@ -476,7 +472,7 @@
     $('#update_numbering').on('submit', function (e) {
       if (!e.isDefaultPrevented()) { 
         e.preventDefault();
-        const nid = $('.modal').attr('nid');
+        const nid = $('#dialog_numbering').attr('nid');
         var data = {
           number: $('#tb_number').val(),
           group_id : Number($('#cb_group option:selected').text()),

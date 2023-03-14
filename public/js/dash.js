@@ -234,31 +234,16 @@ function load_menu_spaces(gid) {
 }
 
 function delete_space(id) {
-	const sid = Number($('#cb_section option:selected').text());
-	const gid = Number($('#cb_group option:selected').text());
-	swal({
-		title: "هل أنت متأكد!",
-		text: "أنت بصدد حذف تسمية فضاء، هل أنت متأكد؟",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#016AD9",
-		confirmButtonText: "نعم واصل",
-		cancelButtonText: "إلغاء",
-		closeOnConfirm: false
-	}, function (isConfirm) {
-		if (isConfirm) {
-			Cookies.set('sid', sid);
-			Cookies.set('gid', gid);
-			axios.post(`${API_URL}/delete_space`, {id}).then(res => {
-				var message = res.data;
-				if (message.success) {
-					window.location.href = 'delp.html';
-				}else {
-					swal("خطأ!", "لا يتم", "error");
-				}
-			})
-		}
-	});
+	return new Promise((resolve, reject)=>{
+		axios.post(`${API_URL}/delete_space`, {id}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(true);
+			}else {
+				reject(message.errors);
+			}
+		})
+	})
 }
 
 function get_numberings_gid(gid) {
