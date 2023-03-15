@@ -239,7 +239,7 @@
           <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title"> ترقم مدخل بناية </h4>
+          <h4 class="modal-title">ترقم مدخل بناية</h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -290,12 +290,12 @@
   <div class="modal" id="dialog_update_numbering" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="update_numbering" class="m-t" role="form" method="post" enctype="multipart/form-data">
+        <form id="update_numbering" role="form" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"> تعديل مدخل بناية </h4>
+            <h4 class="modal-title">تعديل مدخل بناية</h4>
           </div>
           <div class="modal-body">
             <div class="row">
@@ -374,7 +374,7 @@
       $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
 
       $('#numberings').DataTable( {
-        pageLength: 25,
+        pageLength: -1,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
@@ -445,7 +445,6 @@
     }
 
     $(document).ready(() => {
-      get_sections_reserved();
       init_session().then((user)=>{
         $('#display_name').text(user.displayName)
         $('.fullbox-loading').remove('.sk-loading');
@@ -454,6 +453,21 @@
       })
       load_sidebar();
       load_table();
+      get_sections_reserved().then(sections=>{
+				var select = Cookies.get('sid');
+				sections.forEach(s => {
+					if (s.id === select)
+						$('#cb_section').append( new Option(s.number,s.id, true, true) );
+					else
+						$('#cb_section').append( new Option(s.number,s.id) );
+				});
+        reload_table();
+        get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+          groups.forEach(g => {
+            $('#cb_group').append( new Option(g.number,g.id) );
+          });
+        })
+      });
       $('#numberings tbody').on('click', '.numbering-item', function (e) {
         e.preventDefault();
         var tr = $(this).parent().parent();
@@ -504,20 +518,8 @@
       $('#cb_numbered').prop('checked', data[4]==='نعم');
       $('#cb_installed').prop('checked', data[5]==='نعم');
       $('#cb_installed').prop('disabled', !$('#cb_numbered').prop('checked'));
-      $('#cb_group').empty();
-	    get_groups_snum(Number(data[2])).then(groups => {
-        var select = data[3];
-        groups.forEach(g => {
-          if (g.number === select)
-              $('#cb_group').append( new Option(g.number,g.id, true, true) );
-          else
-            $('#cb_group').append( new Option(g.number,g.id) );
-        });
-
-        $('#dialog_update_numbering').modal('show');
-      }).catch(errors=>{
-        console.log(errors[0]);
-      })
+      $("#cb_group option").filter(function() {return $(this).text() == data[3];}).prop('selected', true);
+      $('#dialog_update_numbering').modal('show');
     })
     $('#cb_numbered').change(function () {
       $('#cb_installed').prop('disabled', !$('#cb_numbered').prop('checked'));
@@ -552,6 +554,12 @@
     });
     $('#cb_section').change(function () {
       reload_table();
+      $('#cb_group').empty();
+      get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+        groups.forEach(g => {
+          $('#cb_group').append( new Option(g.number,g.id) );
+        });
+      })
     });
     $('.logout').click(function () {
       logout();

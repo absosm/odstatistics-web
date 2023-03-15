@@ -400,7 +400,6 @@
     function load_table() {
       // Upgrade button class name
       $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-
       $('#spaces').DataTable( {
         pageLength: -1,
         responsive: true,
@@ -476,7 +475,6 @@
     }
 
     $(document).ready(() => {
-      get_sections_reserved();
       init_session().then((user)=>{
         $('#display_name').text(user.displayName)
         $('.fullbox-loading').remove('.sk-loading');
@@ -485,6 +483,21 @@
       })
       load_sidebar();
       load_table();
+      get_sections_reserved().then(sections=>{
+				var select = Cookies.get('sid');
+				sections.forEach(s => {
+					if (s.id === select)
+						$('#cb_section').append( new Option(s.number,s.id, true, true) );
+					else
+						$('#cb_section').append( new Option(s.number,s.id) );
+				});
+        reload_table();
+        get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+          groups.forEach(g => {
+            $('#cb_group').append( new Option(g.number,g.id) );
+          });
+        })
+      });
       $('#spaces tbody').on('click', '.space-item', function (e) {
         e.preventDefault();
         var tr = $(this).parent().parent();
@@ -539,20 +552,8 @@
       $('#cb_named').prop('checked', data[5]==='نعم');
       $('#cb_installed').prop('checked', data[6]==='نعم');
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      $('#cb_group').empty();
-	    get_groups_snum(Number(data[3])).then(groups => {
-        var select = data[4];
-        groups.forEach(g => {
-          if (g.number === select)
-              $('#cb_group').append( new Option(g.number,g.id, true, true) );
-          else
-            $('#cb_group').append( new Option(g.number,g.id) );
-        });
-
-        $('#dialog_update_space').modal('show');
-      }).catch(errors=>{
-        console.log(errors[0]);
-      })
+      $("#cb_group option").filter(function() {return $(this).text() == data[4];}).prop('selected', true);
+      $('#dialog_update_space').modal('show');
     })
     $('#cb_named').change(function () {
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
@@ -564,7 +565,7 @@
       const space_id = $('#dialog_space').attr('space_id');
       swal({
         title: "هل أنت متأكد!",
-        text: `أنت بصدد حذف تسمية فضاء "${nid}" ، هل أنت متأكد؟`,
+        text: `أنت بصدد حذف تسمية فضاء "${space_id}" ، هل أنت متأكد؟`,
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#016AD9",
@@ -587,6 +588,12 @@
     });
     $('#cb_section').change(function () {
       reload_table();
+      $('#cb_group').empty();
+      get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+        groups.forEach(g => {
+          $('#cb_group').append( new Option(g.number,g.id) );
+        });
+      })
     });
     $('.logout').click(function () {
       logout();

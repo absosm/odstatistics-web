@@ -1,6 +1,6 @@
 /*
 Vesion 0.0.15
-last modifed 14/03/2023 08:47
+last modifed 15/03/2023 08:48
 */
 axios.defaults.withCredentials = true;
 
@@ -230,6 +230,19 @@ function load_menu_spaces(gid) {
 		});
 	}).catch(errors=>{
 		console.log(errors[0]);
+	})
+}
+
+function update_space(id, data) {
+	return new Promise((resolve, reject)=>{
+		axios.post(`${API_URL}/update_space`, {id, data}).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(true);
+			}else {
+				reject(message.errors);
+			}
+		})
 	})
 }
 
