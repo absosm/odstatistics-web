@@ -29,7 +29,7 @@ function logout() {
 }
 
 function append_menu(menu_item, submenu = false) {
-	const li = $(`<li></li>`), a = $(`<a href="${menu_item.url}"></a>`), 
+	const li = $(`<li></li>`), a = $(`<a ${(menu_item.id!==undefined)?'class="'+ menu_item.id +'" ':''}href="${menu_item.url}"></a>`), 
 		i = $(`<i class="fa ${menu_item.icon}"></i>`), arrow = $(`<span class="fa arrow">`);
 		span = $(`<span class="nav-label"> ${menu_item.text} </span>`),
 		ul = $(`<ul class="nav nav-second-level collapse"></ul>`);
@@ -40,7 +40,8 @@ function append_menu(menu_item, submenu = false) {
 		a.append(arrow);
 		Object.keys(menu_item.submenu).forEach(key=>{
 			const _sub = menu_item.submenu[key];
-			const item = $(`<li><a href="${_sub.url}"> ${_sub.text} </a></li>`);
+			const item = $(`<li><a ${(_sub.id!==undefined)?'class="'+ _sub.id 
+											+'" ':''}href="${_sub.url}"> ${_sub.text} </a></li>`);
 			if (window.location.pathname === _sub.url) {
 				item.addClass('active');
 				li.addClass('active');
@@ -76,6 +77,22 @@ function load_sidebar() {
 		});
 	});
 }
+
+$('.metismenu').on('click', '.ajax_download', function (e) {
+	e.preventDefault();
+	axios({
+		url: `${API_URL}/` + $(this).attr('href'),
+		method: 'GET',
+		responseType: 'blob', // important
+	}).then((response) => {
+		const url = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement('a');
+		link.href = url;
+		link.setAttribute('download', 'report.pdf');
+		document.body.appendChild(link);
+		link.click();
+	});
+})
 
 function get_sections_uid(inclusion_ends) {
 	return new Promise((resolve, reject) => {

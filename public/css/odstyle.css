@@ -1208,7 +1208,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 .navbar-fixed-top {
   background: #fff;
   transition-duration: 0.4s;
-  border-bottom: 1px solid #e7eaec !important;
+  border-bottom: 1px solid #000 !important;
   z-index: 2000;
   position: fixed;
   right: 0;
@@ -1221,7 +1221,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 .navbar-fixed-top,
 .navbar-static-top {
-  background: #f3f3f4;
+  background: #fff;
 }
 .fixed-nav #wrapper {
   margin-top: 0;
@@ -2549,7 +2549,7 @@ table.dataTable thead .sorting_desc_disabled {
   float: right;
 }
 .html5buttons a {
-  border: 1px solid #e7eaec;
+  border: 1px solid #22a5f06b;
   background: #fff;
   color: #676a6c;
   box-shadow: none;
@@ -2796,7 +2796,7 @@ select.form-control:not([size]):not([multiple]) {
 .single-line {
   background-color: #FFFFFF;
   background-image: none;
-  border: 1px solid #e5e6e7;
+  border: 1px solid #22a5f06b;
   border-radius: 1px;
   color: inherit;
   display: block;
@@ -4756,10 +4756,10 @@ body.body-small .footer.fixed {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #e7e7e7;
+  border: 1px solid #22a5f06b;
 }
 .table > thead > tr > th {
-  border-bottom: 1px solid #DDDDDD;
+  border-bottom: 1px solid #22a5f06b;
   vertical-align: bottom;
 }
 .table > thead > tr > th,
@@ -4942,7 +4942,7 @@ code {
 }
 .ibox-title {
   background-color: #ffffff;
-  border-color: #e7eaec;
+  border-color: #22a5f06b;
   border-image: none;
   border-style: solid solid none;
   border-width: 1px;
@@ -4960,7 +4960,7 @@ code {
   background-color: #ffffff;
   color: inherit;
   padding: 15px 20px 20px 20px;
-  border-color: #e7eaec;
+  border-color: #22a5f06b;
   border-image: none;
   border-style: solid;
   border-width: 1px;
