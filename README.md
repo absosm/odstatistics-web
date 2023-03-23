@@ -27,6 +27,14 @@ npm install -g firebase-tools
 ```
 npm install -g firebase-tools
 ```
+## Authentification
+```
+firebae login
+```
+## Dependencies
+```
+npm install
+```
 
 ## Testing in local emulator
 
