@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="absosm">
-  <title>الخلية البلدية للعنونة |  قائمة الفضاءات العمومية</title>
+  <title>الخلية البلدية للعنونة | قائمة الفضاءات العمومية</title>
   <!-- update the version number as needed -->
   <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
   <!-- include only the Firebase features as you need -->
@@ -27,7 +28,7 @@
   <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
   <script defer src="/__/firebase/init.js"></script>
   <!-- Bootstrap core CSS -->
-  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
+  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet">
   <!-- Animation CSS -->
   <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
   <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -47,7 +48,7 @@
   </style>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
 </head>
 
 <body class="rtls canvas-menu fixed-nav ">
@@ -68,7 +69,7 @@
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
             <div class="dropdown profile-element">
-              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png"/>
+              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png" />
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span id="display_name" class="block m-t-xs font-bold">[Display name]</span>
                 <span class="text-muted text-xs block">عون الإحصاء <b class="caret"></b></span>
@@ -82,13 +83,13 @@
               </ul>
             </div>
             <div class="logo-element">
-              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png"/>
+              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png" />
             </div>
           </li>
         </ul>
       </div>
     </nav>
-    
+
     <div id="page-wrapper" class="gray-bg">
       <div class="row border-bottom">
         <nav class="navbar navbar-fixed-top  " role="navigation" style="margin-bottom: 0">
@@ -106,7 +107,7 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
+                <i class="fa fa-envelope"></i> <span class="label label-warning">0</span>
               </a>
               <ul class="dropdown-menu dropdown-messages">
                 <li>
@@ -118,7 +119,7 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell"></i>  <span class="label label-primary">0</span>
+                <i class="fa fa-bell"></i> <span class="label label-primary">0</span>
               </a>
               <ul class="dropdown-menu dropdown-alerts">
                 <li>
@@ -153,7 +154,7 @@
           </ol>
         </div>
       </div>
-  
+
       <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
           <div class="col-lg-12">
@@ -178,40 +179,40 @@
               <div class="ibox-content">
                 <div class="table-responsive">
                   <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <form method="get">
                         <div class="form-group  row">
-                            <label for="section" class="col-sm-3 col-form-label">نوع الفضاء</label>
-                            <div class="col-sm-9">
-                              <select id="cb_section" class="form-control"></select>
-                            </div>
+                          <label for="cb_baptis_types" class="col-sm-4 col-form-label">نوع الفضاء</label>
+                          <div class="col-sm-8">
+                            <select id="cb_baptis_types" class="form-control"></select>
+                          </div>
                         </div>
                       </form>
                     </div>
                   </div>
                   <!-- <div class="hr-line-dashed"></div> -->
-                  <table id="spaces" class="table table-striped table-bordered table-hover" style="width:100%">
+                  <table id="baptises" class="table table-striped table-bordered table-hover" style="width:100%">
                     <thead>
                       <tr>
                         <th>رقم التعريف</th>
-                        <th>الفضاء</th>
                         <th>التسمية</th>
-                        <th>المقاطعة</th>
-                        <th>المجموعة السكنية</th>
-                        <th>التسمية الأولية</th>
-                        <th>تركيب اللوحة</th>
+                        <th>القرار </th>
+                        <th>التسمية القديمة</th>
+                        <th> مسماة؟</th>
+                        <th> بعد العملية؟</th>
+                        <th> التركيب؟</th>
                         <th>الملاحظة</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                         <th>رقم التعريف</th>
-                        <th>الفضاء</th>
                         <th>التسمية</th>
-                        <th>المقاطعة</th>
-                        <th>المجموعة السكنية</th>
-                        <th>التسمية الأولية</th>
-                        <th>تركيب اللوحة</th>
+                        <th>القرار </th>
+                        <th>التسمية القديمة</th>
+                        <th> مسماة؟</th>
+                        <th> بعد العملية؟</th>
+                        <th> التركيب؟</th>
                         <th>الملاحظة</th>
                       </tr>
                     </tfoot>
@@ -234,37 +235,41 @@
   </div>
 
 
-  <div class="modal" id="dialog_space" tabindex="-1" role="dialog">
+  <div class="modal" id="dialog_baptis" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title"> تسمية الفضاء العمومي </h4>
+          <h4 class="modal-title"> الفضاء العمومي </h4>
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-lg-12">
               <div class="row">
                 <div class="col-lg-4">رقم التعريف:</div>
-                <div class="col-lg-8"><b class="space_id"></b></div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4">الفضاء:</div>
-                <div class="col-lg-8"><b class="type"></b></div>
+                <div class="col-lg-8"><b class="baptis_id"></b></div>
               </div>
               <div class="row">
                 <div class="col-lg-4">التسمية:</div>
                 <div class="col-lg-8"><b class="name"></b></div>
               </div>
               <div class="row">
-                <div class="col-lg-4">المجموعة السكنية:</div>
-                <div class="col-lg-8"><b class="gid"></b></div>
+                <div class="col-lg-4">القرار:</div>
+                <div class="col-lg-8"><b class="decision"></b></div>
               </div>
               <div class="row">
-                <div class="col-lg-4">التسمية الأولية:</div>
+                <div class="col-lg-4">التسمية القديمة:</div>
+                <div class="col-lg-8"><b class="oldname"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">مسماة؟:</div>
                 <div class="col-lg-8"><b class="named"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">بعد العملية؟:</div>
+                <div class="col-lg-8"><b class="after"></b></div>
               </div>
               <div class="row">
                 <div class="col-lg-4">التركيب:</div>
@@ -280,8 +285,8 @@
               <i class="fa fa-edit"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" id="update-space">تعديل</a></li>
-              <li><a class="dropdown-item" href="#" id="delete-space">حذف</a></li>
+              <li><a class="dropdown-item" href="#" id="update-baptis">تعديل</a></li>
+              <li><a class="dropdown-item" href="#" id="delete-baptis">حذف</a></li>
             </ul>
           </div>
           <div class="btn-group">
@@ -293,45 +298,22 @@
   </div>
 
 
-  <div class="modal" id="dialog_update_space" tabindex="-1" role="dialog">
+  <div class="modal" id="dialog_update_baptis" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="update_space" class="m-t" role="form" method="post" enctype="multipart/form-data">
+        <form id="update_baptis" class="m-t" role="form" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"> تعديل تسمية فضاء عمومي </h4>
+            <h4 class="modal-title"> تعديل فضاء عمومي </h4>
           </div>
           <div class="modal-body">
             <div class="row">
               <div class="col-lg-12">
                 <div class="row">
                   <div class="col-lg-4">رقم التعريف:</div>
-                  <div class="col-lg-8"><b class="space_id"></b></div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">الفضاء</label>
-                  <div class="col-sm-8">
-                    <select id="cb_type" class="form-control m-b">
-                      <option value="1">شارع</option>
-                      <option value="2">طريق</option>
-                      <option value="3">نهج</option>
-                      <option value="4">مسلك</option>
-                      <option value="5">معبر</option>
-                      <option value="6">حي</option>
-                      <option value="7">تجمع سكاني</option>
-                      <option value="8">تجزئة</option>
-                      <option value="9">حديقة</option>
-                      <option value="10">ساحة</option>
-                      <option value="11">حظيرة</option>
-                      <option value="12">غابة</option>
-                      <option value="13">معلم تذكاري</option>
-                      <option value="14">آثار تاريخية</option>
-                      <option value="15">مؤسسة</option>
-                      <option value="0">أخرى</option>
-                    </select>
-                  </div>
+                  <div class="col-lg-8"><b class="baptis_id"></b></div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">التسمية</label>
@@ -340,16 +322,25 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">المجموعة السكنية</label>
+                  <label class="col-sm-4 col-form-label">القرار</label>
                   <div class="col-sm-8">
-                    <select id="cb_group" class="form-control m-b"></select>
+                    <input id="tb_decision" type="text" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
+                  <label class="col-sm-4 col-form-label">التسمية القديمة</label>
                   <div class="col-sm-8">
-                    <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label class="checkbox-inline">
-                    <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label class="checkbox-inline">
+                    <input id="tb_oldname" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية</label>
+                  <div class="col-sm-8">
+                    <label class="checkbox-inline">
+                      <label><input id="cb_named" type="checkbox"> مسماة </label>
+                      <label><input id="cb_after" type="checkbox" disabled> بعد العملية </label>
+                      <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> 
+                    </label>
                   </div>
                 </div>
               </div>
@@ -390,27 +381,31 @@
   <!-- Custom and plugin javascript -->
   <script defer src="js/firebase.js?v=0.0.1"></script>
   <script defer src="js/dash.js?v=0.0.15"></script>
-  <script defer src="js/admin.js?v=0.0.6"></script>
+  <script defer src="js/admin.js?v=0.0.7"></script>
   <script type="module">
 
     var row = null;
 
-    function get_section() { return Number($('#cb_section option:selected').text()); } 
+    function get_baptis() { 
+      const s = $('#cb_baptis_types option:selected').val();
+      return Number( (s===undefined)?0:s );
+    }
 
     function load_table() {
       // Upgrade button class name
       $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-      $('#spaces').DataTable( {
+      $('#baptises').DataTable({
         pageLength: -1,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-          {extend: 'copy'},
-          {extend: 'csv'},
-          {extend: 'excel', title: 'ExampleFile'},
-          {extend: 'pdf', title: 'ExampleFile'},
-          {extend: 'print',
-            customize: function (win){
+          { extend: 'copy' },
+          { extend: 'csv' },
+          { extend: 'excel', title: 'ExampleFile' },
+          { extend: 'pdf', title: 'ExampleFile' },
+          {
+            extend: 'print',
+            customize: function (win) {
               $(win.document.body).addClass('white-bg');
               $(win.document.body).css('font-size', '10px');
               $(win.document.body).find('table')
@@ -420,20 +415,20 @@
           }
         ],
         "columnDefs": [
-          { "width": "20%", "targets": 2 }
+          { "width": "20%", "targets": 1 }
         ],
-        order: [[4, 'asc'], [2, 'asc']],
+        order: [[1, 'asc'], [3, 'asc']],
         lengthMenu: [
-            [10, 25, 50,100, -1],
-            [10, 25, 50,100, 'الكل'],
+          [10, 25, 50, 100, -1],
+          [10, 25, 50, 100, 'الكل'],
         ],
         "processing": true,
         // "serverSide": true,
         "ajax": {
-          url: `${API_URL}/spaces_data`,
+          url: `${API_URL}/baptises_data`,
           type: "POST",
-          data: function(d){
-            d.s_number = get_section();
+          data: function (d) {
+            d.type_id = get_baptis();
           },
           xhrFields: {
             withCredentials: true
@@ -441,131 +436,130 @@
           crossDomain: true
         },
         "language": {
-          "decimal":        "",
-          "emptyTable":     "لا توجد بيانات للعرض",
-          "info":           "عرض من _START_ إلى _END_ لــ _TOTAL_ موجود",
-          "infoEmpty":      "عرض 0 إلى  0 من 0 نتيجة",
-          "infoFiltered":   "(تصفية من _MAX_ مجموع النتائج)",
-          "infoPostFix":    "",
-          "thousands":      ",",
-          "lengthMenu":     "عرض _MENU_ نتائج",
+          "decimal": "",
+          "emptyTable": "لا توجد بيانات للعرض",
+          "info": "عرض من _START_ إلى _END_ لــ _TOTAL_ موجود",
+          "infoEmpty": "عرض 0 إلى  0 من 0 نتيجة",
+          "infoFiltered": "(تصفية من _MAX_ مجموع النتائج)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "عرض _MENU_ نتائج",
           "loadingRecords": "تحميل...",
-          "processing":     "عملية جارية...",
-          "search":         "بحث :",
-          "zeroRecords":    "لم يتم العثور على سجلات مطابقة",
+          "processing": "عملية جارية...",
+          "search": "بحث :",
+          "zeroRecords": "لم يتم العثور على سجلات مطابقة",
           "paginate": {
-              "first":      "الأول",
-              "last":       "الأخير",
-              "next":       "التالي",
-              "previous":   "السابق"
+            "first": "الأول",
+            "last": "الأخير",
+            "next": "التالي",
+            "previous": "السابق"
           },
           "aria": {
-              "sortAscending":  ": تمكن من فرز الأعمدة بترتيب تصاعدي",
-              "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
+            "sortAscending": ": تمكن من فرز الأعمدة بترتيب تصاعدي",
+            "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
         }
-      } );
+      });
     }
 
-    function reload_table(){
-      var table = $('#spaces').DataTable();
+    function reload_table() {
+      var table = $('#baptises').DataTable();
       table.clear();
       table.draw();
       table.ajax.reload();
     }
 
     $(document).ready(() => {
-      init_session().then((user)=>{
+      init_session().then((user) => {
         $('#display_name').text(user.displayName)
         $('.fullbox-loading').remove('.sk-loading');
-      }).catch(()=>{
+      }).catch(() => {
         window.location.href = 'login.html';
       })
       load_sidebar();
       load_table();
-      get_sections_reserved().then(sections=>{
-				var select = Cookies.get('sid');
-				sections.forEach(s => {
-					if (s.id === select)
-						$('#cb_section').append( new Option(s.number,s.id, true, true) );
-					else
-						$('#cb_section').append( new Option(s.number,s.id) );
-				});
+      get_baptis_types().then(types => {
+        Object.keys(types).forEach(key => {
+          $('#cb_baptis_types').append(new Option(types[key], key));
+        });
         reload_table();
-        get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
-          groups.forEach(g => {
-            $('#cb_group').append( new Option(g.number,g.id) );
-          });
-        })
       });
-      $('#spaces tbody').on('click', '.space-item', function (e) {
+      $('#baptises tbody').on('click', '.baptis-item', function (e) {
         e.preventDefault();
         var tr = $(this).parent().parent();
-        row = $('#spaces').DataTable().row( tr );
-        var data = $('#spaces').DataTable().row( tr ).data();
-        var space_id = $(this).text();
-        $('#dialog_space').attr('space_id', space_id);
-        $('.space_id').text(space_id);
-        $('.type').text(data[1]);
-        $('.name').text(data[2]);
-        $('.gid').text(data[4]);
-        $('.named').text(data[5]);
+        row = $('#baptises').DataTable().row(tr);
+        var data = $('#baptises').DataTable().row(tr).data();
+        var baptis_id = $(this).text();
+        $('#dialog_baptis').attr('baptis_id', baptis_id);
+        $('.baptis_id').text(baptis_id);
+        $('.name').text(data[1]);
+        $('.decision').text(data[2]);
+        $('.oldname').text(data[3]);
+        $('.named').text(data[4]);
+        $('.after').text(data[5]);
         $('.installed').text(data[6]);
-        $('#dialog_space').modal('show');
+        $('#dialog_baptis').modal('show');
       });
     });
-    $('#update_space').on('submit', function (e) {
-      if (!e.isDefaultPrevented()) { 
+    $('#update_baptis').on('submit', function (e) {
+      if (!e.isDefaultPrevented()) {
         e.preventDefault();
-        const space_id = $('#dialog_space').attr('space_id');
+        const baptis_id = $('#dialog_baptis').attr('baptis_id');
         var data = {
-          type: Number($('#cb_type option:selected').val()),
           name: $('#tb_name').val(),
-          group_id : Number($('#cb_group option:selected').text()),
+          decision: $('#tb_decision').val(),
+          oldname: $('#tb_oldname').val(),
           named: $('#cb_named').prop('checked'),
+          after: $('#cb_after').prop('checked'),
           installed: $('#cb_installed').prop('checked'),
         }
-        update_space(space_id, data).then(result=>{
-          var d = $('#spaces').DataTable().row( row ).data();
-          d[1] = $('#cb_type option:selected').text();
-          d[2] = data.name,
-          d[4] = data.group_id;
-          d[5] = (data.named)?'نعم':'لا';
-          d[6] = (data.installed)?'نعم':'لا';
-          $('#spaces').DataTable().row( row ).data(d).draw();
-          $('#dialog_update_space').modal('toggle');
-        }).catch(errors=>{
+        update_baptis(baptis_id, data).then(result => {
+          var d = $('#baptises').DataTable().row(row).data();
+          d[1] = data.name;
+          d[2] = data.decision;
+          d[3] = data.oldname;
+          d[4] = (data.named) ? 'نعم' : 'لا';
+          d[5] = (data.after) ? 'نعم' : 'لا';
+          d[6] = (data.installed) ? 'نعم' : 'لا';
+          $('#baptises').DataTable().row(row).data(d).draw();
+          $('#dialog_update_baptis').modal('toggle');
+        }).catch(errors => {
           swal("يوجد خطأ!", errors[0].message, "error");
         })
       }
     });
-    $('#update-space').click((e)=>{
+    $('#update-baptis').click((e) => {
       e.preventDefault();
-      const space_id = $('#dialog_space').attr('space_id');
+      const baptis_id = $('#dialog_baptis').attr('baptis_id');
       var data = row.data();
-      $('#dialog_space').modal('toggle');
-      
-      $('#dialog_update_space').attr('space_id', space_id);
-      $('.space_id').text(space_id);
-      $("#cb_type option").filter(function() {return $(this).text() == data[1];}).prop('selected', true);
-      $('#tb_name').val(data[2]);
-      $('#cb_named').prop('checked', data[5]==='نعم');
-      $('#cb_installed').prop('checked', data[6]==='نعم');
+      $('#dialog_baptis').modal('toggle');
+
+      $('#dialog_update_baptis').attr('baptis_id', baptis_id);
+      $('.baptis_id').text(baptis_id);
+      $('#tb_name').val(data[1]);
+      $('#tb_decsion').val(data[2]);
+      $('#tb_oldname').val(data[3]);
+      $('#cb_named').prop('checked', data[4] === 'نعم');
+      $('#cb_after').prop('checked', data[5] === 'نعم');
+      $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
+      $('#cb_installed').prop('checked', data[6] === 'نعم');
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      $("#cb_group option").filter(function() {return $(this).text() == data[4];}).prop('selected', true);
-      $('#dialog_update_space').modal('show');
+      $('#dialog_update_baptis').modal('show');
     })
     $('#cb_named').change(function () {
+      $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      if (!$('#cb_named').prop('checked'))
+      if (!$('#cb_named').prop('checked')) {
+        $('#cb_after').prop('checked', false);
         $('#cb_installed').prop('checked', false);
+      }
     });
-    $('#delete-space').click((e)=>{
+    $('#delete-baptis').click((e) => {
       e.preventDefault();
-      const space_id = $('#dialog_space').attr('space_id');
+      const baptis_id = $('#dialog_baptis').attr('baptis_id');
       swal({
         title: "هل أنت متأكد!",
-        text: `أنت بصدد حذف تسمية فضاء "${space_id}" ، هل أنت متأكد؟`,
+        text: `أنت بصدد حذف فضاء "${baptis_id}" ، هل أنت متأكد؟`,
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#016AD9",
@@ -574,26 +568,20 @@
         closeOnConfirm: true
       }, function (isConfirm) {
         if (isConfirm) {
-          delete_space(space_id).then(result=>{
+          delete_baptis(baptis_id).then(result => {
             row.remove().draw();
-            $('#dialog_space').modal('toggle');
-          }).catch(errors=>{
+            $('#dialog_baptis').modal('toggle');
+          }).catch(errors => {
             swal("يوجد خطأ!", errors[0].message, "error");
           });
         }
       });
     })
-    $('#refrech').click(()=>{
+    $('#refrech').click(() => {
       reload_table();
     });
-    $('#cb_section').change(function () {
+    $('#cb_baptis_types').change(function () {
       reload_table();
-      $('#cb_group').empty();
-      get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
-        groups.forEach(g => {
-          $('#cb_group').append( new Option(g.number,g.id) );
-        });
-      })
     });
     $('.logout').click(function () {
       logout();
@@ -610,4 +598,5 @@
     })
   </script>
 </body>
+
 </html>
