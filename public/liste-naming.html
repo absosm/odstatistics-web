@@ -182,16 +182,16 @@
                     <div class="col-lg-4">
                       <form method="get">
                         <div class="form-group  row">
-                          <label for="cb_baptis_types" class="col-sm-4 col-form-label">نوع الفضاء</label>
+                          <label for="cb_naming_types" class="col-sm-4 col-form-label">نوع الفضاء</label>
                           <div class="col-sm-8">
-                            <select id="cb_baptis_types" class="form-control"></select>
+                            <select id="cb_naming_types" class="form-control"></select>
                           </div>
                         </div>
                       </form>
                     </div>
                   </div>
                   <!-- <div class="hr-line-dashed"></div> -->
-                  <table id="baptises" class="table table-striped table-bordered table-hover" style="width:100%">
+                  <table id="namings" class="table table-striped table-bordered table-hover" style="width:100%">
                     <thead>
                       <tr>
                         <th>رقم التعريف</th>
@@ -235,7 +235,7 @@
   </div>
 
 
-  <div class="modal" id="dialog_baptis" tabindex="-1" role="dialog">
+  <div class="modal" id="dialog_naming" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -249,7 +249,7 @@
             <div class="col-lg-12">
               <div class="row">
                 <div class="col-lg-4">رقم التعريف:</div>
-                <div class="col-lg-8"><b class="baptis_id"></b></div>
+                <div class="col-lg-8"><b class="naming_id"></b></div>
               </div>
               <div class="row">
                 <div class="col-lg-4">التسمية:</div>
@@ -285,8 +285,8 @@
               <i class="fa fa-edit"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" id="update-baptis">تعديل</a></li>
-              <li><a class="dropdown-item" href="#" id="delete-baptis">حذف</a></li>
+              <li><a class="dropdown-item" href="#" id="update-naming">تعديل</a></li>
+              <li><a class="dropdown-item" href="#" id="delete-naming">حذف</a></li>
             </ul>
           </div>
           <div class="btn-group">
@@ -298,10 +298,10 @@
   </div>
 
 
-  <div class="modal" id="dialog_update_baptis" tabindex="-1" role="dialog">
+  <div class="modal" id="dialog_update_naming" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="update_baptis" class="m-t" role="form" method="post" enctype="multipart/form-data">
+        <form id="update_naming" class="m-t" role="form" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -313,7 +313,7 @@
               <div class="col-lg-12">
                 <div class="row">
                   <div class="col-lg-4">رقم التعريف:</div>
-                  <div class="col-lg-8"><b class="baptis_id"></b></div>
+                  <div class="col-lg-8"><b class="naming_id"></b></div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">التسمية</label>
@@ -386,15 +386,15 @@
 
     var row = null;
 
-    function get_baptis() { 
-      const s = $('#cb_baptis_types option:selected').val();
+    function get_naming() { 
+      const s = $('#cb_naming_types option:selected').val();
       return Number( (s===undefined)?0:s );
     }
 
     function load_table() {
       // Upgrade button class name
       $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-      $('#baptises').DataTable({
+      $('#namings').DataTable({
         pageLength: -1,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
@@ -425,10 +425,10 @@
         "processing": true,
         // "serverSide": true,
         "ajax": {
-          url: `${API_URL}/baptises_data`,
+          url: `${API_URL}/namings_data`,
           type: "POST",
           data: function (d) {
-            d.type_id = get_baptis();
+            d.type_id = get_naming();
           },
           xhrFields: {
             withCredentials: true
@@ -463,7 +463,7 @@
     }
 
     function reload_table() {
-      var table = $('#baptises').DataTable();
+      var table = $('#namings').DataTable();
       table.clear();
       table.draw();
       table.ajax.reload();
@@ -478,33 +478,33 @@
       })
       load_sidebar();
       load_table();
-      get_baptis_types().then(types => {
+      get_naming_types().then(types => {
         Object.keys(types).forEach(key => {
-          $('#cb_baptis_types').append(new Option(types[key], key));
+          $('#cb_naming_types').append(new Option(types[key], key));
         });
         reload_table();
       });
-      $('#baptises tbody').on('click', '.baptis-item', function (e) {
+      $('#namings tbody').on('click', '.naming-item', function (e) {
         e.preventDefault();
         var tr = $(this).parent().parent();
-        row = $('#baptises').DataTable().row(tr);
-        var data = $('#baptises').DataTable().row(tr).data();
-        var baptis_id = $(this).text();
-        $('#dialog_baptis').attr('baptis_id', baptis_id);
-        $('.baptis_id').text(baptis_id);
+        row = $('#namings').DataTable().row(tr);
+        var data = $('#namings').DataTable().row(tr).data();
+        var naming_id = $(this).text();
+        $('#dialog_naming').attr('naming_id', naming_id);
+        $('.naming_id').text(naming_id);
         $('.name').text(data[1]);
         $('.decision').text(data[2]);
         $('.oldname').text(data[3]);
         $('.named').text(data[4]);
         $('.after').text(data[5]);
         $('.installed').text(data[6]);
-        $('#dialog_baptis').modal('show');
+        $('#dialog_naming').modal('show');
       });
     });
-    $('#update_baptis').on('submit', function (e) {
+    $('#update_naming').on('submit', function (e) {
       if (!e.isDefaultPrevented()) {
         e.preventDefault();
-        const baptis_id = $('#dialog_baptis').attr('baptis_id');
+        const naming_id = $('#dialog_naming').attr('naming_id');
         var data = {
           name: $('#tb_name').val(),
           decision: $('#tb_decision').val(),
@@ -513,29 +513,29 @@
           after: $('#cb_after').prop('checked'),
           installed: $('#cb_installed').prop('checked'),
         }
-        update_baptis(baptis_id, data).then(result => {
-          var d = $('#baptises').DataTable().row(row).data();
+        update_naming(naming_id, data).then(result => {
+          var d = $('#namings').DataTable().row(row).data();
           d[1] = data.name;
           d[2] = data.decision;
           d[3] = data.oldname;
           d[4] = (data.named) ? 'نعم' : 'لا';
           d[5] = (data.after) ? 'نعم' : 'لا';
           d[6] = (data.installed) ? 'نعم' : 'لا';
-          $('#baptises').DataTable().row(row).data(d).draw();
-          $('#dialog_update_baptis').modal('toggle');
+          $('#namings').DataTable().row(row).data(d).draw();
+          $('#dialog_update_naming').modal('toggle');
         }).catch(errors => {
           swal("يوجد خطأ!", errors[0].message, "error");
         })
       }
     });
-    $('#update-baptis').click((e) => {
+    $('#update-naming').click((e) => {
       e.preventDefault();
-      const baptis_id = $('#dialog_baptis').attr('baptis_id');
+      const naming_id = $('#dialog_naming').attr('naming_id');
       var data = row.data();
-      $('#dialog_baptis').modal('toggle');
+      $('#dialog_naming').modal('toggle');
 
-      $('#dialog_update_baptis').attr('baptis_id', baptis_id);
-      $('.baptis_id').text(baptis_id);
+      $('#dialog_update_naming').attr('naming_id', naming_id);
+      $('.naming_id').text(naming_id);
       $('#tb_name').val(data[1]);
       $('#tb_decision').val(data[2]);
       $('#tb_oldname').val(data[3]);
@@ -544,7 +544,7 @@
       $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
       $('#cb_installed').prop('checked', data[6] === 'نعم');
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      $('#dialog_update_baptis').modal('show');
+      $('#dialog_update_naming').modal('show');
     })
     $('#cb_named').change(function () {
       $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
@@ -554,12 +554,12 @@
         $('#cb_installed').prop('checked', false);
       }
     });
-    $('#delete-baptis').click((e) => {
+    $('#delete-naming').click((e) => {
       e.preventDefault();
-      const baptis_id = $('#dialog_baptis').attr('baptis_id');
+      const naming_id = $('#dialog_naming').attr('naming_id');
       swal({
         title: "هل أنت متأكد!",
-        text: `أنت بصدد حذف فضاء "${baptis_id}" ، هل أنت متأكد؟`,
+        text: `أنت بصدد حذف فضاء "${naming_id}" ، هل أنت متأكد؟`,
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#016AD9",
@@ -568,9 +568,9 @@
         closeOnConfirm: true
       }, function (isConfirm) {
         if (isConfirm) {
-          delete_baptis(baptis_id).then(result => {
+          delete_naming(naming_id).then(result => {
             row.remove().draw();
-            $('#dialog_baptis').modal('toggle');
+            $('#dialog_naming').modal('toggle');
           }).catch(errors => {
             swal("يوجد خطأ!", errors[0].message, "error");
           });
@@ -580,7 +580,7 @@
     $('#refrech').click(() => {
       reload_table();
     });
-    $('#cb_baptis_types').change(function () {
+    $('#cb_naming_types').change(function () {
       reload_table();
     });
     $('.logout').click(function () {

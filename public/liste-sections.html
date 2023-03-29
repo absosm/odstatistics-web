@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="absosm">
-  <title>الخلية البلدية للعنونة | الرئيسية</title>
+  <title>الخلية البلدية للعنونة | قائمة المقاطعات</title>
   <!-- update the version number as needed -->
   <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
   <!-- include only the Firebase features as you need -->
@@ -27,18 +28,27 @@
   <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
   <script defer src="/__/firebase/init.js"></script>
   <!-- Bootstrap core CSS -->
-  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
+  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet">
   <!-- Animation CSS -->
   <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
   <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <!-- Toastr style -->
   <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+  <!-- Sweet Alert -->
+  <link href="https://apcouleddjellal.dz/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+  <!-- Data Tables style -->
+  <link hreff="https://apcouleddjellal.dz/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="css/odstyle.css?v=0.0.1" rel="stylesheet">
+  <link href="css/odstyle.css?v=0.0.3" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .table-responsive label {
+      display: inline-flex;
+    }
+  </style>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
 </head>
 
 <body class="rtls canvas-menu fixed-nav ">
@@ -59,7 +69,7 @@
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
             <div class="dropdown profile-element">
-              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png"/>
+              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png" />
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span id="display_name" class="block m-t-xs font-bold">[Display name]</span>
                 <span class="text-muted text-xs block">عون الإحصاء <b class="caret"></b></span>
@@ -73,13 +83,13 @@
               </ul>
             </div>
             <div class="logo-element">
-              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png"/>
+              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png" />
             </div>
           </li>
         </ul>
       </div>
     </nav>
-    
+
     <div id="page-wrapper" class="gray-bg">
       <div class="row border-bottom">
         <nav class="navbar navbar-fixed-top  " role="navigation" style="margin-bottom: 0">
@@ -93,11 +103,11 @@
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <span class="m-r-sm text-muted welcome-message">خاصة بالخلية البلدية للعنونة</span>
+              <span class="m-r-sm text-muted welcome-message">خاصة باللجنة البلدية للعنونة</span>
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
+                <i class="fa fa-envelope"></i> <span class="label label-warning">0</span>
               </a>
               <ul class="dropdown-menu dropdown-messages">
                 <li>
@@ -109,7 +119,7 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell"></i>  <span class="label label-primary">0</span>
+                <i class="fa fa-bell"></i> <span class="label label-primary">0</span>
               </a>
               <ul class="dropdown-menu dropdown-alerts">
                 <li>
@@ -135,90 +145,60 @@
             <li class="breadcrumb-item">
               <a href=".">الرئيسية</a>
             </li>
+            <li class="breadcrumb-item">
+              إدارة الخلية البلدية
+            </li>
             <li class="breadcrumb-item active">
-              <strong>لوحة التحكم</strong>
+              <strong> قائمة المقاطعات </strong>
             </li>
           </ol>
         </div>
       </div>
-  
-      <div class="wrapper wrapper-content">
-        <div class="animated fadeInLeftBig">
-          <div class="row">
-            <div class="col-lg-3">
-              <div class="ibox ">
-                <div class="ibox-title">
-                  <div class="ibox-tools">
-                    <span class="label label-success float-right">يومي</span>
-                  </div>
-                  <h5>إحصاء</h5>
-                </div>
-                <div class="ibox-content">
-                  <h1 class="no-margins" id="daily">0</h1>
-                  <div class="stat-percent font-bold text-success" id="pdaily">0% <i class="fa fa-bolt"></i></div>
-                  <small>مجموع يومي</small>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="ibox ">
-                <div class="ibox-title">
-                  <div class="ibox-tools">
-                      <span class="label label-info float-right">أسبوعي</span>
-                  </div>
-                  <h5>إحصاء</h5>
-                </div>
-                <div class="ibox-content">
-                  <h1 class="no-margins" id="weekly">0</h1>
-                  <div class="stat-percent font-bold text-info" id="pweekly">0% <i class="fa fa-level-up"></i></div>
-                  <small>مجموع أسبوعي</small>
+
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox ">
+              <div class="ibox-title">
+                <h5>جدول تفصيلي حول الفضاءات العمومية</h5>
+                <div class="ibox-tools">
+                  <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#" class="dropdown-item" id="refrech">تحديث</a></li>
+                  </ul>
+                  <a class="close-link">
+                    <i class="fa fa-times"></i>
+                  </a>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="ibox ">
-                <div class="ibox-title">
-                  <div class="ibox-tools">
-                    <span class="label label-primary float-right">شهري</span>
+              <div class="ibox-content">
+                <div class="table-responsive">
+                  <div class="row">
+
                   </div>
-                  <h5>إحصاء</h5>
-                </div>
-                <div class="ibox-content">
-                  <h1 class="no-margins" id="monthly">0</h1>
-                  <div class="stat-percent font-bold text-navy" id="pmonthly">0% <i class="fa fa-level-up"></i></div>
-                  <small>مجموع شهري</small>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="ibox ">
-                <div class="ibox-title">
-                  <div class="ibox-tools">
-                    <span class="label label-danger float-right">إجمالي</span>
-                  </div>
-                  <h5>مجمل ما تم أنجازه</h5>
-                </div>
-                <div class="ibox-content">
-                  <h1 class="no-margins" id="total">0</h1>
-                  <div class="stat-percent font-bold text-danger" id="ptotal">0% <i class="fa fa-level-down"></i></div>
-                  <small>مجموع كلي</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="footer">
         <div class="float-right">
           Developed by <strong>@absosm</strong> .
         </div>
         <div>
-          <strong>Copyright</strong> apcouleddjellal &copy; 2022
+          <strong>Copyright</strong> apcouleddjellal &copy; 2023
         </div>
       </div>
     </div>
   </div>
+
+
   <!-- Mainly scripts -->
   <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/popper.min.js"></script>
@@ -227,25 +207,30 @@
   <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
   <!-- Toastr script -->
   <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
+  <!-- Sweet alert -->
+  <script src="https://apcouleddjellal.dz/js/plugins/sweetalert/sweetalert.min.js"></script>
+  <!-- Data Tables Scripts -->
+  <script src="https://apcouleddjellal.dz/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
   <!-- Custom and plugin javascript -->
   <script src="https://apcouleddjellal.dz/js/inspinia.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/pace/pace.min.js"></script>
   <script src="https://apcouleddjellal.dz/js/plugins/wow/wow.min.js"></script>
   <!-- Custom and plugin javascript -->
   <script defer src="js/firebase.js?v=0.0.1"></script>
-  <script defer src="js/dash.js?v=0.0.13"></script>
+  <script defer src="js/dash.js?v=0.0.15"></script>
+  <script defer src="js/admin.js?v=0.0.7"></script>
   <script type="module">
     $(document).ready(() => {
-      init_session().then((user)=>{
+      init_session().then((user) => {
         $('#display_name').text(user.displayName)
         $('.fullbox-loading').remove('.sk-loading');
-      }).catch(()=>{
+      }).catch(() => {
         window.location.href = 'login.html';
       })
       load_sidebar();
-      get_statistics_uid();
     });
-
+    
     $('.logout').click(function () {
       logout();
     });
@@ -261,4 +246,5 @@
     })
   </script>
 </body>
+
 </html>

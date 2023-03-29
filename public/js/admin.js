@@ -139,9 +139,9 @@ function get_groups_snum(snum) {
   });
 }
 
-function update_baptis(id, data) {
+function update_naming(id, data) {
 	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/update_baptis`, {id, data}).then(res => {
+		axios.post(`${API_URL}/update_naming`, {id, data}).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
@@ -152,9 +152,9 @@ function update_baptis(id, data) {
 	})
 }
 
-function delete_baptis(id) {
+function delete_naming(id) {
 	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/delete_baptis`, {id}).then(res => {
+		axios.post(`${API_URL}/delete_naming`, {id}).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
@@ -165,9 +165,9 @@ function delete_baptis(id) {
 	})
 }
 
-function get_baptis_types() {
+function get_naming_types() {
   return new Promise((resolve, reject) => {
-    axios.post(`${API_URL}/baptis_types`).then(res => {
+    axios.post(`${API_URL}/naming_types`).then(res => {
       var message = res.data;
       if (message.success) {
         resolve(message.result)
