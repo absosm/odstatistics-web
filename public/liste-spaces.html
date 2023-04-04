@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +28,7 @@
   <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
   <script defer src="/__/firebase/init.js"></script>
   <!-- Bootstrap core CSS -->
-  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
+  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet">
   <!-- Animation CSS -->
   <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
   <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -46,8 +47,8 @@
     }
   </style>
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+  <script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer></script>
 </head>
 
 <body class="rtls canvas-menu fixed-nav ">
@@ -68,7 +69,7 @@
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
             <div class="dropdown profile-element">
-              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png"/>
+              <img id="photo_url" alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/default.png" />
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span id="display_name" class="block m-t-xs font-bold">[Display name]</span>
                 <span class="text-muted text-xs block">عون الإحصاء <b class="caret"></b></span>
@@ -82,13 +83,13 @@
               </ul>
             </div>
             <div class="logo-element">
-              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png"/>
+              <img alt="image" class="rounded-circle" src="https://apcouleddjellal.dz/img/logo-24x24-w.png" />
             </div>
           </li>
         </ul>
       </div>
     </nav>
-    
+
     <div id="page-wrapper" class="gray-bg">
       <div class="row border-bottom">
         <nav class="navbar navbar-fixed-top  " role="navigation" style="margin-bottom: 0">
@@ -106,7 +107,7 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
+                <i class="fa fa-envelope"></i> <span class="label label-warning">0</span>
               </a>
               <ul class="dropdown-menu dropdown-messages">
                 <li>
@@ -118,7 +119,7 @@
             </li>
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell"></i>  <span class="label label-primary">0</span>
+                <i class="fa fa-bell"></i> <span class="label label-primary">0</span>
               </a>
               <ul class="dropdown-menu dropdown-alerts">
                 <li>
@@ -148,12 +149,12 @@
               إدارة الخلية البلدية
             </li>
             <li class="breadcrumb-item active">
-              <strong>  إحصاء الفضاءات العمومية </strong>
+              <strong> إحصاء الفضاءات العمومية </strong>
             </li>
           </ol>
         </div>
       </div>
-  
+
       <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
           <div class="col-lg-12">
@@ -181,10 +182,10 @@
                     <div class="col-lg-3">
                       <form method="get">
                         <div class="form-group  row">
-                            <label for="section" class="col-sm-2 col-form-label">المقاطعة</label>
-                            <div class="col-sm-10">
-                              <select id="cb_section" class="form-control"></select>
-                            </div>
+                          <label for="section" class="col-sm-2 col-form-label">المقاطعة</label>
+                          <div class="col-sm-10">
+                            <select id="cb_section" class="form-control"></select>
+                          </div>
                         </div>
                       </form>
                     </div>
@@ -348,8 +349,10 @@
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
                   <div class="col-sm-8">
-                    <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label class="checkbox-inline">
-                    <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label class="checkbox-inline">
+                    <label><input id="cb_named" type="checkbox"> التسمية الأولية </label> <label
+                      class="checkbox-inline">
+                      <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> <label
+                        class="checkbox-inline">
                   </div>
                 </div>
               </div>
@@ -395,22 +398,23 @@
 
     var row = null;
 
-    function get_section() { return Number($('#cb_section option:selected').text()); } 
+    function get_section() { return Number($('#cb_section option:selected').text()); }
 
     function load_table() {
       // Upgrade button class name
       $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-      $('#spaces').DataTable( {
+      $('#spaces').DataTable({
         pageLength: -1,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-          {extend: 'copy'},
-          {extend: 'csv'},
-          {extend: 'excel', title: 'ExampleFile'},
-          {extend: 'pdf', title: 'ExampleFile'},
-          {extend: 'print',
-            customize: function (win){
+          { extend: 'copy' },
+          { extend: 'csv' },
+          { extend: 'excel', title: 'ExampleFile' },
+          { extend: 'pdf', title: 'ExampleFile' },
+          {
+            extend: 'print',
+            customize: function (win) {
               $(win.document.body).addClass('white-bg');
               $(win.document.body).css('font-size', '10px');
               $(win.document.body).find('table')
@@ -424,15 +428,15 @@
         ],
         order: [[4, 'asc'], [2, 'asc']],
         lengthMenu: [
-            [10, 25, 50,100, -1],
-            [10, 25, 50,100, 'الكل'],
+          [10, 25, 50, 100, -1],
+          [10, 25, 50, 100, 'الكل'],
         ],
         "processing": true,
         // "serverSide": true,
         "ajax": {
           url: `${API_URL}/spaces_data`,
           type: "POST",
-          data: function(d){
+          data: function (d) {
             d.s_number = get_section();
           },
           xhrFields: {
@@ -441,33 +445,33 @@
           crossDomain: true
         },
         "language": {
-          "decimal":        "",
-          "emptyTable":     "لا توجد بيانات للعرض",
-          "info":           "عرض من _START_ إلى _END_ لــ _TOTAL_ موجود",
-          "infoEmpty":      "عرض 0 إلى  0 من 0 نتيجة",
-          "infoFiltered":   "(تصفية من _MAX_ مجموع النتائج)",
-          "infoPostFix":    "",
-          "thousands":      ",",
-          "lengthMenu":     "عرض _MENU_ نتائج",
+          "decimal": "",
+          "emptyTable": "لا توجد بيانات للعرض",
+          "info": "عرض من _START_ إلى _END_ لــ _TOTAL_ موجود",
+          "infoEmpty": "عرض 0 إلى  0 من 0 نتيجة",
+          "infoFiltered": "(تصفية من _MAX_ مجموع النتائج)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "عرض _MENU_ نتائج",
           "loadingRecords": "تحميل...",
-          "processing":     "عملية جارية...",
-          "search":         "بحث :",
-          "zeroRecords":    "لم يتم العثور على سجلات مطابقة",
+          "processing": "عملية جارية...",
+          "search": "بحث :",
+          "zeroRecords": "لم يتم العثور على سجلات مطابقة",
           "paginate": {
-              "first":      "الأول",
-              "last":       "الأخير",
-              "next":       "التالي",
-              "previous":   "السابق"
+            "first": "الأول",
+            "last": "الأخير",
+            "next": "التالي",
+            "previous": "السابق"
           },
           "aria": {
-              "sortAscending":  ": تمكن من فرز الأعمدة بترتيب تصاعدي",
-              "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
+            "sortAscending": ": تمكن من فرز الأعمدة بترتيب تصاعدي",
+            "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
         }
-      } );
+      });
     }
 
-    function reload_table(){
+    function reload_table() {
       var table = $('#spaces').DataTable();
       table.clear();
       table.draw();
@@ -475,34 +479,34 @@
     }
 
     $(document).ready(() => {
-      init_session().then((user)=>{
+      init_session().then((user) => {
         $('#display_name').text(user.displayName)
         $('.fullbox-loading').remove('.sk-loading');
-      }).catch(()=>{
+      }).catch(() => {
         window.location.href = 'login.html';
       })
       load_sidebar();
       load_table();
-      get_sections_reserved().then(sections=>{
-				var select = Cookies.get('sid');
-				sections.forEach(s => {
-					if (s.id === select)
-						$('#cb_section').append( new Option(s.number,s.id, true, true) );
-					else
-						$('#cb_section').append( new Option(s.number,s.id) );
-				});
+      get_sections_reserved().then(sections => {
+        var select = Cookies.get('sid');
+        sections.forEach(s => {
+          if (s.id === select)
+            $('#cb_section').append(new Option(s.number, s.id, true, true));
+          else
+            $('#cb_section').append(new Option(s.number, s.id));
+        });
         reload_table();
-        get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+        get_groups_sid($('#cb_section option:selected').val()).then(groups => {
           groups.forEach(g => {
-            $('#cb_group').append( new Option(g.number,g.id) );
+            $('#cb_group').append(new Option(g.number, g.id));
           });
         })
       });
       $('#spaces tbody').on('click', '.space-item', function (e) {
         e.preventDefault();
         var tr = $(this).parent().parent();
-        row = $('#spaces').DataTable().row( tr );
-        var data = $('#spaces').DataTable().row( tr ).data();
+        row = $('#spaces').DataTable().row(tr);
+        var data = $('#spaces').DataTable().row(tr).data();
         var space_id = $(this).text();
         $('#dialog_space').attr('space_id', space_id);
         $('.space_id').text(space_id);
@@ -515,44 +519,44 @@
       });
     });
     $('#update_space').on('submit', function (e) {
-      if (!e.isDefaultPrevented()) { 
+      if (!e.isDefaultPrevented()) {
         e.preventDefault();
         const space_id = $('#dialog_space').attr('space_id');
         var data = {
           type: Number($('#cb_type option:selected').val()),
           name: $('#tb_name').val(),
-          group_id : Number($('#cb_group option:selected').text()),
+          group_id: Number($('#cb_group option:selected').text()),
           named: $('#cb_named').prop('checked'),
           installed: $('#cb_installed').prop('checked'),
         }
-        update_space(space_id, data).then(result=>{
-          var d = $('#spaces').DataTable().row( row ).data();
+        update_space(space_id, data).then(result => {
+          var d = $('#spaces').DataTable().row(row).data();
           d[1] = $('#cb_type option:selected').text();
           d[2] = data.name,
-          d[4] = data.group_id;
-          d[5] = (data.named)?'نعم':'لا';
-          d[6] = (data.installed)?'نعم':'لا';
-          $('#spaces').DataTable().row( row ).data(d).draw();
+            d[4] = data.group_id;
+          d[5] = (data.named) ? 'نعم' : 'لا';
+          d[6] = (data.installed) ? 'نعم' : 'لا';
+          $('#spaces').DataTable().row(row).data(d).draw();
           $('#dialog_update_space').modal('toggle');
-        }).catch(errors=>{
+        }).catch(errors => {
           swal("يوجد خطأ!", errors[0].message, "error");
         })
       }
     });
-    $('#update-space').click((e)=>{
+    $('#update-space').click((e) => {
       e.preventDefault();
       const space_id = $('#dialog_space').attr('space_id');
       var data = row.data();
       $('#dialog_space').modal('toggle');
-      
+
       $('#dialog_update_space').attr('space_id', space_id);
       $('.space_id').text(space_id);
-      $("#cb_type option").filter(function() {return $(this).text() == data[1];}).prop('selected', true);
+      $("#cb_type option").filter(function () { return $(this).text() == data[1]; }).prop('selected', true);
       $('#tb_name').val(data[2]);
-      $('#cb_named').prop('checked', data[5]==='نعم');
-      $('#cb_installed').prop('checked', data[6]==='نعم');
+      $('#cb_named').prop('checked', data[5] === 'نعم');
+      $('#cb_installed').prop('checked', data[6] === 'نعم');
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      $("#cb_group option").filter(function() {return $(this).text() == data[4];}).prop('selected', true);
+      $("#cb_group option").filter(function () { return $(this).text() == data[4]; }).prop('selected', true);
       $('#dialog_update_space').modal('show');
     })
     $('#cb_named').change(function () {
@@ -560,7 +564,7 @@
       if (!$('#cb_named').prop('checked'))
         $('#cb_installed').prop('checked', false);
     });
-    $('#delete-space').click((e)=>{
+    $('#delete-space').click((e) => {
       e.preventDefault();
       const space_id = $('#dialog_space').attr('space_id');
       swal({
@@ -574,24 +578,24 @@
         closeOnConfirm: true
       }, function (isConfirm) {
         if (isConfirm) {
-          delete_space(space_id).then(result=>{
+          delete_space(space_id).then(result => {
             row.remove().draw();
             $('#dialog_space').modal('toggle');
-          }).catch(errors=>{
+          }).catch(errors => {
             swal("يوجد خطأ!", errors[0].message, "error");
           });
         }
       });
     })
-    $('#refrech').click(()=>{
+    $('#refrech').click(() => {
       reload_table();
     });
     $('#cb_section').change(function () {
       reload_table();
       $('#cb_group').empty();
-      get_groups_sid($('#cb_section option:selected').val()).then(groups=>{
+      get_groups_sid($('#cb_section option:selected').val()).then(groups => {
         groups.forEach(g => {
-          $('#cb_group').append( new Option(g.number,g.id) );
+          $('#cb_group').append(new Option(g.number, g.id));
         });
       })
     });
@@ -610,4 +614,5 @@
     })
   </script>
 </body>
+
 </html>
