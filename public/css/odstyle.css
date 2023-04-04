@@ -2542,8 +2542,14 @@ table.dataTable thead .sorting_desc_disabled {
 .dataTables_length {
   float: left;
 }
+body.rtls .dataTables_length {
+  float: left;
+}
 .dataTables_filter label {
   margin-right: 5px;
+}
+body.rtls .dataTables_filter {
+  text-align: left;
 }
 .html5buttons {
   float: right;
