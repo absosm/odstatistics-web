@@ -47,8 +47,8 @@
     }
   </style>
 
-<script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
-<script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer ></script>
+  <script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer></script>
 </head>
 
 <body class="rtls canvas-menu fixed-nav ">
@@ -219,6 +219,63 @@
     </div>
   </div>
 
+  <!-- dialog section  -->
+  <div class="modal" id="dlg_section" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"> خصائص المقاطعة </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-4">رقم التعريف:</div>
+                <div class="col-lg-8"><b class="section_id"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">الرقم:</div>
+                <div class="col-lg-8"><b class="number"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">المستخدم:</div>
+                <div class="col-lg-8"><b class="display_name"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">المجموعات السكنية:</div>
+                <div class="col-lg-8"><b class="groups"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4"> الفضاءات العمومية:</div>
+                <div class="col-lg-8"><b class="spaces"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">مداخل البنايات:</div>
+                <div class="col-lg-8"><b class="numberings"></b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+              خيارات
+              <i class="fa fa-edit"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" id="btn_lock">إقفال</a></li>
+              <li><a class="dropdown-item" href="#" id="btn_assignement">إسناد</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Mainly scripts -->
   <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
@@ -242,6 +299,8 @@
   <script defer src="js/dash.js?v=0.0.15"></script>
   <script defer src="js/admin.js?v=0.0.7"></script>
   <script type="module">
+
+    var row = null;
 
     function load_table() {
       $('#sections').DataTable({
@@ -282,10 +341,20 @@
             "sortAscending": ": تمكن من فرز الأعمدة بترتيب تصاعدي",
             "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
+        },
+        rowCallback: function( row, data ) {
+          $('td', row).eq(0).html(`<a class="section-item" href="#">${data[0]}</a>`);
+          $('td', row).eq(6).html(`<span class="label label-${(data[6] !== 0) ? ((data[6] === 1) ? 'primary' : 'warning') : 'danger'}">
+                ${(data[6] !== 0) ? ((data[6] === 1) ? 'مكتمل' : 'يحجز') : 'لاشيء'}</span>`);
         }
       });
     }
-
+    function reload_table() {
+      var table = $('#sections').DataTable();
+      table.clear();
+      table.draw();
+      table.ajax.reload();
+    }
     $(document).ready(() => {
       init_session().then((user) => {
         $('#display_name').text(user.displayName)
@@ -295,8 +364,33 @@
       })
       load_sidebar();
       load_table();
+      $('#sections tbody').on('click', '.section-item', function (e) {
+        e.preventDefault();
+        var tr = $(this).parent().parent();
+        row = $('#sections').DataTable().row(tr);
+        var data = $('#sections').DataTable().row(tr).data();
+        var section_id = $(this).text();
+        $('#dlg_section').attr('section_id', section_id);
+        $('.section_id').text(section_id);
+        $('.number').text(data[1]);
+        $('.display_name').text(data[2]);
+        $('.groups').text(data[3]);
+        $('.spaces').text(data[4]);
+        $('.numberings').text(data[5]);
+        $('#dlg_section').modal('show');
+      });
     });
-
+    $('#refrech').click(() => {
+      reload_table();
+    });
+    $('#btn_lock').click(()=>{
+      lock_section($('#dlg_section').attr('section_id')).then(()=>{
+        var d = $('#sections').DataTable().row(row).data();
+        d[6] = 1;
+        $('#sections').DataTable().row(row).data(d).draw();
+        $('#dlg_section').modal('toggle');
+      })
+    })
     $('.logout').click(function () {
       logout();
     });

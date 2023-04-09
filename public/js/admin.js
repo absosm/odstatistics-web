@@ -89,6 +89,19 @@ function add_section() {
     });
 }
 
+function lock_section(id, lock=true) {
+  return new Promise((resolve, reject)=>{
+    axios.post(`${API_URL}/lock_section`, { id: id, lock: lock }).then(res => {
+      var message = res.data;
+      if (message.success) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    });
+  })
+}
+
 function add_group() {
   const section_id = $('#cb_section option:selected').val();
   const l = $('.lbtn-add').ladda();
@@ -140,29 +153,29 @@ function get_groups_snum(snum) {
 }
 
 function update_naming(id, data) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/update_naming`, {id, data}).then(res => {
-			var message = res.data;
-			if (message.success) {
-				resolve(true);
-			}else {
-				reject(message.errors);
-			}
-		})
-	})
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}/update_naming`, { id, data }).then(res => {
+      var message = res.data;
+      if (message.success) {
+        resolve(true);
+      } else {
+        reject(message.errors);
+      }
+    })
+  })
 }
 
 function delete_naming(id) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/delete_naming`, {id}).then(res => {
-			var message = res.data;
-			if (message.success) {
-				resolve(true);
-			}else {
-				reject(message.errors);
-			}
-		})
-	})
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}/delete_naming`, { id }).then(res => {
+      var message = res.data;
+      if (message.success) {
+        resolve(true);
+      } else {
+        reject(message.errors);
+      }
+    })
+  })
 }
 
 function get_naming_types() {
