@@ -1,146 +1,152 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="absosm">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>الخلية البلدية للعنونة</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/9.14.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/9.14.0/firebase-database-compat.js"></script>
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-firestore-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-functions-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-messaging-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-storage-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-analytics-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-remote-config-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.14.0/firebase-performance-compat.js"></script> -->
-    <!-- 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="author" content="absosm">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الخلية البلدية للعنونة</title>
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/9.14.0/firebase-app-compat.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/9.14.0/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/9.14.0/firebase-database-compat.js"></script>
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-firestore-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-functions-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-messaging-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-storage-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-analytics-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-remote-config-compat.js"></script> -->
+  <!-- <script defer src="/__/firebase/9.14.0/firebase-performance-compat.js"></script> -->
+  <!-- 
       initialize the SDK after all desired features are loaded, set useEmulator to false
       to avoid connecting the SDK to running emulators.
     -->
-    <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
-    <script defer src="/__/firebase/init.js"></script>
-    <!-- Bootstrap core CSS -->
-    <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet"> 
-    <!-- Animation CSS -->
-    <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
-    <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Toastr style -->
-    <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <!-- Ladda style -->
-    <link href="https://apcouleddjellal.dz/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
-    <!-- custom style -->
-    <link href="css/style.css?v0.0.0.4" rel="stylesheet">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <!-- <script defer src="/__/firebase/init.js?useEmulator=true"></script> -->
+  <script defer src="/__/firebase/init.js"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="https://apcouleddjellal.dz/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Animation CSS -->
+  <link href="https://apcouleddjellal.dz/css/animate.css" rel="stylesheet">
+  <link href="https://apcouleddjellal.dz/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Toastr style -->
+  <link href="https://apcouleddjellal.dz/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+  <!-- Ladda style -->
+  <link href="https://apcouleddjellal.dz/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
+  <!-- custom style -->
+  <link href="css/style.css?v0.0.0.4" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-    <script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
-    <script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer ></script>
-  </head>
-  <body class="rtls">
+  <script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer></script>
+</head>
 
-    <div class="fullbox-loading sk-loading">
-      <div class="sk-spinner sk-spinner-wave">
-          <div class="sk-rect1"></div>
-          <div class="sk-rect2"></div>
-          <div class="sk-rect3"></div>
-          <div class="sk-rect4"></div>
-          <div class="sk-rect5"></div>
-      </div>
+<body class="rtls">
+
+  <div class="fullbox-loading sk-loading">
+    <div class="sk-spinner sk-spinner-wave">
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
     </div>
+  </div>
 
-    <div class="wrapper wrapper-content">
-      <div class="middle-box text-center animated fadeInRightBig">
-        <div id="panel">
-          <h2>لوحة التحكم</h2>
-          <h1>خاصة بالخلية البلدية للعنونة</h1>
-          <form id="login" class="m-t" role="form" method="post" enctype="multipart/form-data">
-              <div class="form-group row">
-                <div class="col-lg-12">
-                  <input id="phone" name="phone" type="text" class="form-control" placeholder="رقم الهاتف">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-lg-12">
-                    <input type="text" id="code" name="code" class="form-control" placeholder="أدخل كود SMS الذي يصلك" required>
-                </div>
-              </div>
-              <!-- custom-alert -->
-              <div class="alert alert-danger custom-alert" style="display: none"></div>
-              <div id="recaptcha-container"></div>
-              <button id="btn_login" type="submit" class="ladda-button ladda-button-demo btn btn-primary btn-rounded btn-block" href="#" disabled></i> تسجيل الدخول</button>
-          </form>
-          <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
-            
-        </div>
-        <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
+  <div class="wrapper wrapper-content">
+    <div class="middle-box text-center animated fadeInRightBig">
+      <div id="panel">
+        <h2>لوحة التحكم</h2>
+        <h1>خاصة بالخلية البلدية للعنونة</h1>
+        <form id="login" class="m-t" role="form" method="post" enctype="multipart/form-data">
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <input id="phone" name="phone" type="text" class="form-control" placeholder="رقم الهاتف">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <input type="text" id="code" name="code" class="form-control" placeholder="أدخل كود SMS الذي يصلك"
+                required>
+            </div>
+          </div>
+          <!-- custom-alert -->
+          <div class="alert alert-danger custom-alert" style="display: none"></div>
+          <div id="recaptcha-container"></div>
+          <button id="btn_login" type="submit"
+            class="ladda-button ladda-button-demo btn btn-primary btn-rounded btn-block" href="#" disabled></i> تسجيل
+            الدخول</button>
+        </form>
+        <p>من خلال لوحة التحكم الخاصة بك يمكنك إدراج المعلومات الإحصائية بكل أريحية و أكثر دقة في أي وقت</p>
+
       </div>
+      <p id="copyright"><strong>Copyright</strong> apcouleddjellal &copy; 2022</p>
     </div>
+  </div>
 
-    <!-- Mainly scripts -->
-    <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
-    <script src="https://apcouleddjellal.dz/js/popper.min.js"></script>
-    <script src="https://apcouleddjellal.dz/js/bootstrap.js"></script>
-    <script src="https://apcouleddjellal.dz/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- Toastr script -->
-    <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
-    <!-- Ladda -->
-    <script src="https://apcouleddjellal.dz/js/plugins/ladda/spin.min.js"></script>
-    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.min.js"></script>
-    <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
-    <!-- Custom and plugin javascript -->
-    <script defer src="js/firebase.js?v=0.0.1"></script>
-    <script defer src="js/verifyPhone.js?v=0.0.1"></script>
-    <script type="module">
+  <!-- Mainly scripts -->
+  <script src="https://apcouleddjellal.dz/js/jquery-3.1.1.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/popper.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/bootstrap.js"></script>
+  <script src="https://apcouleddjellal.dz/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+  <script src="https://apcouleddjellal.dz/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- Toastr script -->
+  <script src="https://apcouleddjellal.dz/js/plugins/toastr/toastr.min.js"></script>
+  <!-- Ladda -->
+  <script src="https://apcouleddjellal.dz/js/plugins/ladda/spin.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/plugins/ladda/ladda.jquery.min.js"></script>
+  <!-- Custom and plugin javascript -->
+  <script defer src="js/firebase.js?v=0.0.1"></script>
+  <script defer src="js/verifyPhone.js?v=0.0.2"></script>
+  <script type="module">
 
     $('#code').hide();
     $('#recaptcha-container').hide();
-    var l = $( '.ladda-button-demo' ).ladda();
+    var l = $('.ladda-button-demo').ladda();
 
     $('#login').on('submit', function (e) {
-        if (!e.isDefaultPrevented()) { 
-            e.preventDefault();
-            if (sentCodeId == null) {
-              $('.custom-alert').html(`إضغظ على أنا لست روبوتا قبل التحقق.`);
-              $('.custom-alert').fadeIn();
-              return;
-            }
-            l.ladda( 'start' );
-            signInWithPhone(sentCodeId, $('#code').val()).then(success => {
-              if (success) {
-                // console.log('OK');
-                l.ladda('stop');
-              }else {
-                console.log('Wrong verification code');
-                $('.custom-alert').html(`كود التحقق خاطئ`);
-                $('.custom-alert').fadeIn();
-                l.ladda('stop');
-              }
-            });
+      if (!e.isDefaultPrevented()) {
+        e.preventDefault();
+        if (sentCodeId == null) {
+          $('.custom-alert').html(`إضغظ على أنا لست روبوتا قبل التحقق.`);
+          $('.custom-alert').fadeIn();
+          return;
         }
+        l.ladda('start');
+        signInWithPhone(sentCodeId, $('#code').val()).then(success => {
+          if (success) {
+            // console.log('OK');
+            l.ladda('stop');
+          } else {
+            console.log('Wrong verification code');
+            $('.custom-alert').html(`كود التحقق خاطئ`);
+            $('.custom-alert').fadeIn();
+            l.ladda('stop');
+          }
+        });
+      }
     });
 
-    $('input').focus(function(){
+    $('input').focus(function () {
       $('.custom-alert').fadeOut();
     });
 
     $(document).ready(() => {
       axios.defaults.withCredentials = true;
       axios.post(`${API_URL}/session`).then(res => {
-          const message = res.data;
-          if (message.success && message.result) {
-              window.location.href = './';
-          }else {
-              $('.fullbox-loading').remove('.sk-loading');
-          }
+        const message = res.data;
+        if (message.success && message.result) {
+          window.location.href = './';
+        } else {
+          $('.fullbox-loading').remove('.sk-loading');
+        }
       });
     });
 
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
