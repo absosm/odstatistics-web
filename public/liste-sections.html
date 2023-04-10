@@ -183,7 +183,7 @@
                       <tr>
                         <th>رقم التعريف</th>
                         <th>الرقم</th>
-                        <th>المستخدم </th>
+                        <th>العون المكلف </th>
                         <th>المجموعات السكنية</th>
                         <th>الفضاءات العمومية</th>
                         <th> مداخل البنايات</th>
@@ -194,7 +194,7 @@
                       <tr>
                         <th>رقم التعريف</th>
                         <th>الرقم</th>
-                        <th>المستخدم </th>
+                        <th>العون المكلف </th>
                         <th>المجموعات السكنية</th>
                         <th>الفضاءات العمومية</th>
                         <th> مداخل البنايات</th>
@@ -224,7 +224,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"> خصائص المقاطعة </h4>
         </div>
         <div class="modal-body">
@@ -239,7 +240,7 @@
                 <div class="col-lg-8"><b class="number"></b></div>
               </div>
               <div class="row">
-                <div class="col-lg-4">المستخدم:</div>
+                <div class="col-lg-4">العون المكلف:</div>
                 <div class="col-lg-8"><b class="display_name"></b></div>
               </div>
               <div class="row">
@@ -265,8 +266,47 @@
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#" id="btn_lock">إقفال</a></li>
-              <li><a class="dropdown-item" href="#" id="btn_assignement">إسناد</a></li>
+              <li><a class="dropdown-item" href="#" id="btn_assign">إسناد</a></li>
             </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dialog assign section  -->
+  <div class="modal" id="dlg_assign_section" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"> إسناد مقاطعة </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-4">رقم التعريف:</div>
+                <div class="col-lg-8"><b class="section_id"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">الرقم:</div>
+                <div class="col-lg-8"><b class="number"></b></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">العون المكلف:</div>
+                <div class="col-lg-8"><b class="display_name"></b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-primary">خيارات</button>
           </div>
           <div class="btn-group">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
@@ -342,7 +382,7 @@
             "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
         },
-        rowCallback: function( row, data ) {
+        rowCallback: function (row, data) {
           $('td', row).eq(0).html(`<a class="section-item" href="#">${data[0]}</a>`);
           $('td', row).eq(6).html(`<span class="label label-${(data[6] !== 0) ? ((data[6] === 1) ? 'primary' : 'warning') : 'danger'}">
                 ${(data[6] !== 0) ? ((data[6] === 1) ? 'مكتمل' : 'يحجز') : 'لاشيء'}</span>`);
@@ -377,19 +417,34 @@
         $('.groups').text(data[3]);
         $('.spaces').text(data[4]);
         $('.numberings').text(data[5]);
+        if (data[6] !== 0) {
+          $('#btn_lock').show();
+          if (data[6] === 1) {
+            $('#btn_lock').text('إلغاء القفل');
+          } else {
+            $('#btn_lock').text('قفل');
+          }
+        } else {
+          $('#btn_lock').hide();
+        }
         $('#dlg_section').modal('show');
       });
     });
     $('#refrech').click(() => {
       reload_table();
     });
-    $('#btn_lock').click(()=>{
-      lock_section($('#dlg_section').attr('section_id')).then(()=>{
-        var d = $('#sections').DataTable().row(row).data();
-        d[6] = 1;
+    $('#btn_lock').click(() => {
+      var d = $('#sections').DataTable().row(row).data(), lock = true;
+      if (d[6] === 1) lock = false; else lock = true;
+      lock_section($('#dlg_section').attr('section_id'), lock).then(() => {
+        d[6] = (lock === true) ? 1 : 2;
         $('#sections').DataTable().row(row).data(d).draw();
         $('#dlg_section').modal('toggle');
       })
+    });
+    $('#btn_assign').click(()=>{
+      $('#dlg_section').modal('toggle');
+      $('#dlg_assign_section').modal('show');
     })
     $('.logout').click(function () {
       logout();
