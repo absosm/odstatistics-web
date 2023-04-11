@@ -346,7 +346,7 @@
       $('#sections').DataTable({
         responsive: true,
         "bLengthChange": false, //thought this line could hide the LengthMenu
-        "bInfo": false,
+        // "bInfo": false,
         "bPaginate": false,
         "processing": true,
         // "serverSide": true,
@@ -382,11 +382,30 @@
             "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
         },
-        rowCallback: function (row, data) {
-          $('td', row).eq(0).html(`<a class="section-item" href="#">${data[0]}</a>`);
-          $('td', row).eq(6).html(`<span class="label label-${(data[6] !== 0) ? ((data[6] === 1) ? 'primary' : 'warning') : 'danger'}">
-                ${(data[6] !== 0) ? ((data[6] === 1) ? 'مكتمل' : 'يحجز') : 'لاشيء'}</span>`);
-        }
+        columns: [
+          {
+            data: 'id',
+            searchable: false,
+            render: function (data, type) {
+              return (type === 'display') ? `<a class="section-item" href="#">${data}</a>` : data;
+            }
+          },
+          { data: 'number' },
+          { data: 'display_name' },
+          { data: 'groups', searchable: false },
+          { data: 'spaces', searchable: false },
+          { data: 'numberings', searchable: false },
+          {
+            data: {
+              _: 'state.display',
+              filter: 'state.search',
+            },
+            render: function (data, type) {
+              return (type === 'display') ? `<span class="label label-${(data !== 0) ? ((data === 2) ? 'primary' : 'warning') : 'danger'}">
+                ${(data !== 0) ? ((data === 2) ? 'مكتمل' : 'يحجز') : 'لاشيء'}</span>` : data;
+            }
+          }
+        ]
       });
     }
     function reload_table() {
@@ -409,17 +428,16 @@
         var tr = $(this).parent().parent();
         row = $('#sections').DataTable().row(tr);
         var data = $('#sections').DataTable().row(tr).data();
-        var section_id = $(this).text();
-        $('#dlg_section').attr('section_id', section_id);
-        $('.section_id').text(section_id);
-        $('.number').text(data[1]);
-        $('.display_name').text(data[2]);
-        $('.groups').text(data[3]);
-        $('.spaces').text(data[4]);
-        $('.numberings').text(data[5]);
-        if (data[6] !== 0) {
+        $('#dlg_section').attr('section_id', data.id);
+        $('.section_id').text(data.id);
+        $('.number').text(data.number);
+        $('.display_name').text(data.display_name);
+        $('.groups').text(data.groups);
+        $('.spaces').text(data.spaces);
+        $('.numberings').text(data.numberings);
+        if (data.state.display !== 0) {
           $('#btn_lock').show();
-          if (data[6] === 1) {
+          if (data.state.display === 2) {
             $('#btn_lock').text('إلغاء القفل');
           } else {
             $('#btn_lock').text('قفل');
@@ -435,14 +453,14 @@
     });
     $('#btn_lock').click(() => {
       var d = $('#sections').DataTable().row(row).data(), lock = true;
-      if (d[6] === 1) lock = false; else lock = true;
+      if (d.state.display === 2) lock = false; else lock = true;
       lock_section($('#dlg_section').attr('section_id'), lock).then(() => {
-        d[6] = (lock === true) ? 1 : 2;
+        d.state.display = (lock === true) ? 2 : 1;
         $('#sections').DataTable().row(row).data(d).draw();
         $('#dlg_section').modal('toggle');
       })
     });
-    $('#btn_assign').click(()=>{
+    $('#btn_assign').click(() => {
       $('#dlg_section').modal('toggle');
       $('#dlg_assign_section').modal('show');
     })
