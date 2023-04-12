@@ -449,10 +449,12 @@
         $('#dlg_section').modal('show');
       });
     });
-    $('#refrech').click(() => {
+    $('#refrech').click((e) => {
+      e.preventDefault();
       reload_table();
     });
-    $('#btn_lock').click(() => {
+    $('#btn_lock').click((e) => {
+      e.preventDefault();
       var d = $('#sections').DataTable().row(row).data(), lock = true;
       if (d.state.display === 2) lock = false; else lock = true;
       lock_section($('#dlg_section').attr('section_id'), lock).then(() => {
@@ -461,7 +463,8 @@
         $('#dlg_section').modal('toggle');
       })
     });
-    $('#btn_assign').click(() => {
+    $('#btn_assign').click((e) => {
+      e.preventDefault();
       $('#dlg_section').modal('toggle');
       $('#dlg_assign_section').modal('show');
     })
