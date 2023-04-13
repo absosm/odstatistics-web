@@ -297,14 +297,17 @@
               </div>
               <div class="row">
                 <div class="col-lg-4">العون المكلف:</div>
-                <div class="col-lg-8"><b class="display_name"></b></div>
+                <div class="col-lg-8">
+                  <select id="cb_user" class="form-control m-b">
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <div class="btn-group">
-            <button data-toggle="dropdown" class="btn btn-primary">خيارات</button>
+            <button id="btn_assign_ok" class="btn btn-primary">إسناد</button>
           </div>
           <div class="btn-group">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
@@ -420,6 +423,8 @@
       }).catch(() => {
         window.location.href = 'login.html';
       })
+      $('#cb_user').append(new Option('إلغاء الاسناد', ''));
+      get_users();
       load_sidebar();
       load_table();
       $('#sections tbody').on('click', '.section-item', function (e) {
@@ -465,7 +470,27 @@
       e.preventDefault();
       $('#dlg_section').modal('toggle');
       $('#dlg_assign_section').modal('show');
-    })
+    });
+    $('#btn_assign_ok').on('click', (e) => {
+      e.preventDefault();
+      const uid = $('#cb_user option:selected').val();
+      const sid = $('#dlg_section').attr('section_id');
+      $('#dlg_assign_section').modal('toggle');
+      assign_section(uid, sid).then(() => {
+        var d = $('#sections').DataTable().row(row).data();
+        if (uid === '') {
+          d.display_name = uid;
+          d.state.display = 0;
+        } else {
+          d.state.display = 1;
+          d.display_name = $('#cb_user option:selected').text();
+        }
+        $('#sections').DataTable().row(row).data(d).draw();
+        swal({ title: "نجت العملية!", text: "تم إدخال المعطيات بنجاح", type: "success" });
+      }).catch(errors => {
+        swal("يوجد خطأ!", errors[0].message, "error");
+      })
+    });
     $('.logout').click(function () {
       logout();
     });

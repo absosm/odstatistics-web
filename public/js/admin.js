@@ -52,45 +52,21 @@ function get_sections_reserved() {
   })
 }
 
-function add_section() {
-  const uid = $('#cb_user option:selected').val();
-  const l = $('.lbtn-add').ladda();
-  l.ladda('start');
-  axios.post(`${API_URL}/new_section`,
-    {
-      link: {
-        uid: uid,
-        sid: $('#cb_section option:selected').val()
-      }
-    }).then(res => {
+function assign_section(uid, sid) {
+  return new Promise((resolve,reject)=>{
+    axios.post(`${API_URL}/assign_section`, { uid: uid, sid: sid }).then(res => {
       var message = res.data;
       if (message.success) {
-        l.ladda('stop');
-        swal({
-          title: "نجت العملية!",
-          text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-          type: "success",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "نعم واصل",
-          cancelButtonText: "إلغاء",
-          closeOnConfirm: false
-        }, function (isConfirm) {
-          if (isConfirm) {
-            Cookies.set('uid', uid);
-            window.location.href = 'news.html';
-          } else {
-            window.location.href = 'admin.html';
-          }
-        });
+        resolve(true);
       } else {
-        swal("يوجد خطأ!", message.errors[0].message, "error");
+        reject(message.errors);
       }
     });
+  })
 }
 
-function lock_section(id, lock=true) {
-  return new Promise((resolve, reject)=>{
+function lock_section(id, lock = true) {
+  return new Promise((resolve, reject) => {
     axios.post(`${API_URL}/lock_section`, { id: id, lock: lock }).then(res => {
       var message = res.data;
       if (message.success) {
