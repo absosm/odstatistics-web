@@ -53,7 +53,7 @@ function get_sections_reserved() {
 }
 
 function assign_section(uid, sid) {
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve, reject) => {
     axios.post(`${API_URL}/assign_section`, { uid: uid, sid: sid }).then(res => {
       var message = res.data;
       if (message.success) {
@@ -78,41 +78,17 @@ function lock_section(id, lock = true) {
   })
 }
 
-function add_group() {
-  const section_id = $('#cb_section option:selected').val();
-  const l = $('.lbtn-add').ladda();
-  l.ladda('start');
-  axios.post(`${API_URL}/new_group`,
-    {
-      group: {
-        sid: section_id,
-        number: Number($('#tb_group').val()),
-      }
-    }).then(res => {
+function add_group(sid, number) {
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}/new_group`, { sid: sid, number: number }).then(res => {
       var message = res.data;
-      l.ladda('stop');
       if (message.success) {
-        swal({
-          title: "نجت العملية!",
-          text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-          type: "success",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "نعم واصل",
-          cancelButtonText: "إلغاء",
-          closeOnConfirm: false
-        }, function (isConfirm) {
-          if (isConfirm) {
-            Cookies.set('sid', section_id);
-            window.location.href = 'newg.html';
-          } else {
-            window.location.href = 'admin.html';
-          }
-        });
+        resolve(true)
       } else {
-        swal("يوجد خطأ!", message.errors[0].message, "error");
+        reject(message.errors);
       }
     });
+  })
 }
 
 function get_groups_snum(snum) {
