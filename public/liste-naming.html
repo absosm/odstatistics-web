@@ -47,8 +47,8 @@
     }
   </style>
 
-<script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
-<script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer ></script>
+  <script src="https://apcouleddjellal.dz/js/axios.min.js"></script>
+  <script src="https://apcouleddjellal.dz/js/js.cookie.min.js" defer></script>
 </head>
 
 <body class="rtls canvas-menu fixed-nav ">
@@ -339,7 +339,7 @@
                     <label class="checkbox-inline">
                       <label><input id="cb_named" type="checkbox"> مسماة </label>
                       <label><input id="cb_after" type="checkbox" disabled> بعد العملية </label>
-                      <label><input id="cb_installed" type="checkbox" disabled> مركبة </label> 
+                      <label><input id="cb_installed" type="checkbox" disabled> مركبة </label>
                     </label>
                   </div>
                 </div>
@@ -386,9 +386,9 @@
 
     var row = null;
 
-    function get_naming() { 
+    function get_naming() {
       const s = $('#cb_naming_types option:selected').val();
-      return Number( (s===undefined)?0:s );
+      return Number((s === undefined) ? 0 : s);
     }
 
     function load_table() {
@@ -398,22 +398,7 @@
         pageLength: -1,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
-        buttons: [
-          { extend: 'copy' },
-          { extend: 'csv' },
-          { extend: 'excel', title: 'ExampleFile' },
-          { extend: 'pdf', title: 'ExampleFile' },
-          {
-            extend: 'print',
-            customize: function (win) {
-              $(win.document.body).addClass('white-bg');
-              $(win.document.body).css('font-size', '10px');
-              $(win.document.body).find('table')
-                .addClass('compact')
-                .css('font-size', 'inherit');
-            }
-          }
-        ],
+        buttons: [{ extend: 'excel', title: 'namings-export', text: 'تصدير إلى EXCEL' }],
         "columnDefs": [
           { "width": "20%", "targets": 1 }
         ],

@@ -388,6 +388,7 @@
     var row = null;
 
     function load_table() {
+      $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
       $('#sections').DataTable({
         responsive: true,
         "bLengthChange": false, //thought this line could hide the LengthMenu
@@ -395,6 +396,10 @@
         "bPaginate": false,
         "processing": true,
         // "serverSide": true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [
+          { extend: 'excel', title: 'sections-export', text: 'تصدير إلى EXCEL' }
+        ],
         "ajax": {
           url: `${API_URL}/sections_data`,
           type: "POST",
