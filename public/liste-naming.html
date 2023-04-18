@@ -160,20 +160,25 @@
           <div class="col-lg-12">
             <div class="ibox ">
               <div class="ibox-title">
-                <h5>جدول تفصيلي حول الفضاءات العمومية</h5>
+                <h5>جدول تفصيلي حول تسمية الفضاءات العمومية</h5>
                 <div class="ibox-tools">
+                  <!-- <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                  </a> -->
+                  <button data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle">
+                    خيارات
+                    <i class="fa fa-wrench"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#" class="dropdown-item" id="refrech">تحديث</a></li>
+                    <li><a href="#" class="dropdown-item" id="ddi_add_naming">إضافة تسمية</a></li>
+                  </ul>
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
                   </a>
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-wrench"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#" class="dropdown-item" id="refrech">تحديث</a></li>
-                  </ul>
-                  <a class="close-link">
+                  <!-- <a class="close-link">
                     <i class="fa fa-times"></i>
-                  </a>
+                  </a> -->
                 </div>
               </div>
               <div class="ibox-content">
@@ -234,7 +239,7 @@
     </div>
   </div>
 
-
+  <!-- dialog naming property  -->
   <div class="modal" id="dialog_naming" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -297,7 +302,7 @@
     </div>
   </div>
 
-
+  <!-- dialog update naming  -->
   <div class="modal" id="dialog_update_naming" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -359,6 +364,69 @@
     </div>
   </div>
 
+  <!-- dialog add naming  -->
+  <div class="modal" id="dlg_add_naming" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="frm_add_naming" role="form" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
+            <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"> إضافة تسمية فضاء عمومي </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية</label>
+                  <div class="col-sm-8">
+                    <input id="in_name" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">القرار</label>
+                  <div class="col-sm-8">
+                    <input id="in_decision" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية القديمة</label>
+                  <div class="col-sm-8">
+                    <input id="in_oldname" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية</label>
+                  <div class="col-sm-8">
+                    <label class="checkbox-inline">
+                      <label><input id="in_named" type="checkbox"> مسماة </label>
+                      <label><input id="in_after" type="checkbox" disabled> بعد العملية </label>
+                      <label><input id="in_installed" type="checkbox" disabled> مركبة </label>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">الملاحظة</label>
+                  <div class="col-sm-8">
+                    <input id="in_comment" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="submit" class="btn btn-primary">إضافة تسمية<i class="fa fa-edit"></i></button>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Mainly scripts -->
@@ -386,7 +454,7 @@
 
     var row = null;
 
-    function get_naming() {
+    function get_naming_type() {
       const s = $('#cb_naming_types option:selected').val();
       return Number((s === undefined) ? 0 : s);
     }
@@ -413,7 +481,7 @@
           url: `${API_URL}/namings_data`,
           type: "POST",
           data: function (d) {
-            d.type_id = get_naming();
+            d.type_id = get_naming_type();
           },
           xhrFields: {
             withCredentials: true
@@ -531,13 +599,19 @@
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
       $('#dialog_update_naming').modal('show');
     })
-    $('#cb_named').change(function () {
-      $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
-      $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
-      if (!$('#cb_named').prop('checked')) {
-        $('#cb_after').prop('checked', false);
-        $('#cb_installed').prop('checked', false);
+    function cfg_check(a, b, c) {
+      $(b).prop('disabled', !$(a).prop('checked'));
+      $(c).prop('disabled', !$(a).prop('checked'));
+      if (!$(a).prop('checked')) {
+        $(b).prop('checked', false);
+        $(c).prop('checked', false);
       }
+    }
+    $('#cb_named').change(function () {
+      cfg_check('#cb_named', '#cb_after', '#cb_installed');
+    });
+    $('#in_named').change(function () {
+      cfg_check('#in_named', '#in_after', '#in_installed');
     });
     $('#delete-naming').click((e) => {
       e.preventDefault();
@@ -568,6 +642,17 @@
     $('#cb_naming_types').change(function () {
       reload_table();
     });
+    $('#ddi_add_naming').click(e=>{
+      e.preventDefault();
+      $('#dlg_add_naming').modal('show');
+      $('#in_name').focus();
+      $('#in_name').val('');
+      $('#in_named').prop('checked', false);
+      cfg_check('#in_named', '#in_after', '#in_installed');
+    })
+    $('#frm_add_naming').on('submit', e=>{
+      e.preventDefault();
+    })
     $('.logout').click(function () {
       logout();
     });
