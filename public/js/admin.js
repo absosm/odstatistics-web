@@ -104,6 +104,19 @@ function get_groups_snum(snum) {
   });
 }
 
+function add_naming(naming) {
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}/new_naming`, { naming }).then(res => {
+      var message = res.data;
+      if (message.success) {
+        resolve(message.result)
+      } else {
+        reject(message.errors);
+      }
+    });
+  })
+}
+
 function update_naming(id, data) {
   return new Promise((resolve, reject) => {
     axios.post(`${API_URL}/update_naming`, { id, data }).then(res => {

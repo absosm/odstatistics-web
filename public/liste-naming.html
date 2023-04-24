@@ -511,7 +511,33 @@
             "sortAscending": ": تمكن من فرز الأعمدة بترتيب تصاعدي",
             "sortDescending": ": تمكن من فرز الأعمدة بترتيب تنازلي"
           }
-        }
+        },
+        columns: [
+          {
+            data: 'id', render: function (data, type) {
+              return (type === 'display') ? `<a class="naming-item" href="#">${data}</a>` : data;
+            }
+          },
+          { data: 'name' },
+          { data: 'decision' },
+          { data: 'oldname' },
+          {
+            data: 'named', searchable: false, render: function (data, type) {
+              return (type === 'display') ? ((data)?'نعم':'لا') : data;
+            }
+          },
+          {
+            data: 'after', searchable: false, render: function (data, type) {
+              return (type === 'display') ? ((data)?'نعم':'لا') : data;
+            }
+          },
+          {
+            data: 'installed', searchable: false, render: function (data, type) {
+              return (type === 'display') ? ((data)?'نعم':'لا') : data;
+            }
+          },
+          { data: 'comment'},
+        ]
       });
     }
 
@@ -545,12 +571,12 @@
         var naming_id = $(this).text();
         $('#dialog_naming').attr('naming_id', naming_id);
         $('.naming_id').text(naming_id);
-        $('.name').text(data[1]);
-        $('.decision').text(data[2]);
-        $('.oldname').text(data[3]);
-        $('.named').text(data[4]);
-        $('.after').text(data[5]);
-        $('.installed').text(data[6]);
+        $('.name').text(data.name);
+        $('.decision').text(data.decision);
+        $('.oldname').text(data.oldname);
+        $('.named').text((data.named)?'نعم':'لا');
+        $('.after').text((data.after)?'نعم':'لا');
+        $('.installed').text((data.installed)?'نعم':'لا');
         $('#dialog_naming').modal('show');
       });
     });
@@ -568,12 +594,12 @@
         }
         update_naming(naming_id, data).then(result => {
           var d = $('#namings').DataTable().row(row).data();
-          d[1] = data.name;
-          d[2] = data.decision;
-          d[3] = data.oldname;
-          d[4] = (data.named) ? 'نعم' : 'لا';
-          d[5] = (data.after) ? 'نعم' : 'لا';
-          d[6] = (data.installed) ? 'نعم' : 'لا';
+          d.name = data.name;
+          d.decision = data.decision;
+          d.oldname = data.oldname;
+          d.named = data.named;
+          d.after = data.after;
+          d.installed = data.installed;
           $('#namings').DataTable().row(row).data(d).draw();
           $('#dialog_update_naming').modal('toggle');
         }).catch(errors => {
@@ -589,13 +615,13 @@
 
       $('#dialog_update_naming').attr('naming_id', naming_id);
       $('.naming_id').text(naming_id);
-      $('#tb_name').val(data[1]);
-      $('#tb_decision').val(data[2]);
-      $('#tb_oldname').val(data[3]);
-      $('#cb_named').prop('checked', data[4] === 'نعم');
-      $('#cb_after').prop('checked', data[5] === 'نعم');
+      $('#tb_name').val(data.name);
+      $('#tb_decision').val(data.decision);
+      $('#tb_oldname').val(data.oldname);
+      $('#cb_named').prop('checked', data.named);
+      $('#cb_after').prop('checked', data.after);
       $('#cb_after').prop('disabled', !$('#cb_named').prop('checked'));
-      $('#cb_installed').prop('checked', data[6] === 'نعم');
+      $('#cb_installed').prop('checked', data.installed);
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
       $('#dialog_update_naming').modal('show');
     })
@@ -642,16 +668,54 @@
     $('#cb_naming_types').change(function () {
       reload_table();
     });
-    $('#ddi_add_naming').click(e=>{
-      e.preventDefault();
+    function show_dlg_add_naming() {
       $('#dlg_add_naming').modal('show');
       $('#in_name').focus();
       $('#in_name').val('');
+      $('#in_oldname').val('');
+      $('#in_decision').val('');
+      $('#in_comment').val('');
       $('#in_named').prop('checked', false);
       cfg_check('#in_named', '#in_after', '#in_installed');
-    })
-    $('#frm_add_naming').on('submit', e=>{
+    }
+    $('#ddi_add_naming').click(e => {
       e.preventDefault();
+      show_dlg_add_naming();
+    })
+    $('#frm_add_naming').on('submit', e => {
+      e.preventDefault();
+      $('#dlg_add_naming').modal('toggle');
+      let naming = {
+        type: get_naming_type(),
+        name: $('#in_name').val(),
+        oldname: $('#in_oldname').val(),
+        decision: $('#in_decision').val(),
+        named: $('#in_named').prop('checked'),
+        after: $('#in_after').prop('checked'),
+        installed: $('#in_installed').prop('checked'),
+        comment: $('#in_comment').val()
+      }
+      add_naming(naming).then((id) => {
+        var t = $('#namings').DataTable();
+        naming.id = id;
+        t.row.add(naming).draw(false);
+        swal({
+          title: "نجت العملية!",
+          text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
+          type: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#016AD9",
+          confirmButtonText: "نعم واصل",
+          cancelButtonText: "إلغاء",
+          closeOnConfirm: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            show_dlg_add_naming();
+          }
+        });
+      }).catch(errors => {
+        swal("يوجد خطأ!", errors[0].message, "error");
+      })
     })
     $('.logout').click(function () {
       logout();
