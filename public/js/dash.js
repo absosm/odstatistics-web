@@ -1,6 +1,6 @@
 /*
-Vesion 0.0.15
-last modifed 15/03/2023 08:48
+Vesion 0.0.16
+last modifed 25/04/2023 14:51
 */
 axios.defaults.withCredentials = true;
 
@@ -10,7 +10,7 @@ function init_session() {
 			const message = res.data;
 			if (message.success && message.result) {
 				resolve(message.result);
-			}else {
+			} else {
 				reject(false);
 			}
 		});
@@ -22,26 +22,26 @@ function logout() {
 		var message = res.data;
 		if (message.success) {
 			window.location.href = './login.html';
-		}else {
+		} else {
 			alert('error');
 		}
 	});
 }
 
 function append_menu(menu_item, submenu = false) {
-	const li = $(`<li></li>`), a = $(`<a ${(menu_item.id!==undefined)?'class="'+ menu_item.id +'" ':''}href="${menu_item.url}"></a>`), 
+	const li = $(`<li></li>`), a = $(`<a ${(menu_item.id !== undefined) ? 'class="' + menu_item.id + '" ' : ''}href="${menu_item.url}"></a>`),
 		i = $(`<i class="fa ${menu_item.icon}"></i>`), arrow = $(`<span class="fa arrow">`);
-		span = $(`<span class="nav-label"> ${menu_item.text} </span>`),
+	span = $(`<span class="nav-label"> ${menu_item.text} </span>`),
 		ul = $(`<ul class="nav nav-second-level collapse"></ul>`);
 	a.append(i);
 	a.append(span);
 	li.append(a);
 	if (submenu) {
 		a.append(arrow);
-		Object.keys(menu_item.submenu).forEach(key=>{
+		Object.keys(menu_item.submenu).forEach(key => {
 			const _sub = menu_item.submenu[key];
-			const item = $(`<li><a ${(_sub.id!==undefined)?'class="'+ _sub.id 
-											+'" ':''}href="${_sub.url}"> ${_sub.text} </a></li>`);
+			const item = $(`<li><a ${(_sub.id !== undefined) ? 'class="' + _sub.id
+				+ '" ' : ''}href="${_sub.url}"> ${_sub.text} </a></li>`);
 			if (window.location.pathname === _sub.url) {
 				item.addClass('active');
 				li.addClass('active');
@@ -61,17 +61,17 @@ function load_sidebar() {
 			if (message.success) {
 				$(".metismenu").metisMenu('dispose');
 				let sidebar = message.result;
-				Object.keys(sidebar).forEach(key=>{
+				Object.keys(sidebar).forEach(key => {
 					const menu_item = sidebar[key];
 					if (menu_item.submenu === null) {
 						append_menu(menu_item);
-					}else {
+					} else {
 						append_menu(menu_item, true);
 					}
 				})
 				$(".metismenu").metisMenu();
 				resolve(sidebar);
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		});
@@ -96,11 +96,11 @@ $('.metismenu').on('click', '.ajax_download', function (e) {
 
 function get_sections_uid(inclusion_ends) {
 	return new Promise((resolve, reject) => {
-		axios.post(`${API_URL}/sections_uid`, {inclusion_ends}).then(res => {
+		axios.post(`${API_URL}/sections_uid`, { inclusion_ends }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(message.result)
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		});
@@ -108,16 +108,16 @@ function get_sections_uid(inclusion_ends) {
 }
 
 function load_cb_sections(inclusion_ends) {
-	get_sections_uid(inclusion_ends).then(sections=>{
+	get_sections_uid(inclusion_ends).then(sections => {
 		const select = Number(Cookies.get('sid'));
 		sections.forEach(s => {
 			if (s.number === select)
-				$('#cb_section').append( new Option(s.number,s.id, true, true) );
+				$('#cb_section').append(new Option(s.number, s.id, true, true));
 			else
-				$('#cb_section').append( new Option(s.number,s.id) );
+				$('#cb_section').append(new Option(s.number, s.id));
 		});
 		load_cb_groups($('#cb_section').val());
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
@@ -133,7 +133,7 @@ function get_section_dist() {
 				let li = `<li class="list-group-item">
 					<a class="nav-link" data-toggle="tab" href="#tab-1">
 						<small class="float-left text-muted">
-							${(_section.end)?'<i class="fa fa-thumbs-o-up"></i>':''}
+							${(_section.end) ? '<i class="fa fa-thumbs-o-up"></i>' : ''}
 							<i class="fa fa-map-marker"></i> مقاطعة ${_section.number}
 						</small>
 						<strong>${_user.displayName}</strong>
@@ -145,7 +145,7 @@ function get_section_dist() {
 				</li>`;
 				$('#sections').append(li);
 			});
-		}else {
+		} else {
 			console.log(message.errors[0]);
 		}
 	});
@@ -153,17 +153,17 @@ function get_section_dist() {
 
 function get_groups_sid(sid) {
 	return new Promise((resolve, reject) => {
-		axios.post(`${API_URL}/groups_sid`, {sid}).then(res => {
+		axios.post(`${API_URL}/groups_sid`, { sid }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(message.result)
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		});
 	});
 }
-  
+
 function load_cb_groups(sid) {
 	$('#cb_group').empty();
 	get_groups_sid(sid).then(groups => {
@@ -172,34 +172,34 @@ function load_cb_groups(sid) {
 			select = Number(Cookies.get('gid'));
 		groups.forEach(g => {
 			if (g.number === select)
-					$('#cb_group').append( new Option(g.number,g.id, true, true) );
+				$('#cb_group').append(new Option(g.number, g.id, true, true));
 			else
-				$('#cb_group').append( new Option(g.number,g.id) );
+				$('#cb_group').append(new Option(g.number, g.id));
 		});
-		if($('#cb_numbering').length > 0) {
+		if ($('#cb_numbering').length > 0) {
 			load_cb_numberings(Number($('#cb_group option:selected').text()));
 		}
-		if($('#cb_space').length > 0) {
+		if ($('#cb_space').length > 0) {
 			load_cb_spaces(Number($('#cb_group option:selected').text()));
 		}
-		if($('#numberings').length > 0) {
+		if ($('#numberings').length > 0) {
 			load_menu_numberings(Number($('#cb_group option:selected').text()));
 		}
-		if($('#spaces').length > 0) {
+		if ($('#spaces').length > 0) {
 			load_menu_spaces(Number($('#cb_group option:selected').text()));
 		}
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
 
 function get_spaces_gid(gid) {
 	return new Promise((resolve, reject) => {
-		axios.post(`${API_URL}/spaces_gid`, {gid: gid}).then(res => {
+		axios.post(`${API_URL}/spaces_gid`, { gid: gid }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(message.result)
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		});
@@ -208,25 +208,25 @@ function get_spaces_gid(gid) {
 
 function load_cb_spaces(gid) {
 	$('#cb_space').empty();
-	get_spaces_gid(gid).then(spaces=>{
+	get_spaces_gid(gid).then(spaces => {
 		spaces.forEach(s => {
-			$('#cb_space').append( new Option(s.name,s.id) );
+			$('#cb_space').append(new Option(s.name, s.id));
 		});
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
 
 function load_menu_spaces(gid) {
-	const types = ['أخرى', 'شارع', 'طريق', 'نهج', 'مسلك', 
-	'معبر', 'حي', 'تجمع سكاني', 'تجزئة', 'حديقة', 'ساحة', 'حظيرة', 
-	'غابة', 'معلم تذكاري', 'آثار تاريخية', 'مؤسسة'];
+	const types = ['أخرى', 'شارع', 'طريق', 'نهج', 'مسلك',
+		'معبر', 'حي', 'تجمع سكاني', 'تجزئة', 'حديقة', 'ساحة', 'حظيرة',
+		'غابة', 'معلم تذكاري', 'آثار تاريخية', 'مؤسسة'];
 
 	$('#spaces').html('');
-	get_spaces_gid(gid).then(spaces=>{
+	get_spaces_gid(gid).then(spaces => {
 		spaces.forEach(space => {
-			const named = (space.named)?'نعم':'لا';
-			const installed = (space.installed)?'نعم':'لا';
+			const named = (space.named) ? 'نعم' : 'لا';
+			const installed = (space.installed) ? 'نعم' : 'لا';
 			let li = `<li class="list-group-item">
 				<a class="nav-link" data-toggle="tab" href="#tab-1">
 					<small class="float-left text-muted">أولي: ${named} | تركيب: ${installed}</small>
@@ -245,18 +245,18 @@ function load_menu_spaces(gid) {
 			</li>`;
 			$('#spaces').append(li);
 		});
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
 
 function update_space(id, data) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/update_space`, {id, data}).then(res => {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/update_space`, { id, data }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		})
@@ -264,12 +264,12 @@ function update_space(id, data) {
 }
 
 function delete_space(id) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/delete_space`, {id}).then(res => {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/delete_space`, { id }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		})
@@ -278,11 +278,11 @@ function delete_space(id) {
 
 function get_numberings_gid(gid) {
 	return new Promise((resolve, reject) => {
-		axios.post(`${API_URL}/numberings_gid`, {gid: gid}).then(res => {
+		axios.post(`${API_URL}/numberings_gid`, { gid: gid }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(message.result)
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		});
@@ -291,10 +291,10 @@ function get_numberings_gid(gid) {
 
 function load_menu_numberings(gid) {
 	$('#numberings').html('');
-	get_numberings_gid(gid).then(numberings=>{
+	get_numberings_gid(gid).then(numberings => {
 		numberings.forEach(numbering => {
-			const numbered = (numbering.numbered)?'نعم':'لا';
-			const installed = (numbering.installed)?'نعم':'لا';
+			const numbered = (numbering.numbered) ? 'نعم' : 'لا';
+			const installed = (numbering.installed) ? 'نعم' : 'لا';
 			let li = `<li class="list-group-item">
 				<a class="nav-link" data-toggle="tab" href="#tab-1">
 					<small class="float-left text-muted">أولي: ${numbered} | تركيب: ${installed}</small>
@@ -308,29 +308,29 @@ function load_menu_numberings(gid) {
 			</li>`;
 			$('#numberings').append(li);
 		});
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
 
 function load_cb_numberings(gid) {
 	$('#cb_numbering').empty();
-	get_numberings_gid(gid).then(numberings=>{
+	get_numberings_gid(gid).then(numberings => {
 		numberings.forEach(n => {
-			$('#cb_numbering').append( new Option(n.number,n.id) );
+			$('#cb_numbering').append(new Option(n.number, n.id));
 		});
-	}).catch(errors=>{
+	}).catch(errors => {
 		console.log(errors[0]);
 	})
 }
 
 function delete_numbering(id) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/delete_numbering`, {id}).then(res => {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/delete_numbering`, { id }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		})
@@ -338,12 +338,12 @@ function delete_numbering(id) {
 }
 
 function update_numbering(id, data) {
-	return new Promise((resolve, reject)=>{
-		axios.post(`${API_URL}/update_numbering`, {id, data}).then(res => {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/update_numbering`, { id, data }).then(res => {
 			var message = res.data;
 			if (message.success) {
 				resolve(true);
-			}else {
+			} else {
 				reject(message.errors);
 			}
 		})
@@ -359,7 +359,7 @@ function get_statistics() {
 			$('#numberings').text(statistics.numberings);
 			$('#sections').text(statistics.sections);
 			$('#groups').text(statistics.groups);
-		}else {
+		} else {
 			console.log(message.errors);
 		}
 	});
@@ -371,98 +371,71 @@ function get_statistics_uid() {
 		if (message.success) {
 			var statistics = message.result;
 			$('#daily').text(statistics.daily);
-			$('#pdaily').text(Math.round((statistics.daily/180)*100)+'% ');
+			$('#pdaily').text(Math.round((statistics.daily / 180) * 100) + '% ');
 			$('#weekly').text(statistics.weekly);
-			$('#pweekly').text(Math.round((statistics.weekly/900)*100)+'% ');
+			$('#pweekly').text(Math.round((statistics.weekly / 900) * 100) + '% ');
 			$('#monthly').text(statistics.monthly);
-			$('#pmonthly').text(Math.round((statistics.monthly/3600)*100)+'% ');
+			$('#pmonthly').text(Math.round((statistics.monthly / 3600) * 100) + '% ');
 			$('#total').text(statistics.total);
-			$('#ptotal').text(Math.round((statistics.total/6000)*100)+'% ');
-		}else {
+			$('#ptotal').text(Math.round((statistics.total / 6000) * 100) + '% ');
+		} else {
 			console.log(message.errors);
 		}
 	});
 }
-  
-function add_space() {
-	const sid = Number($('#cb_section option:selected').text());
-	const gid = Number($('#cb_group option:selected').text());
-	const l = $( '.lbtn-add' ).ladda();
-	l.ladda( 'start' );
-	axios.post(`${API_URL}/new_space`, 
-	{space : {
-		section_id: sid,
-		group_id : gid,
-		type: Number($('#cb_space_type').val()),
-		name : $('#tb_space_name').val(),
-		named: $('#cb_named').prop('checked'),
-		installed: $('#cb_installed').prop('checked'),
-		comment:$('#tb_comment').val(),
-	}}).then(res => {
-		var message = res.data;
-		l.ladda( 'stop' );
-		if (message.success) {
-			swal({
-				title: "نجت العملية!",
-				text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-				type: "success",
-				showCancelButton: true,
-				confirmButtonColor: "#016AD9",
-				confirmButtonText: "نعم واصل",
-				cancelButtonText: "إلغاء",
-				closeOnConfirm: false
-			}, function (isConfirm) {
-				if (isConfirm) {
-					Cookies.set('sid', sid);
-					Cookies.set('gid', gid);
-					window.location.href = 'newp.html';
-				} else {
-					window.location.href = 'paneling.html';
-				}
-			});
-		}else {
-			swal("يوجد خطأ!", message.errors[0].message, "error");
-		}
-	});
+
+function add_space(space) {
+	return new Promise((resolve, reject) => {
+		axios.post(`${API_URL}/new_space`, { space }).then(res => {
+			var message = res.data;
+			if (message.success) {
+				resolve(message.result)
+			} else {
+				reject(message.errors);
+			}
+		});
+	})
 }
-  
+
 function add_numbering() {
 	const sid = Number($('#cb_section option:selected').text());
 	const gid = Number($('#cb_group option:selected').text());
-	const l = $( '.lbtn-add' ).ladda();
-	l.ladda( 'start' );
-	axios.post(`${API_URL}/new_numbering`, 
-	{numbering : {
-		section_id: sid,
-		group_id : gid,
-		number : $('#tb_number').val(),
-		numbered: $('#cb_numbered').prop('checked'),
-		installed: $('#cb_installed').prop('checked'),
-		comment:$('#tb_comment').val(),
-	}}).then(res => {
-		var message = res.data;
-		l.ladda( 'stop' );
-		if (message.success) {
-			swal({
-				title: "نجت العملية!",
-				text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
-				type: "success",
-				showCancelButton: true,
-				confirmButtonColor: "#016AD9",
-				confirmButtonText: "نعم واصل",
-				cancelButtonText: "إلغاء",
-				closeOnConfirm: false
-			}, function (isConfirm) {
-				if (isConfirm) {
-					Cookies.set('sid', sid);
-					Cookies.set('gid', gid);
-					window.location.href = 'newn.html';
-				} else {
-					window.location.href = 'numbering.html';
-				}
-			});
-		}else {
-			swal("يوجد خطأ!", message.errors[0].message, "error");
-		}
-	});
+	const l = $('.lbtn-add').ladda();
+	l.ladda('start');
+	axios.post(`${API_URL}/new_numbering`,
+		{
+			numbering: {
+				section_id: sid,
+				group_id: gid,
+				number: $('#tb_number').val(),
+				numbered: $('#cb_numbered').prop('checked'),
+				installed: $('#cb_installed').prop('checked'),
+				comment: $('#tb_comment').val(),
+			}
+		}).then(res => {
+			var message = res.data;
+			l.ladda('stop');
+			if (message.success) {
+				swal({
+					title: "نجت العملية!",
+					text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
+					type: "success",
+					showCancelButton: true,
+					confirmButtonColor: "#016AD9",
+					confirmButtonText: "نعم واصل",
+					cancelButtonText: "إلغاء",
+					closeOnConfirm: false
+				}, function (isConfirm) {
+					if (isConfirm) {
+						Cookies.set('sid', sid);
+						Cookies.set('gid', gid);
+						window.location.href = 'newn.html';
+					} else {
+						window.location.href = 'numbering.html';
+					}
+				});
+			} else {
+				swal("يوجد خطأ!", message.errors[0].message, "error");
+			}
+		});
 }

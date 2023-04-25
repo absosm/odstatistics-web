@@ -162,17 +162,19 @@
               <div class="ibox-title">
                 <h5>جدول تفصيلي حول إحصاء الفضاءات العمومية</h5>
                 <div class="ibox-tools">
-                  <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
-                  </a>
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <!-- <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-wrench"></i>
-                  </a>
+                  </a> -->
+                  <button data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle">
+                    خيارات
+                    <i class="fa fa-wrench"></i>
+                  </button>
                   <ul class="dropdown-menu dropdown-user">
                     <li><a href="#" class="dropdown-item" id="refrech">تحديث</a></li>
+                    <li><a href="#" class="dropdown-item" id="ddi_add_space">إضافة فضاء</a></li>
                   </ul>
-                  <a class="close-link">
-                    <i class="fa fa-times"></i>
+                  <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
                   </a>
                 </div>
               </div>
@@ -296,11 +298,93 @@
     </div>
   </div>
 
+  <!-- dialog add space -->
+  <div class="modal" id="dlg_add_space" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="frm_add_space" role="form" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
+            <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"> إضافة فضاء عمومي </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">الفضاء</label>
+                  <div class="col-sm-8">
+                    <select id="id_type" class="form-control m-b">
+                      <option value="1">شارع</option>
+                      <option value="2">طريق</option>
+                      <option value="3">نهج</option>
+                      <option value="4">مسلك</option>
+                      <option value="5">معبر</option>
+                      <option value="6">حي</option>
+                      <option value="7">تجمع سكاني</option>
+                      <option value="8">تجزئة</option>
+                      <option value="9">حديقة</option>
+                      <option value="10">ساحة</option>
+                      <option value="11">حظيرة</option>
+                      <option value="12">غابة</option>
+                      <option value="13">معلم تذكاري</option>
+                      <option value="14">آثار تاريخية</option>
+                      <option value="15">مؤسسة عمومية</option>
+                      <option value="16">بناء عمومي</option>
+                      <option value="17">أملاك عمومية</option>
+                      <option value="0">أخرى</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">التسمية</label>
+                  <div class="col-sm-8">
+                    <input id="id_name" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">المجموعة السكنية</label>
+                  <div class="col-sm-8">
+                    <select id="id_group" class="form-control m-b"></select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">تركيب اللوحة</label>
+                  <div class="col-sm-8">
+                    <label><input id="id_named" type="checkbox"> التسمية الأولية </label>
+                    <label class="checkbox-inline">
+                      <label><input id="id_installed" type="checkbox" disabled> مركبة </label>
+                      <label class="checkbox-inline">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">الملاحظة</label>
+                  <div class="col-sm-8">
+                    <input id="id_comment" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="submit" class="btn btn-primary"> إضافة <i class="fa fa-plus"></i></button>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- dialog update space -->
   <div class="modal" id="dialog_update_space" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="update_space" class="m-t" role="form" method="post" enctype="multipart/form-data">
+        <form id="frm_update_space" role="form" method="post" enctype="multipart/form-data">
           <div class="modal-header">
             <button type="button" class="close text-left" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -581,6 +665,7 @@
         get_groups_sid($('#cb_section option:selected').val()).then(groups => {
           groups.forEach(g => {
             $('#cb_group').append(new Option(g.number, g.id));
+            $('#id_group').append(new Option(g.number, g.id));
           });
         })
       });
@@ -599,31 +684,29 @@
         $('#dialog_space').modal('show');
       });
     });
-    $('#update_space').on('submit', function (e) {
-      if (!e.isDefaultPrevented()) {
-        e.preventDefault();
-        const space_id = $('#dialog_space').attr('space_id');
-        var data = {
-          type: Number($('#cb_type option:selected').val()),
-          name: $('#tb_name').val(),
-          group_id: Number($('#cb_group option:selected').text()),
-          named: $('#cb_named').prop('checked'),
-          installed: $('#cb_installed').prop('checked'),
-        }
-        update_space(space_id, data).then(result => {
-          var d = $('#spaces').DataTable().row(row).data();
-          d.type.value = $('#cb_type option:selected').val();
-          d.type.text = $('#cb_type option:selected').text();
-          d.name = data.name;
-          d.group_id = data.group_id;
-          d.named = data.named;
-          d.installed = data.installed;
-          $('#spaces').DataTable().row(row).data(d).draw();
-          $('#dialog_update_space').modal('toggle');
-        }).catch(errors => {
-          swal("يوجد خطأ!", errors[0].message, "error");
-        })
+    $('#frm_update_space').on('submit', function (e) {
+      e.preventDefault();
+      const space_id = $('#dialog_space').attr('space_id');
+      var data = {
+        type: Number($('#cb_type option:selected').val()),
+        name: $('#tb_name').val(),
+        group_id: Number($('#cb_group option:selected').text()),
+        named: $('#cb_named').prop('checked'),
+        installed: $('#cb_installed').prop('checked'),
       }
+      update_space(space_id, data).then(result => {
+        var d = $('#spaces').DataTable().row(row).data();
+        d.type.value = $('#cb_type option:selected').val();
+        d.type.text = $('#cb_type option:selected').text();
+        d.name = data.name;
+        d.group_id = data.group_id;
+        d.named = data.named;
+        d.installed = data.installed;
+        $('#spaces').DataTable().row(row).data(d).draw();
+        $('#dialog_update_space').modal('toggle');
+      }).catch(errors => {
+        swal("يوجد خطأ!", errors[0].message, "error");
+      })
     });
     $('#update-space').click((e) => {
       e.preventDefault();
@@ -679,11 +762,14 @@
     $('#in_named').change(function () {
       cfg_check('#in_named', '#in_after', '#in_installed');
     });
+    $('#id_named').change(function () {
+      cfg_check('#id_named', '#id_after', '#id_installed');
+    });
     function show_dlg_add_naming() {
       let data = $('#spaces').DataTable().row(row).data();
       $('#dlg_add_naming').modal('show');
       $('#in_name').focus();
-      $('#in_name').val(data.name);
+      $('#in_name').val(data.name.trim());
       $('#in_oldname').val('');
       $('#in_decision').val('');
       $('#in_comment').val(`المقاطعة ${data.section_id}`);
@@ -694,12 +780,11 @@
     $('#btn_add_naming').click(e => {
       e.preventDefault();
       $('#dialog_space').modal('toggle');
-      console.log(`get_naming_type: ${get_naming_type()}`);
       show_dlg_add_naming();
     });
     function get_naming_type() {
       let data = $('#spaces').DataTable().row(row).data();
-      switch (data.type.value) {
+      switch (Number(data.type.value)) {
         case 1: case 2: case 3: case 4: case 5: return 0;
         case 6: case 7: case 8: return 1;
         case 9: case 10: case 11: case 12: return 2;
@@ -730,15 +815,69 @@
         swal("يوجد خطأ!", errors[0].message, "error");
       })
     });
+    function show_dlg_add_space() {
+      $('#dlg_add_space').modal('show');
+      $('#id_name').val('');
+      $('#id_name').focus();
+      $('#id_comment').val('');
+      $('#id_named').prop('checked', false);
+      cfg_check('#id_named', '#id_after', '#id_installed');
+    }
+    $('#ddi_add_space').click(e => {
+      e.preventDefault();
+      show_dlg_add_space();
+    });
+    $('#frm_add_space').on('submit', function (e) {
+      e.preventDefault();
+      $('#dlg_add_space').modal('toggle');
+      const sid = Number($('#cb_section option:selected').text());
+      const gid = Number($('#id_group option:selected').text());
+      let space = {
+        section_id: sid,
+        group_id: gid,
+        type: Number($('#id_type option:selected').val()),
+        name: $('#id_name').val(),
+        named: $('#id_named').prop('checked'),
+        installed: $('#id_installed').prop('checked'),
+        comment: $('#id_comment').val(),
+      }
+      add_space(space).then(id => {
+        var t = $('#spaces').DataTable();
+        space.id = id;
+        space.type = {
+          value: Number($('#id_type option:selected').val()),
+          text: $('#id_type option:selected').text()
+        }
+        t.row.add(space).draw(false);
+        swal({
+          title: "نجت العملية!",
+          text: "تم إدخال المعطيات بنجاح!هل تريد المواصلة",
+          type: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#016AD9",
+          confirmButtonText: "نعم واصل",
+          cancelButtonText: "إلغاء",
+          closeOnConfirm: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            show_dlg_add_space();
+          }
+        });
+      }).catch(errors => {
+        swal("يوجد خطأ!", errors[0].message, "error");
+      })
+    });
     $('#refrech').click(() => {
       reload_table();
     });
     $('#cb_section').change(function () {
       reload_table();
       $('#cb_group').empty();
+      $('#id_group').empty();
       get_groups_sid($('#cb_section option:selected').val()).then(groups => {
         groups.forEach(g => {
           $('#cb_group').append(new Option(g.number, g.id));
+          $('#id_group').append(new Option(g.number, g.id));
         });
       })
     });
