@@ -729,6 +729,7 @@
       $('#cb_installed').prop('checked', data.installed);
       $('#cb_installed').prop('disabled', !$('#cb_named').prop('checked'));
       $("#cb_group option").filter(function () { return $(this).text() == data.group_id; }).prop('selected', true);
+      $('#tb_comment').val(data.comment);
       $('#dialog_update_space').modal('show');
     })
     $('#cb_named').change(function () {
