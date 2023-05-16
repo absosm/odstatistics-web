@@ -1,6 +1,6 @@
 /*
-Vesion 0.0.16
-last modifed 25/04/2023 14:51
+Vesion 0.0.17
+last modifed 25/04/2023 16:16
 */
 axios.defaults.withCredentials = true;
 
@@ -111,7 +111,7 @@ function load_cb_sections(inclusion_ends) {
 	get_sections_uid(inclusion_ends).then(sections => {
 		const select = Number(Cookies.get('sid'));
 		sections.forEach(s => {
-			if (s.number === select)
+			if (s.number == select)
 				$('#cb_section').append(new Option(s.number, s.id, true, true));
 			else
 				$('#cb_section').append(new Option(s.number, s.id));
@@ -168,10 +168,12 @@ function load_cb_groups(sid) {
 	$('#cb_group').empty();
 	get_groups_sid(sid).then(groups => {
 		var select = undefined;
-		if (Cookies.get('gid') !== undefined)
+		if (Cookies.get('gid') !== undefined) {
 			select = Number(Cookies.get('gid'));
+			console.log(select);
+		}
 		groups.forEach(g => {
-			if (g.number === select)
+			if (g.number == select)
 				$('#cb_group').append(new Option(g.number, g.id, true, true));
 			else
 				$('#cb_group').append(new Option(g.number, g.id));
