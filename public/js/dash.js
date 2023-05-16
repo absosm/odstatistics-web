@@ -168,10 +168,8 @@ function load_cb_groups(sid) {
 	$('#cb_group').empty();
 	get_groups_sid(sid).then(groups => {
 		var select = undefined;
-		if (Cookies.get('gid') !== undefined) {
+		if (Cookies.get('gid') !== undefined)
 			select = Number(Cookies.get('gid'));
-			console.log(select);
-		}
 		groups.forEach(g => {
 			if (g.number == select)
 				$('#cb_group').append(new Option(g.number, g.id, true, true));
