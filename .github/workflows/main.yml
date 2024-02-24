@@ -45,16 +45,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
+        
       - name: install firebase
         run: npm i firebase-tools -g
 
       - name: Prepare Google Application Credentials
-        shell: bash
-        run: |
-          echo "${{ secrets.DEV_GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "google-application-credentials.json"- name: Prepare Google Application Credentials
-        shell: bash
-        run: |
-          echo "${{ secrets.DEV_GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "google-application-credentials.json"
+        run: echo "${{ secrets.DEV_GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "google-application-credentials.json"
 
       - name: deploy
         run: firebase deploy
