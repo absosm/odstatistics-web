@@ -53,11 +53,6 @@ jobs:
         shell: bash
         run: |
           echo "${{ secrets.DEV_GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "google-application-credentials.json"
-
-      - name: Use Firebase Dev
-        shell: bash
-        run: |
-          firebase use dev --debug
         
       - name: deploy
         run: firebase deploy --debug --token ${{ secrets.FIREBASE_TOKEN }} 
