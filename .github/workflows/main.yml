@@ -39,11 +39,25 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: google-application-credentials.json
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@main
+
       - name: install firebase
         run: npm i firebase-tools -g
+
+      - name: Prepare Google Application Credentials
+        shell: bash
+        run: |
+          echo "${{ secrets.DEV_GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "google-application-credentials.json"
+
+      - name: Use Firebase Dev
+        shell: bash
+        run: |
+          firebase use dev --debug
         
       - name: deploy
-        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --debug --token ${{ secrets.FIREBASE_TOKEN }} 
