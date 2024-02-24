@@ -56,3 +56,8 @@ jobs:
         
       - name: deploy
         run: firebase deploy --debug --token ${{ secrets.FIREBASE_TOKEN }} 
+      
+      - name: Remove credentials file
+        if: success() || failure()
+        run: |
+          rm google-application-credentials.json
